@@ -1,0 +1,6 @@
+[ssh-secure]
+localhost
+
+[ssh-secure:children]
+prod-all
+vagrant

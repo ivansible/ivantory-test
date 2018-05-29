@@ -1,0 +1,5 @@
+---
+- src: git@github.com:ivansible/ivansible1
+  name: multi
+  version: multi
+  scm: git

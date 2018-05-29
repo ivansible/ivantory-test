@@ -1,0 +1,18 @@
+---
+- hosts: test-inven
+  tasks:
+  - ping:
+  - debug:
+      msg: "{{ inventory_hostname }} groups: {{ group_names | sort | join(' ') }}"
+  - debug:
+      msg: "{{ inventory_hostname }} vars: {{ hostvars[inventory_hostname].keys() | select('match', 'test_') | sort | join(' ') }}"
+  - debug:
+      msg: "test_public_var: {{ test_public_var }}"
+  - debug:
+      msg: "test_secret_var: {{ test_secret_var }}"
+  - command: hostname -f
+    changed_when: false
+    register: this_hostname
+  - debug:
+      msg: "hostname: {{ this_hostname.stdout }}"
+...

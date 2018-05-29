@@ -1,0 +1,14 @@
+!.gitkeep
+*-temp
+*-temp.*
+/.fact-cache/
+/.venv/
+/roles-galaxy/
+__pycache__
+.galaxy_install_info
+*~
+*.bak
+*.retry
+*.pyc
+*.pyo
+/log/*.log
