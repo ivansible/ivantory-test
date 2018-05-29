@@ -1,0 +1,5 @@
+# 2.5.3 template module leaves trash
+ansible != 2.5.3
+pywinrm
+passlib
+ansible-inventory-grapher
