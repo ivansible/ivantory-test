@@ -1,0 +1,16 @@
+---
+prod_all:
+  vars:
+    lin_ss_configs:
+      - name: default
+        port: 1081
+        direct: yes
+        password: supersecret
+        method: aes-128-cfb
+    lin_ss_mirrors:
+      # `server` is a front server name, which can be
+      # 'default' (must go first) or full.host.name or .domain.name
+      # `origin` is host name of an origin server, which must support https
+      - server: default
+        origin: www.lartc.org
+...

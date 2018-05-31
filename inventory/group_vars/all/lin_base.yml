@@ -1,0 +1,8 @@
+---
+hide_secrets: yes
+is_permitted: no
+
+web_group: www-data
+
+linbase_time_server: 2.pool.ntp.org  # note: supports both ipv4/ipv6
+...

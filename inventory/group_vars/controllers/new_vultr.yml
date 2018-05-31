@@ -1,0 +1,5 @@
+---
+vultr_ssh_key_file: files/insecure.key
+vultr_ssh_port: 22
+vultr_username: ubuntu
+...

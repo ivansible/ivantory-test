@@ -1,0 +1,21 @@
+---
+web_domain: example.com
+nginx_letsencrypt_cert: example.com
+# affects: nginx_ssl_cert nginx_ssl_key
+
+#
+# nginx configuration snippets
+#
+nginx_conf_pubcookie_server_DISABLE: |
+  location = /PubCookie.reply {
+      pubcookie_post;
+  }
+  location = /bye {
+      pubcookie_app_id pctest;
+      pubcookie_end_session clearLogin;
+  }
+
+nginx_conf_auth_DISABLE: |
+  pubcookie_app_id pctest;
+
+...

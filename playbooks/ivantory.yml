@@ -1,0 +1,15 @@
+---
+- name: run the main playbook
+  import_playbook: "{{ playbook_dir }}/starter.yml"
+
+- name: deploy ivan's inventory ("ivantory")
+  hosts: permitted
+  gather_facts: false
+  vars:
+    divan_skip_prepare: yes  # already done in dev-user/dev-ansible
+  roles:
+    - ivansible.dev_ivantory
+  tags:
+    - ip4only
+    - ivantory
+...

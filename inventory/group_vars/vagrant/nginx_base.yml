@@ -1,0 +1,5 @@
+---
+web_domain: test.example.com
+nginx_letsencrypt_cert: test.example.com
+# affects: nginx_ssl_cert nginx_ssl_key
+...

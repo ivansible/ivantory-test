@@ -1,0 +1,9 @@
+---
+# handlers file for vag_ipv6dns
+
+- name: restart service ipv6dns-renew
+  systemd:
+    name: ipv6dns-renew
+    state: restarted
+  become: yes
+...

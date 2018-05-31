@@ -1,0 +1,34 @@
+#!/bin/bash
+#set -x
+
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+
+hosts="$1"
+# host list should not start with "-"
+[[ $hosts =~ ^- ]] && hosts=""
+[ -n "$hosts" ] && shift
+
+if [ -z "$hosts" ]; then
+    echo "usage: $prog host1[,host2...] [args...]"
+    exit 1
+fi
+
+strategy="linear"
+[[ $hosts =~ "," ]] && strategy="free"
+
+#echo "$hosts $strategy" ; exit
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+set -x
+exec ansible-playbook \
+    plays-all/lin-refresh.yml \
+    -l "$hosts" \
+    -e linref_play_strategy="$strategy" \
+    "$@"

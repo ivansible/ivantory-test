@@ -1,0 +1,12 @@
+---
+# handlers file for vag-share
+
+- name: activate systemd mounts
+  systemd:
+    name: remote-fs.target
+    state: restarted
+    daemon_reload: yes
+  become: yes
+  # possible error: "path is already a mount point, refusing start"
+  #ignore_errors: yes
+...

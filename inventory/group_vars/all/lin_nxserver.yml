@@ -1,0 +1,6 @@
+---
+#lin_nxserver_deb_url: "https://download.nomachine.com/download/6.8/Linux/nomachine_6.8.1_1_amd64.deb"
+
+# use nomachine package copy in dropbox for stability of deployments
+lin_nxserver_deb_url: "https://www.dropbox.com/s/h9n09fyy9q3ihtx/nomachine_6.8.1_1_amd64.deb?dl=1"
+...

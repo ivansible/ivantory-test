@@ -1,0 +1,6 @@
+---
+ziproxy_port: 1083
+# colon-separated user:password pair
+# leave empty for no authentication
+ziproxy_userpass: "ubuntu1:supersecret"
+...

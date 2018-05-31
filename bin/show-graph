@@ -1,3 +1,27 @@
 #!/bin/sh
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+case "$1" in
+  ''|-h|--help)
+    echo "usage: $prog [-q] host1,host2 ['*']"
+    ansible-inventory-grapher --help
+    exit 1
+    ;;
+esac
+
+if [ ! -x /usr/bin/dot ] || [ ! -x /usr/bin/display ]; then
+    echo "please install requirements:"
+    echo " sudo apt-get -q -q -y install xauth imagemagick graphviz"
+    exit 1
+fi
+
 set -x
 ansible-inventory-grapher "$@" | dot -Tpng | display png:-

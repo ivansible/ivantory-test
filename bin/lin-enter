@@ -1,0 +1,10 @@
+#!/bin/sh
+if [ -z "$1" ] || [ "$1" != "${1#-}" ]; then
+  prog=$(basename "$0")
+  echo "usage: $prog hosts [args...]"
+  exit 1
+fi
+exe_path=$(readlink -f "$0")
+bin_dir=$(dirname "$exe_path")
+export ANSIBLE_GATHERING=false
+exec "$bin_dir"/role ivansible.lin_enter "$@"

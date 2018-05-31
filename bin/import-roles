@@ -1,0 +1,50 @@
+#!/bin/bash
+prog=$(basename "$0")
+mode="$1"
+
+case "$mode" in
+  '')
+    mode=devel
+    ;;
+  light|force|devel|clone)
+    ;;
+  *)
+    echo "usage: $prog force|light|devel|clone"
+    exit 1
+esac
+echo "mode: $mode"
+
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+roles_dir=$(readlink -f "$divan_dir/roles-galaxy")
+
+force_arg=""
+git_meta_arg=""
+nodep_arg="--no-deps"
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+if [ $mode = force ] || [ $mode = devel ]; then
+    rm -rf -- "${roles_dir:?}"/*
+    force_arg="--force"
+fi
+if [ $mode = devel ]; then
+    git_meta_arg="--keep-scm-meta"
+fi
+
+set -x
+ansible-galaxy install \
+    --role-file=requirements.yml --roles-path="$roles_dir" \
+    "$nodep_arg" "$git_meta_arg" "$force_arg"
+
+if [ $mode = clone ]; then
+    cd "$roles_dir" || exit 1
+    for dir in ivansible.* ; do
+        rm -rf "${dir}"
+        git clone git@github.com:"${dir/\./\/}" "${dir}"
+    done
+fi

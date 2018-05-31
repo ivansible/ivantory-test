@@ -1,0 +1,13 @@
+---
+vag_vbguest_enable: no
+vag_vbguest_freeze_kernel: no
+
+vag_vbguest_kernel_packages:
+  - linux-image-generic
+  - linux-image-virtual
+  - linux-headers-generic
+  - linux-headers-virtual
+  - linux-virtual
+
+vag_vbguest_module_path: /lib/modules/{{ ansible_kernel }}/misc/vboxguest.ko
+...

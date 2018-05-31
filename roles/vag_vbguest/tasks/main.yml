@@ -1,0 +1,45 @@
+---
+- name: check whether virtualbox guest additions are installed
+  stat:
+    path: /sbin/rcvboxadd
+  register: vbguest_tools
+
+- name: check whether guest additions kernel modules are up-to-date
+  stat:
+    path: "{{ vag_vbguest_module_path }}"
+  register: vbguest_kernel_module
+
+- name: setup virtualbox guest additions
+  block:
+    - name: temporarily unhold kernel packages
+      command: apt-mark unhold {{ vag_vbguest_kernel_packages |join(' ') }}
+
+    - name: install prerequisites for virtualbox guest additions
+      apt:
+        name:
+          - linux-headers-generic
+          - linux-headers-{{ ansible_kernel }}
+          - build-essential
+
+    - name: rebuild kernel modules for virtualbox guest additions
+      command: /sbin/rcvboxadd quicksetup all
+
+    - name: restart guest additions services
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      loop:
+        - vboxadd
+        - vboxadd-service
+  become: yes
+  when: vag_vbguest_enable |bool
+        and vbguest_tools.stat.exists
+        and not vbguest_kernel_module.stat.exists
+
+- name: freeze kernel version to prevent problems with guest additions
+  when: vag_vbguest_freeze_kernel |bool
+  command: apt-mark hold {{ vag_vbguest_kernel_packages |join(' ') }}
+  become: yes
+  changed_when: false
+...

@@ -1,6 +1,0 @@
----
-- hosts: test-inven
-  tasks:
-  - import_role:
-      name: "{{ role }}"
-...

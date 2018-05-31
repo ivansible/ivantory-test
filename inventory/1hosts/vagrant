@@ -1,0 +1,7 @@
+[vagrant]
+vag1  ansible_host=192.168.99.31
+revssh ansible_host=localhost ansible_port=8822
+vagstart
+
+[vagrant:vars]
+ansible_ssh_common_args="-o ForwardAgent=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"

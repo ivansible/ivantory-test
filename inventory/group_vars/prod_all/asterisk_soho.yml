@@ -1,0 +1,48 @@
+---
+ast_soho_gateway_alias: forfree
+ast_soho_phones_alias: gigasets
+
+ast_soho_gateway_codecs: g729,g722,ulaw,alaw
+ast_soho_phones_codecs: g729,g722,ulaw,alaw
+
+
+ast_soho_gateway_accounts:
+  # note: gateway should provide account name when calls us back
+  - name: forfree1
+    # caller_id: +1-495-123-4567
+    username: 12345
+    # password: length from 8 to 30, only alpha-numerics
+    password: supersecret
+    active: yes
+
+ast_soho_gateway_hosts:
+  # the first one is used for outward calls
+  - sip.forfree.com
+
+ast_soho_gateway_billing_exten: 1111
+
+
+ast_soho_phones:
+  - name: gigaset1
+    password: supersecret
+    exten: 221
+    gateway: forfree1
+    active: yes
+
+
+ast_soho_quick_numbers:
+  - name: user1
+    exten: 111
+    number: 79251234567
+
+
+ast_soho_gateway_networks:
+  - 192.168.253.0/24
+
+
+ast_soho_phones_networks:
+  ######## TELE2
+  - ; https://ipinfo.io/AS12958
+  - ;; T2 Mobile LLC
+  - 109.94.192.0/20
+...

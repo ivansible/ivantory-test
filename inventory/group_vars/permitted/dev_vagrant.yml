@@ -1,0 +1,17 @@
+---
+vagrant_plugin_list:
+  - vagrant-share  # override system plugin, fixes `vagrant plugin update`
+  - vagrant-hostmanager
+  - vagrant-vbguest
+  # plugins below are rarely needed!
+  #- vagrant-aws    # requires nokogiri (binary!)
+  #- vagrant-vultr  # faraday gem conflict with aws!
+  #- vagrant-azure
+  #- vagrant-digitalocean
+  #- vagrant-linode
+  #- vagrant-managed-servers
+
+# secrets
+vagrant_cloud_token: ""
+vagrant_files_repo: ""
+...

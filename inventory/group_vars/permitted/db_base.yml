@@ -1,0 +1,15 @@
+---
+srv_pg_host: localhost
+srv_pg_port: 5432
+srv_pg_admin_password: supersecret
+
+mongodb_host: localhost
+mongodb_port: 27017
+mongodb_admin_username: mongoadmin
+mongodb_admin_password: supersecret
+
+redis_host: redis.example.com
+redis_port_tcp: 6379
+redis_port_ssl: 6377
+redis_password: supersecret
+...

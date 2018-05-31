@@ -1,16 +1,56 @@
 #!/bin/bash
+#set -x
+
 reinstall=0
 pythonver=python3
+requirements_file=ansible-requirements.txt
+venv_dir=~/.ansible/venv
+user_bin=~/bin
+linked_exe_list="role play vultr cryptor gitroles"
+
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_link="$divan_dir/.venv"
+rela_link=$(realpath --relative-to "$venv_link/.." --no-symlinks "$venv_dir")
+requirements_path="$divan_dir/$requirements_file"
+requirements_link=$(dirname "$venv_dir")/ivantory-requirements.txt
+
+cd "$divan_dir" || exit 1
+test -r "$requirements_file" || exit 1
+
+mkdir -p "$venv_dir" || exit 1
+rm -f "$venv_link"
+ln -s -f "$rela_link" "$venv_link"
+rm -f "$requirements_link"
+ln -s -f "$requirements_path" "$requirements_link"
+
+mkdir -p "$user_bin" || exit 1
+for exe in $linked_exe_list ; do
+  rela_dir=$(realpath --relative-to "$user_bin" --no-symlinks "$divan_dir/bin")
+  ln -s -f "$rela_dir/$exe"  "$user_bin/ivantory-$exe"
+done
+
 set -x
-sudo apt-get -qy install \
-  build-essential virtualenv\
-  ${pythonver} ${pythonver}-dev ${pythonver}-virtualenv \
-  graphviz imagemagick \
-  x11-apps xauth
-test $reinstall=1 && rm -rf .venv/*
-test -x .venv/bin/activate || virtualenv -p ${pythonver} .venv
+sudo apt-get -q -q -y install \
+  build-essential \
+  virtualenv\
+  ${pythonver} \
+  ${pythonver}-dev \
+  ${pythonver}-virtualenv \
+  ${pythonver}-pip \
+  graphviz \
+  imagemagick \
+  x11-apps \
+  x11-xserver-utils \
+  xauth
+
+test "$reinstall" = 1 && rm -r -f -- "${venv_dir:?}"/{bin,include,lib,share}
+
+test -r "$venv_dir/bin/activate" || virtualenv -p "$pythonver" "$venv_dir"
 set +x
-. .venv/bin/activate
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate"
 set -x
-pip install -U pip setuptools wheel
-pip install -r ansible-requirements.txt
+pip install -q -U pip setuptools wheel
+pip install -q -r "$requirements_path"

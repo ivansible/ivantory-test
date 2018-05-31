@@ -1,0 +1,8 @@
+---
+dev_user_known_host_list:
+  - github.com
+  - gitlab.com
+
+dev_user_group_vars:
+  ANSIBLE_FORCE_COLOR: true
+...

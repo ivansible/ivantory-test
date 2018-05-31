@@ -1,0 +1,9 @@
+#!/bin/bash
+filter='^NoSuchFilter$'
+if [ "$1" = "--norename" ]; then
+    filter='^(>>> )?rename:'
+    shift
+fi
+script_path=$(readlink -f "$0")
+bin_dir=$(dirname "$script_path")
+git diff -b --color "$@" | $bin_dir/filter-git-diff | grep -E -v "$filter" | less -X -S

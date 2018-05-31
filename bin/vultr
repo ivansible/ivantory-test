@@ -1,0 +1,118 @@
+#!/bin/bash
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+ok=0
+
+# parse command line
+case "$1" in
+  list|ls)
+    # parse the "list" command
+    case "$2" in
+      plans)
+        ok=1
+        curl -sk "https://api.vultr.com/v1/plans/list" \
+             | jq -M "..|.name?" \
+             | grep -Ev '^null$' \
+             | tr -d '"' \
+             | sort -u
+        ;;
+      regions|regs)
+        ok=1
+        curl -sk "https://api.vultr.com/v1/regions/list" \
+             | jq -M "..|.name?" \
+             | grep -Ev '^null$' \
+             | tr -d '"' \
+             | sort -u
+        ;;
+      *)
+        ok=0
+        ;;
+    esac
+    run=0
+    ;;
+  new)
+    # parse the "new" command
+    name=$2
+    [ -n "$name" ] && ok=1 || ok=0
+    shift; shift
+    if [ $ok = 1 ] && [ x"$1" = x"-os" ]; then
+        os=$2
+        shift; shift
+        case "$os" in
+            xenial|bionic) ok=1 ;;
+            *) ok=0 ;;
+        esac
+    else
+        os=xenial
+    fi
+    if [ $ok = 1 ] && [ x"$1" = x"-plan" ]; then
+        plan=$2
+        shift; shift
+        case "$plan" in
+            5|10) ok=1 ;;
+            *) ok=0 ;;
+        esac
+    else
+        plan=5
+    fi
+    if [ $ok = 1 ] && [ x"$1" = x"-region" ]; then
+        region=$2
+        shift; shift
+        case "$region" in
+            ams|ny) ok=1 ;;
+            *) ok=0 ;;
+        esac
+    else
+        region=ams
+    fi
+    if [ $ok = 1 ] && [ x"$1" = x"-inven" ]; then
+        inven=$2
+        shift; shift
+        case "$inven" in
+            yes|no) ok=1 ;;
+            '') ok=0 ;;
+            *) ok=1 ;;
+        esac
+    else
+        inven="no"
+    fi
+    run=1
+    ;;
+  *)
+    # wrong command
+    ok=0
+    ;;
+esac
+
+# print usage
+if [ $ok = 0 ]; then
+    echo "usage:"
+    echo " $prog list|ls plans|regions"
+    echo " $prog new <name> [-os xenial|bionic] [-plan 5|10] [-region ams|ny] [-inven yes|no|<name>] [playbook options...]"
+    exit 1
+fi
+
+if [ $run = 0 ]; then
+  exit 0
+fi
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+# shellcheck disable=SC2124
+args="$@"
+#echo "name:$name invname:$invname os:$os plan:$plan region:$region args:$args"
+#set -x
+# shellcheck disable=SC2086
+exec ./bin/role \
+  .new_vultr localhost \
+  -e vultr_name="$name" \
+  -e vultr_os="$os" \
+  -e vultr_plan="$plan" \
+  -e vultr_region="$region" \
+  -e vultr_inventory="$inven" \
+  $args

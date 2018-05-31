@@ -1,0 +1,13 @@
+---
+# defaults file for vag_ipv6dns
+
+# interface to get ipv6 from
+ipv6dns_interface: eth0
+
+ipv6dns_host: ipv6
+ipv6dns_zone: example.com
+
+# cloudflare authentication parameters
+ipv6dns_cf_email: user@example.com
+ipv6dns_cf_token: supersecret
+...

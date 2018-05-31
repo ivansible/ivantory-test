@@ -1,5 +1,5 @@
 ---
-- hosts: test-inven
+- hosts: test_inven
   tasks:
   - ping:
   - debug:
