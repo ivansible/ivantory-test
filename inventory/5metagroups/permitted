@@ -1,0 +1,6 @@
+[permitted]
+localhost
+starter
+
+[permitted:children]
+controllers

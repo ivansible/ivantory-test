@@ -1,0 +1,74 @@
+---
+- name: gather facts
+  hosts: all
+  gather_facts: true
+  tags: always
+
+- name: setup core linux
+  hosts: all
+  gather_facts: false
+  vars:
+    docker_extras: yes
+    docker_bash_completion_extras: yes
+  roles:
+    - ivansible.lin_system
+    - ivansible.lin_docker
+  tags: devops_prepare
+
+- name: deploy ansible playbooks
+  hosts: permitted
+  gather_facts: false
+  vars:
+    dev_user_extras: yes
+    # avoid task duplication between dev-user and dev-ivantory
+    divan_skip_prepare: yes
+  roles:
+    - ivansible.dev_user
+    - ivansible.dev_ansible
+    # ivantory's ansible playbooks are required by terraform plans
+    - ivansible.dev_ivantory
+  tags: devops_permitted
+
+- name: configure for devops and cloud control
+  hosts: all
+  gather_facts: false
+  vars:
+    # tell nxserver to enable swap
+    lin_swap_enable: yes
+  roles:
+    - ivansible.dev_hosters
+    - ivansible.dev_terraform
+    - ivansible.dev_packer
+    # nxserver is required by virtualbox gui (and many others..)
+    - ivansible.lin_nxserver
+    # mount VM images
+    - ivansible.lin_rclone
+  tags: devops_software
+
+- name: enable host for virtual machines
+  hosts: baremetal
+  gather_facts: false
+  pre_tasks:
+    - name: prevent unattanded-upgrades locking dpkg frontend lock
+      systemd:
+        name: unattended-upgrades
+        state: stopped
+      become: yes
+      ignore_errors: yes # the service may be absent
+      no_log: true
+      tags: devops_fixes
+  roles:
+    - ivansible.lin_virtualbox
+    - ivansible.dev_vagrant
+  tags: devops_virtual
+
+- name: silence cloud-init warning on bender
+  hosts: bender
+  gather_facts: false
+  tasks:
+    - name: silence the cloud-init warning
+      copy:
+        dest: "{{ ansible_user_dir }}/.cloud-warnings.skip"
+        content: ""
+  tags: devops_fixes
+...

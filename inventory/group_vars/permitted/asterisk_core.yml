@@ -1,0 +1,18 @@
+---
+ast_user_agent: Asterisk
+
+ast_voicemail_pass: 0000
+
+ast_pg_host: "{{ srv_pg_host }}"
+ast_pg_port: "{{ srv_pg_port }}"
+ast_pg_dbname: asterisk
+ast_pg_user: asterisk
+ast_pg_pass: supersecret
+ast_pg_dump_url: ""
+
+ast_g729_bench_enable: yes
+
+ast_g729_bench_digium_tarball_url: ""
+
+ast_g729_bench_free_tarball_url: ""
+...

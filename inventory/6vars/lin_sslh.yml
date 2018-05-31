@@ -1,0 +1,11 @@
+---
+all:
+  vars:
+    use_sslh: false
+  hosts:
+    test_sslh:
+      sslh_listen_addresses:
+        - "{{ ansible_default_ipv4.address }}"
+        - "{{ ansible_default_ipv6.address }}"
+      use_sslh: true
+...

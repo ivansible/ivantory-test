@@ -1,0 +1,80 @@
+---
+- name: gather facts
+  hosts: all
+  gather_facts: true
+  tags: always
+
+- name: basic linux setup
+  hosts: all
+  gather_facts: false
+  roles:
+    - ivansible.lin_system
+    - ivansible.lin_docker
+    - ivansible.dev_user
+  tags: master_prepare
+
+
+# Note: please `--skip-tags master_cert`
+#       when you run this playbook on a single host!
+- name: letsencrypt certificate on production master
+  hosts: prod_master
+  gather_facts: false
+  roles:
+    - ivansible.cert_cloudflare
+  tags: master_cert
+
+- name: letsencrypt certificate on production slaves
+  hosts: prod_slaves
+  gather_facts: false
+  roles:
+    - ivansible.cert_replica
+  tags: master_cert
+
+- name: letsencrypt certificate on development hosts
+  hosts: dev_all
+  gather_facts: false
+  roles:
+    - ivansible.cert_copy
+  tags: master_cert
+
+
+- name: databases (master-only)
+  hosts:
+    - prod_master
+    - dev_master
+  gather_facts: false
+  roles:
+    - ivansible.srv_postgres
+    - ivansible.srv_mongodb
+    - ivansible.srv_redis_ssl
+  tags: master_db
+
+
+- name: web servers
+  hosts: all
+  gather_facts: false
+  roles:
+    - ivansible.lin_sslh
+    - ivansible.lin_nginx
+  tags: master_web
+
+
+- name: mail (master-only)
+  hosts:
+    - prod_master
+    - dev_master
+  gather_facts: false
+  roles:
+    - ivansible.srv_cgpro
+  tags: master_mail
+
+
+- name: asterisk
+  hosts: asterisk_servers
+  gather_facts: false
+  roles:
+    - ivansible.asterisk_core
+    - ivansible.asterisk_soho
+    - ivansible.asterisk_providers
+  tags: master_asterisk
+...

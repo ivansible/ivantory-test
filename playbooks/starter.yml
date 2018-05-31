@@ -1,0 +1,48 @@
+---
+- name: gather facts
+  hosts: all
+  gather_facts: true
+  tags: always
+
+- name: setup vagrant boxes
+  hosts: vagrant
+  gather_facts: false
+  roles:
+    - role: vag_share
+      when: vag_share_name | default('') != ''
+    - vag_vbguest
+
+- name: basic linux setup
+  hosts: all
+  gather_facts: false
+  roles:
+    - ivansible.lin_system
+    - role: ivansible.lin_docker
+      when: ansible_kernel is version('3.10', '>')
+  tasks:
+    - name: update hostname
+      hostname:
+        name: "{{ starter_hostname }}"
+      become: yes
+      when: starter_hostname is defined
+      tags: update_hostname
+
+- name: system upgrade
+  hosts: all
+  gather_facts: false
+  vars:
+    refresh: false
+    # time-sync is already done in lin-system
+    linref_time_sync: false
+  roles:
+    - role: ivansible.lin_refresh
+      when: refresh |bool
+  tags: refresh
+
+- name: configure for development
+  hosts: permitted
+  gather_facts: false
+  roles:
+    - ivansible.dev_user
+    - ivansible.dev_ansible
+...

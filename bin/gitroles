@@ -1,0 +1,39 @@
+#!/bin/bash
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+roles_dir=$(readlink -f "$divan_dir/roles-galaxy")
+
+full=0
+pull=0
+case "$1" in
+  -f|--full)
+    full=1 ;;
+  -p|--pull)
+    pull=1 ;;
+  "")
+    ;;
+  *)
+    echo "usage: $prog [-f|--full] [-p|--pull]"
+    exit 1 ;;
+esac
+
+cd "$roles_dir" || exit 1
+for role in * ; do
+    echo
+    echo ">>>> $role"
+    if ! cd "$roles_dir/$role"; then
+        echo "error: cannot access role directory"
+        continue
+    fi
+    git status --short
+    if [ $full = 1 ]; then
+        git fetch
+        git branch -vv
+    fi
+    if [ $pull = 1 ]; then
+        git fetch
+        git pull --ff-only
+    fi
+done

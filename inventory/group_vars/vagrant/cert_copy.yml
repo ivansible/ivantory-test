@@ -1,0 +1,7 @@
+---
+# these settings are for development and testing:
+
+certbot_group: "{{ web_group }}"
+
+certbot_master_host: zeus
+...

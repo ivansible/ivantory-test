@@ -1,0 +1,32 @@
+#!/bin/bash
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+
+if [ -z "$1" ] || [ "$1" != "${1#-}" ] || [ -z "$2" ] || [ "$2" != "${2#-}" ]; then
+    echo "usage: $prog roles hosts [args...]"
+    exit 1
+fi
+
+roles=$1
+hosts=$2
+shift
+shift
+
+role_list=""
+for role in ${roles//,/ } ; do
+    [[ $role =~ ^\. ]] && role="ivansible$role"
+    role_list="$role_list ${role//-/_}"
+done
+role_list=${role_list# }
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+for role in $role_list ; do
+    set -x
+    ansible-playbook playbooks/run-role.yml -l "$hosts" -e "role=$role" "$@"
+done

@@ -1,0 +1,31 @@
+---
+certbot_group: "{{ web_group }}"
+
+certbot_cloudflare_email: user@mail.com
+certbot_cloudflare_api_key: supersecret
+
+certbot_certificates:
+  - name: example.com
+    active: yes
+    remove_existing: no
+    update_existing: no
+    domains:
+      - example.com
+
+certbot_acme_accounts:
+  - name: staging
+    active: yes
+    server: acme-staging-v02.api.letsencrypt.org
+    account: 00000
+    hash: 00000000000000000000000000000000
+    creation_date: "2018-08-18T11:22:33Z"
+    creation_host: example.com
+    key_data:
+      _n: 1
+      _d: 2
+      _p: 3
+      _q: 4
+      dp: 5
+      dq: 6
+      qi: 7
+...

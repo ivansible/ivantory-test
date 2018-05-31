@@ -1,0 +1,12 @@
+---
+- name: gather facts
+  hosts: all
+  gather_facts: true
+  tags: always
+
+- hosts: all
+  gather_facts: false
+  tasks:
+  - import_role:
+      name: "{{ role }}"
+...

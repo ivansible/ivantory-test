@@ -1,0 +1,9 @@
+---
+all:
+  vars:
+    dev_user_authorized_keys_files:
+      - files/insecure.key
+    dev_user_installed_keys_files:
+      - files/insecure.key
+    lin_ssh_keys_files: "{{ dev_user_installed_keys_files }}"
+...

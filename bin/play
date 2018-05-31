@@ -1,0 +1,33 @@
+#!/bin/bash
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+
+case "$1" in
+  -l | --list )
+    echo $(for pb in "$divan_dir/playbooks"/*.yml; do basename ${pb%.yml}; done)
+    exit 0
+    ;;
+esac
+
+if [ -z "$1" ] || [ "$1" != "${1#-}" ] || [ -z "$2" ] || [ "$2" != "${2#-}" ]; then
+    echo "usage: $prog playbook[.yml] hosts [args...]"
+    echo "   or: $prog -l | --list"
+    exit 1
+fi
+
+playbook=$1
+hosts=$2
+shift
+shift
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+playbook_file=playbooks/${playbook}.yml
+
+set -x
+exec ansible-playbook "$playbook_file" -l "$hosts" "$@"

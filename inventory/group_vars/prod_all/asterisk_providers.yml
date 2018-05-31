@@ -1,0 +1,12 @@
+---
+ast_providers:
+  - name: sipnet1
+    exten: 1
+    host: sipnet.ru
+    username: 092345
+    password: supersecret
+    #transport: udp,tcp
+    #codecs: g729,ulaw,alaw
+    networks: [ 212.53.40.40 ]
+    active: yes
+...

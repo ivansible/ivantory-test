@@ -1,0 +1,8 @@
+---
+srv_chisel_port: 1084
+srv_chisel_web_path: /supersecret/chisel/
+srv_chisel_username: ubuntu1
+srv_chisel_password: supersecret
+srv_chisel_key_seed: supersecret_seed
+srv_chisel_fingerprint: 11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff:00
+...

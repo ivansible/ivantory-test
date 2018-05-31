@@ -1,0 +1,21 @@
+---
+# prerequisite role: .cert_copy
+
+# variables derived from nginx_base:
+#   ast_ssl_cert ast_ssl_key
+
+ast_domains:
+  - "{{ web_domain }}"
+
+# use insecure softphone logins when debugging
+ast_softphones:
+  - name: phoner4win
+    password: 123
+    exten: 104
+    srtp: no
+    active: yes
+
+ast_softphones_secure: no
+
+ast_stun_addr: stun.example.com
+...

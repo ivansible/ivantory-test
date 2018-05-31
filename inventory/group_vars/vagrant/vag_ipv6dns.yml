@@ -1,0 +1,5 @@
+---
+# cloudflare authentication
+ipv6dns_cf_email: user@mail.com
+ipv6dns_cf_token: 1234567890000000000000000000000abcdef
+...

@@ -1,0 +1,5 @@
+---
+devhost_digitalocean_token: supersecret
+devhost_packet_auth_token: supersecret
+devhost_packet_default_project: supersecret
+...

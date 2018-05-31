@@ -1,0 +1,6 @@
+---
+xenial_nodns:
+  hosts:
+    test_nodns:
+      nginx_resolver: 1.1.1.1
+...

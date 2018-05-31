@@ -1,0 +1,14 @@
+---
+dante_port: 1080
+dante_direct: no
+# socks5 probe is possible only in sslh 1.20+, which is not available in
+# xenial/bionic packages and requires sslh compilation from github sources
+#sslh_socks5_port: "{{ dante_port }}"
+
+# dante username must start with 'dante_' (it's a global linux user)
+dante_user: user1
+dante_pass: supersecret
+
+# see: https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#hash-filters
+dante_salt: "{{ 12345 |random(seed=inventory_hostname) |string }}"
+...

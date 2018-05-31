@@ -1,0 +1,4 @@
+---
+vag_vbguest_enable: yes
+vag_vbguest_freeze_kernel: yes
+...

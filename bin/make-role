@@ -1,0 +1,122 @@
+#!/bin/bash
+prog=$(basename "$0")
+dir=$(readlink -f "$0")
+dir=$(dirname "$dir")
+divan_dir=$(dirname "$dir")
+venv_dir=$(readlink -f "$divan_dir/.venv")
+roles_home=$(readlink -f "$divan_dir/roles-galaxy")
+skel_dir=$divan_dir/skel
+
+help=0
+force=0
+force_arg=""
+push=0
+galaxy=0
+desc_arg="ROLEFULL description"
+repo_arg=""
+default_roles_home="$roles_home"
+
+while true; do
+  case "$1" in
+    -f | --force )
+      force=1
+      force_arg="--force"
+      shift
+      ;;
+    -p | --push )
+      push=1
+      shift
+      ;;
+    -g | --galaxy )
+      push=1
+      galaxy=1
+      shift
+      ;;
+    -c | --curdir )
+      roles_home="."
+      shift
+      ;;
+    -d | --desc )
+      desc_arg="$2"
+      shift 2
+      [ -n "$desc_arg" ] || help=1  # blank option
+      ;;
+    -* )
+      help=1  # unknown option
+      shift
+      ;;
+    "" )
+      break
+      ;;
+    * )
+      [ -z "$repo_arg" ] || help=1  # duplicate option
+      repo_arg="$1"
+      shift
+      ;;
+  esac
+done
+
+if [ $help = 1 ] || [ -z "$repo_arg" ]; then
+    echo "usage: $prog [-f|--force] [-p|--push] [-g|--galaxy] [-c|--curdir] [-d|--desc <desc>] [ivansible].role-repo"
+    echo "options:"
+    echo "  --curdir  create role under current directory"
+    echo "            (by default role is created under $default_roles_home)"
+    echo "  --force   remove previous role content, if any"
+    echo "  --push    push role to github"
+    echo "  --galaxy  import into ansible galaxy (implies push)"
+    echo "  --desc    provide description for github repository"
+    echo "note: usually <role-repo> contains dashes, but role name will have dashes replaced by underscores"
+    exit 1
+fi
+
+if [ ! -d "$roles_home" ]; then
+    echo "$roles_home is not a directory"
+    exit 1
+fi
+
+if [ -z "$(command -v hub)" ]; then
+    echo "please install 'hub', for example:"
+    echo "bin/play starter localhost -e dev_user_extras=yes -t dev_user_install_hub"
+    exit 1
+fi
+
+[[ $repo_arg =~ ^\. ]] && repo_full="ivansible$repo_arg" || repo_full=$repo_arg
+
+repo_user=$(echo "$repo_full" | cut -d. -f1)
+repo_name=$(echo "$repo_full" | cut -d. -f2)
+role_name=${repo_name//[-.]/_}
+role_full="$repo_user.$role_name"
+home_page=https://galaxy.ansible.com/$repo_user/$role_name
+
+cd "$divan_dir" || exit 1
+# shellcheck disable=SC1090
+. "$venv_dir/bin/activate" || exit 1
+
+set -x
+cd "$roles_home" || exit 1
+[ $force = 1 ] && rm -rf "./$role_full/"
+
+ansible-galaxy init --role-skeleton "$skel_dir" $force_arg "$role_full"
+cd "$role_full" || exit 1
+sed -i \
+    -e "s/ROLEDESC/$desc_arg/g" \
+    -e "s/ROLENAME/$role_name/g" \
+    -e "s/ROLEFULL/$role_full/g" \
+    -e "s/REPONAME/$repo_name/g" \
+    ./*/main.yml \
+    ./tests/test.yml \
+    ./tasks/root.yml \
+    ./README.md
+git init
+
+if [ $push = 1 ]; then
+  role_desc=$(grep "description:" meta/main.yml | cut -d: -f2 | cut -d\" -f2)
+  hub create -d "$role_desc" -h "$home_page" "$repo_user/$repo_name"
+  git add .
+  git commit -m "first commit"
+  git push -u origin master
+fi
+
+if [ $galaxy = 1 ]; then
+  ansible-galaxy import "$repo_user" "$repo_name"
+fi

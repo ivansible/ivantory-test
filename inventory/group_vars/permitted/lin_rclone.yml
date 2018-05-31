@@ -1,0 +1,27 @@
+---
+lin_rclone_repo_owner: rclone
+lin_rclone_allow_nonroot: false
+
+lin_rclone_mailru_token: '{"access_token":"supersecret","token_type":"Bearer","refresh_token":"supersecret","expiry":"2018-12-31T11:22:33.1234567+01:00"}'
+
+lin_rclone_mounts:
+  - name: repo
+    path: /mnt/rc/repo
+    fstab: false
+    #logto: /tmp/rclone-repo.log
+    token: "{{ lin_rclone_mailru_token |string }}"
+    reuse_token: _repo
+    # use special mailru config with speedup disabled for restic
+    # speedup will always fail because all contents is encrypted
+    config: |
+      type = alias
+      remote = _repo:_rc/repo
+
+      [_repo]
+      type = mailru
+      user = user@mail.ru
+      pass = supersecret
+      check_hash = true
+      speedup_enable = false
+      token = [TOKEN]
+...

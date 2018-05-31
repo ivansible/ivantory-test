@@ -1,0 +1,9 @@
+---
+sslh_anyprot_port: "{{ mtproxy_port }}"
+
+mtproxy_port: 9876
+mtproxy_secret: 12345678900000000000000000abcdef
+mtproxy_direct: no
+mtproxy_secure: yes
+mtproxy_rmdocker: yes
+...
