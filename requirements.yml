@@ -36,6 +36,9 @@
 - src: https://github.com/ivansible/lin-rclone
   name: ivansible.lin_rclone
   scm: git
+- src: https://github.com/ivansible/lin-restic
+  name: ivansible.lin_restic
+  scm: git
 - src: https://github.com/ivansible/dev-jupyter
   name: ivansible.dev_jupyter
   scm: git

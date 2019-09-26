@@ -82,4 +82,15 @@
     - ivansible.ast_providers
     - ivansible.ast_webui
   tags: master_asterisk
+
+
+- name: backup
+  hosts:
+    - prod_all
+    - dev_master
+  gather_facts: false
+  roles:
+    - ivansible.lin_rclone
+    - ivansible.lin_restic
+  tags: master_backup
 ...
