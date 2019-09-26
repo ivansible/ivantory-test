@@ -1,0 +1,12 @@
+---
+all:
+  children:
+    vagrant:
+      vars:
+        lin_restic_password: supersecret
+        lin_restic_repo_owner: ivandeex
+        lin_restic_postgres_port: 5432
+        lin_restic_rclone_remote: repo
+        # molecule defines no jobs
+        lin_restic_jobs: []
+...
