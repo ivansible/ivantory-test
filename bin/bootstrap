@@ -13,4 +13,4 @@ set +x
 . .venv/bin/activate
 set -x
 pip install -U pip setuptools wheel
-pip install -r requirements.txt
+pip install -r ansible-requirements.txt
