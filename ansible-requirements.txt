@@ -1,5 +1,13 @@
-# 2.5.3 template module leaves trash
-ansible != 2.5.3
+ansible
+# molecule pulls: ansible-lint yamllint flake8 pytest testinfra
+molecule
+docker
+ansible-test
+# utils
+ansible-inventory-grapher
 pywinrm
 passlib
-ansible-inventory-grapher
+# jmespath is required by json_query filter
+jmespath
+# netaddr is required by ipaddr filter
+netaddr
