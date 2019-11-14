@@ -1,6 +1,10 @@
-# ROLEFULL
+# _ROLE_FULL_
 
-This role performs:
+[![Github Test Status](https://github.com/_REPO_USER_/_REPO_NAME_/workflows/Molecule%20test/badge.svg?branch=master)](https://github.com/_REPO_USER_/_REPO_NAME_/actions)
+[![Travis Test Status](https://travis-ci.org/_REPO_USER_/_REPO_NAME_.svg?branch=master)](https://travis-ci.org/_REPO_USER_/_REPO_NAME_)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-_REPO_USER_._ROLE_BADGE_-68a.svg?style=flat)](https://galaxy.ansible.com/_REPO_USER_/_ROLE_NAME_/)
+
+This role will:
  - action1;
  - action2;
 
@@ -33,7 +37,7 @@ None
 
     - hosts: vagrant-boxes
       roles:
-         - role: ROLENAME
+         - role: _ROLE_NAME_
            variable1: 1
            variable2: 2
 
@@ -42,6 +46,7 @@ None
 
 MIT
 
+
 ## Author Information
 
-Created in 2019 by [IvanSible](https://github.com/ivansible)
+Created in 2019 by [IvanSible](https://github.com/_REPO_USER_)

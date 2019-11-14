@@ -1,0 +1,11 @@
+---
+- src: https://github.com/_REPO_USER_/lin-base
+  name: _REPO_USER_.lin_base
+  scm: git
+- src: https://github.com/_REPO_USER_/backup-base
+  name: _REPO_USER_.backup_base
+  scm: git
+- src: https://github.com/_REPO_USER_/lin-system
+  name: _REPO_USER_.lin_system
+  scm: git
+...
