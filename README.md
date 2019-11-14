@@ -1,6 +1,6 @@
-# Inventory: ivansible
+# Collection: ivantory
 
-My primary ansible inventory and playbooks for [ivansible](https://github.com/ivansible) roles.
+My primary ansible inventory and collection for [ivansible](https://github.com/ivansible) roles.
 
 
 ## Run a role

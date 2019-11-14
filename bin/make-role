@@ -86,6 +86,7 @@ repo_user=$(echo "$repo_full" | cut -d. -f1)
 repo_name=$(echo "$repo_full" | cut -d. -f2)
 role_name=${repo_name//[-.]/_}
 role_full="$repo_user.$role_name"
+role_badge=${role_name//_/__}
 home_page=https://galaxy.ansible.com/$repo_user/$role_name
 
 cd "$divan_dir" || exit 1
@@ -99,13 +100,16 @@ cd "$roles_home" || exit 1
 ansible-galaxy init --role-skeleton "$skel_dir" $force_arg "$role_full"
 cd "$role_full" || exit 1
 sed -i \
-    -e "s/ROLEDESC/$desc_arg/g" \
-    -e "s/ROLENAME/$role_name/g" \
-    -e "s/ROLEFULL/$role_full/g" \
-    -e "s/REPONAME/$repo_name/g" \
+    -e "s/_ROLE_DESC_/$desc_arg/g" \
+    -e "s/_ROLE_NAME_/$role_name/g" \
+    -e "s/_ROLE_FULL_/$role_full/g" \
+    -e "s/_REPO_NAME_/$repo_name/g" \
+    -e "s/_REPO_USER_/$repo_user/g" \
+    -e "s/_ROLE_BADGE_/$role_badge/g" \
     ./*/main.yml \
-    ./tests/test.yml \
-    ./tasks/root.yml \
+    ./.travis.yml \
+    ./.github/workflows/*.yml \
+    ./molecule/default/*.yml \
     ./README.md
 git init
 
