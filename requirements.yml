@@ -1,141 +1,141 @@
 ---
-#- src: git@github.com:ivansible/vansible1
+#- src: https://github.com/ivansible/vansible1
 #  name: ivansible.vansible1
 #  version: multi
 #  scm: git
-- src: git@github.com:ivansible/lin-base
+- src: https://github.com/ivansible/lin-base
   name: ivansible.lin_base
   scm: git
-- src: git@github.com:ivansible/lin-enter
+- src: https://github.com/ivansible/lin-enter
   name: ivansible.lin_enter
   scm: git
-- src: git@github.com:ivansible/lin-system
+- src: https://github.com/ivansible/lin-system
   name: ivansible.lin_system
   scm: git
-- src: git@github.com:ivansible/lin-refresh
+- src: https://github.com/ivansible/lin-refresh
   name: ivansible.lin_refresh
   scm: git
-- src: git@github.com:ivansible/lin-ansible
+- src: https://github.com/ivansible/lin-ansible
   name: ivansible.lin_ansible
   scm: git
-- src: git@github.com:ivansible/lin-docker
+- src: https://github.com/ivansible/lin-docker
   name: ivansible.lin_docker
   scm: git
-- src: git@github.com:ivansible/lin-rclone
+- src: https://github.com/ivansible/lin-rclone
   name: ivansible.lin_rclone
   scm: git
-- src: git@github.com:ivansible/dev-jupyter
+- src: https://github.com/ivansible/dev-jupyter
   name: ivansible.dev_jupyter
   scm: git
-- src: git@github.com:ivansible/dev-user
+- src: https://github.com/ivansible/dev-user
   name: ivansible.dev_user
   scm: git
-- src: git@github.com:ivansible/dev-ansible
+- src: https://github.com/ivansible/dev-ansible
   name: ivansible.dev_ansible
   scm: git
-- src: git@github.com:ivansible/dev-ivantory
+- src: https://github.com/ivansible/dev-ivantory
   name: ivansible.dev_ivantory
   scm: git
-- src: git@github.com:ivansible/lin-nxserver
+- src: https://github.com/ivansible/lin-nxserver
   name: ivansible.lin_nxserver
   scm: git
-- src: git@github.com:ivansible/lin-virtualbox
+- src: https://github.com/ivansible/lin-virtualbox
   name: ivansible.lin_virtualbox
   scm: git
-- src: git@github.com:ivansible/dev-vagrant
+- src: https://github.com/ivansible/dev-vagrant
   name: ivansible.dev_vagrant
   scm: git
-- src: git@github.com:ivansible/dev-hosters
+- src: https://github.com/ivansible/dev-hosters
   name: ivansible.dev_hosters
   scm: git
-- src: git@github.com:ivansible/dev-terraform
+- src: https://github.com/ivansible/dev-terraform
   name: ivansible.dev_terraform
   scm: git
-- src: git@github.com:ivansible/dev-packer
+- src: https://github.com/ivansible/dev-packer
   name: ivansible.dev_packer
   scm: git
-- src: git@github.com:ivansible/new-vultr
+- src: https://github.com/ivansible/new-vultr
   name: ivansible.new_vultr
   scm: git
-- src: git@github.com:ivansible/lin-mtproxy
+- src: https://github.com/ivansible/lin-mtproxy
   name: ivansible.lin_mtproxy
   scm: git
-- src: git@github.com:ivansible/lin-dante-auth
+- src: https://github.com/ivansible/lin-dante-auth
   name: ivansible.lin_dante_auth
   scm: git
-- src: git@github.com:ivansible/lin-shadowsocks
+- src: https://github.com/ivansible/lin-shadowsocks
   name: ivansible.lin_shadowsocks
   scm: git
-- src: git@github.com:ivansible/srv-chisel
+- src: https://github.com/ivansible/srv-chisel
   name: ivansible.srv_chisel
   scm: git
-- src: git@github.com:ivansible/srv-doh
+- src: https://github.com/ivansible/srv-doh
   name: ivansible.srv_doh
   scm: git
-- src: git@github.com:ivansible/lin-tor
+- src: https://github.com/ivansible/lin-tor
   name: ivansible.lin_tor
   scm: git
-- src: git@github.com:ivansible/lin-ziproxy
+- src: https://github.com/ivansible/lin-ziproxy
   name: ivansible.lin_ziproxy
   scm: git
-- src: git@github.com:ivansible/srv-squid
+- src: https://github.com/ivansible/srv-squid
   name: ivansible.srv_squid
   scm: git
-- src: git@github.com:ivansible/cert-cloudflare
+- src: https://github.com/ivansible/cert-cloudflare
   name: ivansible.cert_cloudflare
   scm: git
-- src: git@github.com:ivansible/cert-master
+- src: https://github.com/ivansible/cert-master
   name: ivansible.cert_master
   scm: git
-- src: git@github.com:ivansible/cert-replica
+- src: https://github.com/ivansible/cert-replica
   name: ivansible.cert_replica
   scm: git
-- src: git@github.com:ivansible/cert-copy
+- src: https://github.com/ivansible/cert-copy
   name: ivansible.cert_copy
   scm: git
-- src: git@github.com:ivansible/nginx-base
+- src: https://github.com/ivansible/nginx-base
   name: ivansible.nginx_base
   scm: git
-- src: git@github.com:ivansible/lin-sslh
+- src: https://github.com/ivansible/lin-sslh
   name: ivansible.lin_sslh
   scm: git
-- src: git@github.com:ivansible/lin-nginx
+- src: https://github.com/ivansible/lin-nginx
   name: ivansible.lin_nginx
   scm: git
-- src: git@github.com:ivansible/lin-uwsgi
+- src: https://github.com/ivansible/lin-uwsgi
   name: ivansible.lin_uwsgi
   scm: git
-- src: git@github.com:ivansible/srv-postgres
+- src: https://github.com/ivansible/srv-postgres
   name: ivansible.srv_postgres
   scm: git
-- src: git@github.com:ivansible/backup-base
+- src: https://github.com/ivansible/backup-base
   name: ivansible.backup_base
   scm: git
-- src: git@github.com:ivansible/db-base
+- src: https://github.com/ivansible/db-base
   name: ivansible.db_base
   scm: git
-- src: git@github.com:ivansible/asterisk-base
+- src: https://github.com/ivansible/asterisk-base
   name: ivansible.asterisk_base
   scm: git
-- src: git@github.com:ivansible/asterisk-core
+- src: https://github.com/ivansible/asterisk-core
   name: ivansible.asterisk_core
   scm: git
-- src: git@github.com:ivansible/asterisk-soho
+- src: https://github.com/ivansible/asterisk-soho
   name: ivansible.asterisk_soho
   scm: git
-- src: git@github.com:ivansible/asterisk-providers
+- src: https://github.com/ivansible/asterisk-providers
   name: ivansible.asterisk_providers
   scm: git
-- src: git@github.com:ivansible/asterisk-billing
+- src: https://github.com/ivansible/asterisk-billing
   name: ivansible.asterisk_billing
   scm: git
-- src: git@github.com:ivansible/srv-cgpro
+- src: https://github.com/ivansible/srv-cgpro
   name: ivansible.srv_cgpro
   scm: git
-- src: git@github.com:ivansible/srv-mongodb
+- src: https://github.com/ivansible/srv-mongodb
   name: ivansible.srv_mongodb
   scm: git
-- src: git@github.com:ivansible/srv-redis-ssl
+- src: https://github.com/ivansible/srv-redis-ssl
   name: ivansible.srv_redis_ssl
   scm: git
 ...
