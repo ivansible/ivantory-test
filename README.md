@@ -1,6 +1,9 @@
-# Collection: ivantory
+# Collection: ivantory (test)
 
-My primary ansible inventory and collection for [ivansible](https://github.com/ivansible) roles.
+[![Github Test Status](https://github.com/ivansible/ivantory-test/workflows/Molecule%20test/badge.svg?branch=master)](https://github.com/ivansible/ivantory-test/actions)
+[![Travis Test Status](https://travis-ci.org/ivansible/ivantory-test.svg?branch=master)](https://travis-ci.org/ivansible/ivantory-test)
+
+Ansible inventory and collection for **testing** [ivansible](https://github.com/ivansible) roles.
 
 
 ## Run a role
