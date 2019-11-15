@@ -1,6 +1,6 @@
 ---
 cgpro_master_key: 123456789000000000000000000000000001
-cgpro_enabling_keys: [ 123456789000000000000000000002 ]
+cgpro_enabling_keys: ['123456789000000000000000000002']
 
 # avoid port clashes with local asterisk
 cgpro_port_sip: 15060
