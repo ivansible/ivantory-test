@@ -9,16 +9,16 @@
   gather_facts: false
   roles:
     - role: vag_share
-      when: vag_share_name | default('') != ''
-    - vag_vbguest
+      when: vag_share_name |default('') != ''
+    - role: vag_vbguest
 
 - name: basic linux setup
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.lin_system
+    - role: ivansible.lin_system
     - role: ivansible.lin_docker
-      when: ansible_kernel is version('3.10', '>')
+      when: lin_use_docker |bool
   tasks:
     - name: update hostname
       hostname:

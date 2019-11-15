@@ -8,9 +8,10 @@
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.lin_system
-    - ivansible.lin_docker
-    - ivansible.dev_user
+    - role: ivansible.lin_system
+    - role: ivansible.dev_user
+    - role: ivansible.lin_docker
+      when: lin_use_docker |bool
   tags: master_prepare
 
 

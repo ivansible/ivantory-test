@@ -8,15 +8,10 @@
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.lin_system
-    - ivansible.dev_user
-  tasks:
-    - include_role:
-        name: ivansible.lin_docker
-      args:
-        apply:
-          tags: bastion_prepare
-      when: ansible_kernel is version('3.10', '>')
+    - role: ivansible.lin_system
+    - role: ivansible.dev_user
+    - role: ivansible.lin_docker
+      when: lin_use_docker |bool
   tags: bastion_prepare
 
 - name: simple proxy services
