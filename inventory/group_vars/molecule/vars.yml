@@ -1,0 +1,49 @@
+---
+# lin_system
+linbase_system_locale: en_US.UTF-8
+
+allow_sysctl: false
+
+lin_use_ssh: "{{ lookup('env', 'IVATEST_SSH_SERVER') | default(true, true) }}"
+lin_use_firewall: "{{ lookup('env', 'IVATEST_FIREWALL') | default(true, true) }}"
+lin_systemd_tmpfiles: "{{ lookup('env', 'IVATEST_SYSTEMD_TMPFILES') | default(true, true) }}"
+
+# lin_docker
+docker_hub_username: ""
+docker_hub_password: ""
+
+# dev_user
+lin_ssh_keys_files:
+  - files/insecure.key
+dev_user_authorized_keys_files: "{{ lin_ssh_keys_files }}"
+dev_user_installed_keys_files: "{{ lin_ssh_keys_files }}"
+
+# dev_ivantory
+divan_repo: https://github.com/ivansible/ivantory-test.git
+divan_github_token: ""
+divan_password: ""
+
+# dev_hosters
+devhost_digitalocean_token: ""
+devhost_packet_golang_version: 1.13
+
+# lin_nxserver
+lin_swap_enable: false
+allow_reboot: false
+
+# cert_cloudflare:
+certbot_renewal_enable: false
+certbot_certificates: []
+certbot_acme_accounts: []
+
+# nginx_base
+nginx_letsencrypt_cert: ""  # force snakeoil certificate all over
+
+# asterisk_core
+ast_time_sync_enable: false
+ast_ssl_cert: "{{ nginx_ssl_cert }}"
+ast_ssl_key: "{{ nginx_ssl_key }}"
+
+# lin_dante_auth
+dante_user: dante_test
+...
