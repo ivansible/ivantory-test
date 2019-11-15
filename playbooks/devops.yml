@@ -11,8 +11,9 @@
     docker_extras: yes
     docker_bash_completion_extras: yes
   roles:
-    - ivansible.lin_system
-    - ivansible.lin_docker
+    - role: ivansible.lin_system
+    - role: ivansible.lin_docker
+      when: lin_use_docker |bool
   tags: devops_prepare
 
 - name: deploy ansible playbooks
@@ -32,9 +33,6 @@
 - name: configure for devops and cloud control
   hosts: all
   gather_facts: false
-  vars:
-    # tell nxserver to enable swap
-    lin_swap_enable: yes
   roles:
     - ivansible.dev_hosters
     - ivansible.dev_terraform
