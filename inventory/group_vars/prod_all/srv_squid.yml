@@ -25,8 +25,8 @@ squid_local_subnets:
   - fd00::/64
 
 squid_nopassword_networks:
-   - name: internal
-     ranges:
+  - name: internal
+    ranges:
       - "192.168.0.0/16"
 
 squid_domain_rules:
