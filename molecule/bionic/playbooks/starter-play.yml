@@ -1,0 +1,4 @@
+---
+- name: import starter
+  import_playbook: ../../../playbooks/starter.yml
+...

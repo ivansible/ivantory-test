@@ -11,4 +11,5 @@ __pycache__
 *.retry
 *.pyc
 *.pyo
+*.swp
 /log/*.log

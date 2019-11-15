@@ -1,0 +1,8 @@
+---
+- name: verify
+  hosts: all
+  tasks:
+    - name: TODO
+      debug:
+        msg: 'tests complete'
+...
