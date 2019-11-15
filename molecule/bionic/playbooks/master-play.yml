@@ -1,0 +1,4 @@
+---
+- name: import master
+  import_playbook: ../../../playbooks/master.yml
+...

@@ -1,0 +1,4 @@
+---
+- name: import devops
+  import_playbook: ../../../playbooks/devops.yml
+...

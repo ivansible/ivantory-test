@@ -1,0 +1,4 @@
+---
+- name: import ivantory
+  import_playbook: ../../../playbooks/ivantory.yml
+...

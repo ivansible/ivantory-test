@@ -1,0 +1,4 @@
+---
+- name: import bastion
+  import_playbook: ../../../playbooks/bastion.yml
+...
