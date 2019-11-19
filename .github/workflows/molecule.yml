@@ -22,11 +22,15 @@ jobs:
           - ubuntu-16.04
           - ubuntu-18.04
         playbook:
-          - bastion
-          - master
+          # notes:
+          #   * bastion is flagged - testing isolated in docker
+          #   * master is flagged - testing isolated in docker
+          #   * starter mainly duplicates ivantory - disabled
+          # - bastion
+          # - master
           - devops
           - ivantory
-          - starter
+          # - starter
     env:
       IVATEST_FIREWALL: true
       IVATEST_SSH_SERVER: false
@@ -61,11 +65,14 @@ jobs:
       fail-fast: false
       matrix:
         playbook:
+          # notes:
+          #   * bastion is flagged - testing isolated in docker
+          #   * master is flagged - testing isolated in docker
           - bastion
           - master
-          - devops
-          - ivantory
-          - starter
+          # - devops
+          # - ivantory
+          # - starter
         target:
           - all
     env:

@@ -10,13 +10,14 @@ os: linux
 # job matrix
 jobs:
   include:
-    # bastion
-    - name: bastion local xenial
-      env: PLAYBOOK=bastion TARGET=local
-      dist: xenial
-    - name: bastion local bionic
-      env: PLAYBOOK=bastion TARGET=local
-      dist: bionic
+    ###### bastion
+    ### (bastion is flagged - testing isolated in docker)
+    # - name: bastion local xenial
+    #   env: PLAYBOOK=bastion TARGET=local
+    #   dist: xenial
+    # - name: bastion local bionic
+    #   env: PLAYBOOK=bastion TARGET=local
+    #   dist: bionic
     - name: bastion docker xenial
       env: PLAYBOOK=bastion TARGET=xenial
       services: docker
@@ -25,13 +26,14 @@ jobs:
       env: PLAYBOOK=bastion TARGET=bionic
       services: docker
       dist: bionic
-    # master
-    - name: master local xenial
-      env: PLAYBOOK=master TARGET=local
-      dist: xenial
-    - name: master local bionic
-      env: PLAYBOOK=master TARGET=local
-      dist: bionic
+    ####### master
+    ### (master is flagged - testing isolated in docker)
+    # - name: master local xenial
+    #   env: PLAYBOOK=master TARGET=local
+    #   dist: xenial
+    # - name: master local bionic
+    #   env: PLAYBOOK=master TARGET=local
+    #   dist: bionic
     - name: master docker xenial
       env: PLAYBOOK=master TARGET=xenial
       services: docker
@@ -40,51 +42,52 @@ jobs:
       env: PLAYBOOK=master TARGET=bionic
       services: docker
       dist: bionic
-    # devops
+    ####### devops
     - name: devops local xenial
       env: PLAYBOOK=devops TARGET=local
       dist: xenial
     - name: devops local bionic
       env: PLAYBOOK=devops TARGET=local
       dist: bionic
-    - name: devops docker xenial
-      env: PLAYBOOK=devops TARGET=xenial
-      services: docker
-      dist: bionic
-    - name: devops docker bionic
-      env: PLAYBOOK=devops TARGET=bionic
-      services: docker
-      dist: bionic
-    # ivantory
+    # - name: devops docker xenial
+    #   env: PLAYBOOK=devops TARGET=xenial
+    #   services: docker
+    #   dist: bionic
+    # - name: devops docker bionic
+    #   env: PLAYBOOK=devops TARGET=bionic
+    #   services: docker
+    #   dist: bionic
+    ####### ivantory
     - name: ivantory local xenial
       env: PLAYBOOK=ivantory TARGET=local
       dist: xenial
     - name: ivantory local bionic
       env: PLAYBOOK=ivantory TARGET=local
       dist: bionic
-    - name: ivantory docker xenial
-      env: PLAYBOOK=ivantory TARGET=xenial
-      services: docker
-      dist: bionic
-    - name: ivantory docker bionic
-      env: PLAYBOOK=ivantory TARGET=bionic
-      services: docker
-      dist: bionic
-    # starter
-    - name: starter local xenial
-      env: PLAYBOOK=starter TARGET=local
-      dist: xenial
-    - name: starter local bionic
-      env: PLAYBOOK=starter TARGET=local
-      dist: bionic
-    - name: starter docker xenial
-      env: PLAYBOOK=starter TARGET=xenial
-      services: docker
-      dist: bionic
-    - name: starter docker bionic
-      env: PLAYBOOK=starter TARGET=bionic
-      services: docker
-      dist: bionic
+#   - name: ivantory docker xenial
+#     env: PLAYBOOK=ivantory TARGET=xenial
+#     services: docker
+#     dist: bionic
+#   - name: ivantory docker bionic
+#     env: PLAYBOOK=ivantory TARGET=bionic
+#     services: docker
+#     dist: bionic
+####### starter
+### (starter mainly duplicates ivantory - disabled)
+#   - name: starter local xenial
+#     env: PLAYBOOK=starter TARGET=local
+#     dist: xenial
+#   - name: starter local bionic
+#     env: PLAYBOOK=starter TARGET=local
+#     dist: bionic
+#   - name: starter docker xenial
+#     env: PLAYBOOK=starter TARGET=xenial
+#     services: docker
+#     dist: bionic
+#   - name: starter docker bionic
+#     env: PLAYBOOK=starter TARGET=bionic
+#     services: docker
+#     dist: bionic
 # end of matrix
 
 # stages
