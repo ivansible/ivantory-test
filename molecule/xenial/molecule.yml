@@ -29,8 +29,10 @@ provisioner:
   env:
     ANSIBLE_ROLES_PATH: ../../roles:../../roles-galaxy:../../roles-temp
     ANSIBLE_CALLBACK_PLUGINS: ../../plugins/callback
+    ANSIBLE_STRATEGY_PLUGINS: ../../plugins/strategy/mitogen
   config_options:
     defaults:
+      strategy: mitogen_linear
       stdout_callback: unixy2
   lint:
     name: ansible-lint
