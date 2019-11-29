@@ -97,7 +97,7 @@ set -x
 cd "$roles_home" || exit 1
 [ $force = 1 ] && rm -rf "./$role_full/"
 
-ansible-galaxy init --role-skeleton "$skel_dir" $force_arg "$role_full"
+ansible-galaxy role init --role-skeleton "$skel_dir" $force_arg "$role_full"
 cd "$role_full" || exit 1
 sed -i \
     -e "s/_ROLE_DESC_/$desc_arg/g" \
@@ -122,5 +122,5 @@ if [ $push = 1 ]; then
 fi
 
 if [ $galaxy = 1 ]; then
-  ansible-galaxy import "$repo_user" "$repo_name"
+  ansible-galaxy role import "$repo_user" "$repo_name"
 fi

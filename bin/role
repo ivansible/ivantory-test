@@ -26,6 +26,8 @@ cd "$divan_dir" || exit 1
 # shellcheck disable=SC1090
 . "$venv_dir/bin/activate" || exit 1
 
+export ANSIBLE_CONFIG="$divan_dir/ansible.cfg"
+
 for role in $role_list ; do
     set -x
     ansible-playbook playbooks/run-role.yml -l "$hosts" -e "role=$role" "$@"

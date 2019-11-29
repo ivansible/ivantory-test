@@ -37,7 +37,7 @@ if [ $mode = devel ]; then
 fi
 
 set -x
-ansible-galaxy install \
+ansible-galaxy role install \
     --role-file=requirements.yml --roles-path="$roles_dir" \
     "$nodep_arg" "$git_meta_arg" "$force_arg"
 
