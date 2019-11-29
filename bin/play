@@ -7,7 +7,8 @@ venv_dir=$(readlink -f "$divan_dir/.venv")
 
 case "$1" in
   -l | --list )
-    echo $(for pb in "$divan_dir/playbooks"/*.yml; do basename ${pb%.yml}; done)
+    # shellcheck disable=SC2046,SC2005
+    echo $(for book in "$divan_dir/playbooks"/*.yml; do basename "${book%.yml}"; done)
     exit 0
     ;;
 esac
@@ -27,6 +28,7 @@ cd "$divan_dir" || exit 1
 # shellcheck disable=SC1090
 . "$venv_dir/bin/activate" || exit 1
 
+export ANSIBLE_CONFIG="$divan_dir/ansible.cfg"
 playbook_file=playbooks/${playbook}.yml
 
 set -x

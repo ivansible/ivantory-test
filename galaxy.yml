@@ -1,0 +1,16 @@
+---
+namespace: ivansible
+name: ivantory-test
+version: v1.0
+readme: README.md
+authors:
+  - "Ivan Andreev <ivandeex@gmail.com>"
+dependencies: []
+license:
+  - MIT
+tags:
+  - xenial
+  - bionic
+repository:
+  - https://github.com/ivansible/ivantory-test.git
+...
