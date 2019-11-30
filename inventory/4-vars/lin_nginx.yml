@@ -1,0 +1,9 @@
+---
+all:
+  children:
+    xenial_nodns:
+      hosts:
+        test_nodns:
+      vars:
+        nginx_resolver: 1.1.1.1
+...
