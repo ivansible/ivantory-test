@@ -1,0 +1,47 @@
+---
+all:
+  children:
+    # hosts
+    docker:
+      hosts:
+        default1:
+          ansible_host: 192.168.99.100
+    localhosts:
+      hosts:
+        localhost:
+          ansible_connection: local
+    vagrant:
+      hosts:
+        vag1:
+          ansible_host: 192.168.99.31
+        revssh:
+          ansible_host: localhost
+          ansible_port: 8822
+        vagstart:
+      vars:
+        ansible_ssh_common_args: "-o ForwardAgent=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+    # groups
+    controllers:
+      hosts:
+        localhost:
+    permitted:
+      hosts:
+        localhost:
+        starter:
+      children:
+        controllers:
+    python3:
+      hosts:
+        starter:
+        vag1:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+    python2:
+      hosts:
+        testhost:
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+    test_inven:
+      hosts:
+        localhost:
+...
