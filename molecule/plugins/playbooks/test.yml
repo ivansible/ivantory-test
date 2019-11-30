@@ -1,0 +1,15 @@
+---
+- name: gather facts
+  hosts: all
+  gather_facts: true
+  tags: always
+
+- name: test module github_release
+  import_playbook: github_release.yml
+
+- name: test module go
+  import_playbook: go.yml
+
+- name: test module json_patch
+  import_playbook: json_patch.yml
+...
