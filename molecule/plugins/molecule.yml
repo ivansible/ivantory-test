@@ -1,0 +1,52 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: bionic
+    image: ivandeex/molecule:18.04
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        ansible_user: ansible
+  playbooks:
+    # tests are performed in converge step here (skip verify)
+    converge: playbooks/test.yml
+  env:
+    ANSIBLE_CALLBACK_PLUGINS: ../../plugins/callback
+    ANSIBLE_STRATEGY_PLUGINS: ../../plugins/strategy/mitogen
+  config_options:
+    defaults:
+      strategy: mitogen_linear
+      stdout_callback: unixy2
+  lint:
+    name: ansible-lint
+verifier:
+  name: ansible
+  lint:
+    name: ansible-lint
+lint:
+  name: yamllint
+  options:
+    config-file: .yamllint.yml
+scenario:
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - destroy
+  create_sequence:
+    - create
+  destroy_sequence:
+    - destroy
+  converge_sequence:
+    - converge
+...
