@@ -5,4 +5,6 @@ is_permitted: no
 web_group: www-data
 
 linbase_time_server: 2.pool.ntp.org  # note: supports both ipv4/ipv6
+
+linbase_golang_version: 1.13
 ...
