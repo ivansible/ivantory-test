@@ -25,7 +25,6 @@ divan_password: ""
 
 # dev_hosters
 devhost_digitalocean_token: ""
-devhost_packet_golang_version: 1.13
 
 # lin_nxserver
 lin_swap_enable: false
