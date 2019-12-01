@@ -10,6 +10,11 @@ os: linux
 # job matrix
 jobs:
   include:
+    ###### plugins
+    - name: plugins
+      env: TARGET=plugins
+      services: docker
+      dist: bionic
     ###### bastion
     ### (bastion is flagged - testing isolated in docker)
     # - name: bastion local xenial

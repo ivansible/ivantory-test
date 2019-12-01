@@ -101,4 +101,35 @@ jobs:
         shell: bash
         run: |
           molecule test -s $TARGET
+
+  plugins_test:
+    name: plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - plugins
+    env:
+      TARGET: ${{ matrix.target }}
+
+    steps:  # copy-pasting above steps since anchors are unsupported
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Install requisites
+        shell: bash
+        run: |
+          # stock and pypy flavors of PyYAML are incompatible:
+          sudo apt-get remove -q -y python3-yaml
+          sudo -H pip3 install -U pip setuptools wheel
+          # molecule pulls: ansible-lint yamllint flake8 pytest testinfra
+          sudo -H pip3 install molecule docker jmespath mitogen
+          # fix mitogen strategy symlink
+          ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
+
+      - name: Run test
+        shell: bash
+        run: |
+          molecule test -s $TARGET
 ...
