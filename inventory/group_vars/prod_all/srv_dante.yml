@@ -1,6 +1,6 @@
 ---
 dante_port: 1080
-dante_direct: no
+dante_direct: false
 # socks5 probe is possible only in sslh 1.20+, which is not available in
 # xenial/bionic packages and requires sslh compilation from github sources
 #sslh_socks5_port: "{{ dante_port }}"

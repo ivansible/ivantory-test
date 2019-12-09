@@ -57,14 +57,14 @@
 - src: https://github.com/ivansible/new-vultr
   name: ivansible.new_vultr
   scm: git
-- src: https://github.com/ivansible/lin-mtproxy
-  name: ivansible.lin_mtproxy
+- src: https://github.com/ivansible/srv-mtproxy
+  name: ivansible.srv_mtproxy
   scm: git
-- src: https://github.com/ivansible/lin-dante-auth
-  name: ivansible.lin_dante_auth
+- src: https://github.com/ivansible/srv-dante
+  name: ivansible.srv_dante
   scm: git
-- src: https://github.com/ivansible/lin-shadowsocks
-  name: ivansible.lin_shadowsocks
+- src: https://github.com/ivansible/srv-ss
+  name: ivansible.srv_ss
   scm: git
 - src: https://github.com/ivansible/srv-chisel
   name: ivansible.srv_chisel
@@ -75,8 +75,8 @@
 - src: https://github.com/ivansible/lin-tor
   name: ivansible.lin_tor
   scm: git
-- src: https://github.com/ivansible/lin-ziproxy
-  name: ivansible.lin_ziproxy
+- src: https://github.com/ivansible/srv-ziproxy
+  name: ivansible.srv_ziproxy
   scm: git
 - src: https://github.com/ivansible/srv-squid
   name: ivansible.srv_squid
@@ -135,7 +135,7 @@
 - src: https://github.com/ivansible/srv-mongodb
   name: ivansible.srv_mongodb
   scm: git
-- src: https://github.com/ivansible/srv-redis-ssl
-  name: ivansible.srv_redis_ssl
+- src: https://github.com/ivansible/srv-redis
+  name: ivansible.srv_redis
   scm: git
 ...
