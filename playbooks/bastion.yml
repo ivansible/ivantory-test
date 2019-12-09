@@ -19,9 +19,9 @@
   gather_facts: false
   roles:
     - ivansible.lin_tor
-    - ivansible.lin_mtproxy
-    - ivansible.lin_ziproxy
-    - ivansible.lin_dante_auth
+    - ivansible.srv_mtproxy
+    - ivansible.srv_ziproxy
+    - ivansible.srv_dante
   tags: bastion_proxy
 
 # Note: please `--skip-tags bastion_cert`
@@ -50,7 +50,7 @@
   roles:
     - ivansible.lin_sslh
     - ivansible.lin_nginx
-    - ivansible.lin_shadowsocks
+    - ivansible.srv_ss
     - ivansible.srv_chisel
     - ivansible.srv_doh
   tags:

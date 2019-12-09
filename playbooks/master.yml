@@ -47,7 +47,7 @@
   roles:
     - ivansible.srv_postgres
     - ivansible.srv_mongodb
-    - ivansible.srv_redis_ssl
+    - ivansible.srv_redis
   tags: master_db
 
 
