@@ -8,10 +8,11 @@
   hosts: all
   gather_facts: false
   vars:
-    docker_extras: yes
-    docker_bash_completion_extras: yes
+    docker_extras: true
+    docker_bash_completion_extras: true
   roles:
     - role: ivansible.lin_system
+    - role: ivansible.lin_devel
     - role: ivansible.lin_docker
       when: lin_use_docker |bool
   tags: devops_prepare
@@ -20,9 +21,8 @@
   hosts: permitted
   gather_facts: false
   vars:
-    dev_user_extras: yes
     # avoid task duplication between dev-user and dev-ivantory
-    divan_skip_prepare: yes
+    divan_skip_prepare: true
   roles:
     - ivansible.dev_user
     - ivansible.dev_ansible
