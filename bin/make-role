@@ -76,7 +76,7 @@ fi
 
 if [ -z "$(command -v hub)" ]; then
     echo "please install 'hub', for example:"
-    echo "bin/play starter localhost -e dev_user_extras=yes -t dev_user_install_hub"
+    echo "ivantory-play ivantory localhost -t divan_install_hub"
     exit 1
 fi
 
