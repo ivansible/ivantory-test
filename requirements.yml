@@ -27,6 +27,9 @@
 - src: https://github.com/ivansible/dev-jupyter
   name: ivansible.dev_jupyter
   scm: git
+- src: https://github.com/ivansible/lin-devel
+  name: ivansible.lin_devel
+  scm: git
 - src: https://github.com/ivansible/dev-user
   name: ivansible.dev_user
   scm: git

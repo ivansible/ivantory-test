@@ -6,7 +6,7 @@
   hosts: permitted
   gather_facts: false
   vars:
-    divan_skip_prepare: yes  # already done in dev-user/dev-ansible
+    divan_skip_prepare: true  # already done in dev-user/dev-ansible
   roles:
     - ivansible.dev_ivantory
   tags:
