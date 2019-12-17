@@ -1,4 +1,4 @@
 ---
 ansible_connection: local
-linbase_time_sync: true
+linsys_time_sync: true
 ...
