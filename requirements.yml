@@ -12,6 +12,12 @@
 - src: https://github.com/ivansible/lin-system
   name: ivansible.lin_system
   scm: git
+- src: https://github.com/ivansible/lin-ssh
+  name: ivansible.lin_ssh
+  scm: git
+- src: https://github.com/ivansible/dev-user
+  name: ivansible.dev_user
+  scm: git
 - src: https://github.com/ivansible/lin-refresh
   name: ivansible.lin_refresh
   scm: git
@@ -29,9 +35,6 @@
   scm: git
 - src: https://github.com/ivansible/lin-devel
   name: ivansible.lin_devel
-  scm: git
-- src: https://github.com/ivansible/dev-user
-  name: ivansible.dev_user
   scm: git
 - src: https://github.com/ivansible/dev-ansible
   name: ivansible.dev_ansible
