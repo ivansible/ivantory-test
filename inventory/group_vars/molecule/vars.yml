@@ -1,8 +1,8 @@
 ---
 # lin_system
-linbase_system_locale: en_US.UTF-8
+linsys_system_locale: en_US.UTF-8
 
-linbase_swap_enable: false
+linsys_swap_enable: false
 
 allow_sysctl: false
 
