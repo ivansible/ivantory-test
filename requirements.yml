@@ -15,6 +15,9 @@
 - src: https://github.com/ivansible/lin-ssh
   name: ivansible.lin_ssh
   scm: git
+- src: https://github.com/ivansible/lin-motd
+  name: ivansible.lin_motd
+  scm: git
 - src: https://github.com/ivansible/dev-user
   name: ivansible.dev_user
   scm: git
