@@ -27,7 +27,7 @@ class CallbackModule(CallbackBase):
         if role_name != self._last_role_name:
             self._last_role_name = role_name
             if role_name:
-                task_name = '%s \u2014 %s' % (task_name, role_name)
+                task_name = '%s - %s' % (task_name, role_name)
         self.task_display_name = task_name
 
     def _run_is_verbose(self, result, verbosity=0):
@@ -68,7 +68,7 @@ class CallbackModule(CallbackBase):
     def v2_playbook_on_play_start(self, play):
         name = play.get_name().strip()
         if name and play.hosts:  # replace hyphens by endash
-            msg = u"\n\u2013 %s on hosts: %s \u2013" % (name, ",".join(play.hosts))
+            msg = u"\n... %s on hosts: %s ..." % (name, ",".join(play.hosts))
         else:
             msg = u"---"
         self._display.display(msg)
@@ -77,13 +77,13 @@ class CallbackModule(CallbackBase):
         self._get_task_display_name(task)
         if self.task_display_name is not None:
             ts = datetime.now().strftime("%H:%M:%S")
-            self._display.display("%s\u2026 %s" % (ts, self.task_display_name))
+            self._display.display("%s.. %s" % (ts, self.task_display_name))
 
     def v2_playbook_on_handler_task_start(self, task):
         self._get_task_display_name(task)
         if self.task_display_name is not None:
             ts = datetime.now().strftime("%H:%M:%S")
-            self._display.display("%s\u2026 %s (via handler)... " % (ts, self.task_display_name))
+            self._display.display("%s.. %s (via handler)... " % (ts, self.task_display_name))
 
     def v2_runner_on_failed(self, result, ignore_errors=False):
         self._preprocess_result(result)
