@@ -123,20 +123,20 @@
 - src: https://github.com/ivansible/db-base
   name: ivansible.db_base
   scm: git
-- src: https://github.com/ivansible/asterisk-base
-  name: ivansible.asterisk_base
+- src: https://github.com/ivansible/ast-base
+  name: ivansible.ast_base
   scm: git
-- src: https://github.com/ivansible/asterisk-core
-  name: ivansible.asterisk_core
+- src: https://github.com/ivansible/ast-core
+  name: ivansible.ast_core
   scm: git
-- src: https://github.com/ivansible/asterisk-soho
-  name: ivansible.asterisk_soho
+- src: https://github.com/ivansible/ast-soho
+  name: ivansible.ast_soho
   scm: git
-- src: https://github.com/ivansible/asterisk-providers
-  name: ivansible.asterisk_providers
+- src: https://github.com/ivansible/ast-providers
+  name: ivansible.ast_providers
   scm: git
-- src: https://github.com/ivansible/asterisk-billing
-  name: ivansible.asterisk_billing
+- src: https://github.com/ivansible/ast-billing
+  name: ivansible.ast_billing
   scm: git
 - src: https://github.com/ivansible/srv-cgpro
   name: ivansible.srv_cgpro

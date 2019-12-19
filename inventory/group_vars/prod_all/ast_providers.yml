@@ -8,5 +8,5 @@ ast_providers:
     #transport: udp,tcp
     #codecs: g729,ulaw,alaw
     networks: ['212.53.40.40']
-    active: yes
+    active: true
 ...

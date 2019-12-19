@@ -39,7 +39,7 @@ certbot_acme_accounts: []
 # nginx_base
 nginx_letsencrypt_cert: ""  # force snakeoil certificate all over
 
-# asterisk_core
+# ast_core
 ast_time_sync_enable: false
 ast_ssl_cert: "{{ nginx_ssl_cert }}"
 ast_ssl_key: "{{ nginx_ssl_key }}"
