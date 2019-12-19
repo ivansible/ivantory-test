@@ -14,6 +14,7 @@
     - role: ivansible.dev_user
     - role: ivansible.lin_docker
       when: lin_use_docker |bool
+    - role: ivansible.lin_syslog
   tags: bastion_prepare
 
 - name: simple proxy services
