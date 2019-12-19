@@ -147,4 +147,7 @@
 - src: https://github.com/ivansible/srv-redis
   name: ivansible.srv_redis
   scm: git
+- src: https://github.com/ivansible/lin-syslog
+  name: ivansible.lin_syslog
+  scm: git
 ...
