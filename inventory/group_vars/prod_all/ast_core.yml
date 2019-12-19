@@ -10,24 +10,24 @@ ast_softphones:
   - name: phoner4win
     password: supersecret
     exten: 201
-    srtp: no
-    active: yes
+    srtp: false
+    active: true
 
-ast_softphones_secure: yes
+ast_softphones_secure: true
 
 ast_default_language: en
 
 # increase qualify timeout to 3 seconds
-ast_qualify_value: "3000"
+ast_qualify_value: '3000'
 
 ast_ami_port: 25038
 ast_http_port: 25088
 ast_https_port: 25089
 ast_ami_admin_password: supersecret
 
-ast_default_nat: yes  # increases security
+ast_default_nat: true  # increases security
 
-ast_prefer_ipv4: yes  # for sipnet.ru (asterisk_providers)
+ast_prefer_ipv4: true  # for sipnet.ru (asterisk_providers)
 
 ast_reject_networks:
   # noicy hackers

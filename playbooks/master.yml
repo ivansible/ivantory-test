@@ -76,8 +76,8 @@
   hosts: asterisk_servers
   gather_facts: false
   roles:
-    - ivansible.asterisk_core
-    - ivansible.asterisk_soho
-    - ivansible.asterisk_providers
+    - ivansible.ast_core
+    - ivansible.ast_soho
+    - ivansible.ast_providers
   tags: master_asterisk
 ...
