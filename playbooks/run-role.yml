@@ -1,7 +1,7 @@
 ---
 - name: gather facts
   hosts: all
-  gather_facts: true
+  gather_facts: "{{ gather |default(true) |bool }}"
   tags: always
 
 - hosts: all

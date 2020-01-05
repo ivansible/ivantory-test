@@ -1,10 +1,9 @@
 #!/bin/sh
 if [ -z "$1" ] || [ "$1" != "${1#-}" ]; then
-  prog=$(basename "$0")
-  echo "usage: $prog hosts [args...]"
+  echo "usage: $(basename "$0") hosts [args...]"
   exit 1
 fi
 exe_path=$(readlink -f "$0")
 bin_dir=$(dirname "$exe_path")
-export ANSIBLE_GATHERING=false
-exec "$bin_dir"/role ivansible.lin_enter "$@"
+export ANSIBLE_STRATEGY=linear  # disable mitogen, it breaks python probing
+exec "$bin_dir"/role ivansible.lin_enter "$@" -e gather=false  # disable initial gather
