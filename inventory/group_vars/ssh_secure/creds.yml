@@ -2,4 +2,7 @@
 ansible_user: ubuntu
 ansible_port: 22
 ansible_ssh_private_key_file: files/insecure.key
+
+ferm_ports_external:
+  - 22/tcp
 ...
