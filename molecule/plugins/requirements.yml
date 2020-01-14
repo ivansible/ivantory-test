@@ -1,0 +1,6 @@
+---
+# role lin-base contains all custom modules
+- src: https://github.com/ivansible/lin-base
+  name: ivansible.lin_base
+  scm: git
+...

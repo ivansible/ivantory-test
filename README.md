@@ -171,4 +171,4 @@ GPL v3
 
 ## Author
 
-Copyright (c) 2018-2019, [IvanDeex](https://github.com/ivandeex)
+Copyright (c) 2018-2020, [IvanDeex](https://github.com/ivandeex)

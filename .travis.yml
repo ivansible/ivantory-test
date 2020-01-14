@@ -102,6 +102,8 @@ install:
   - pip3 install molecule docker jmespath mitogen
   # fix mitogen strategy symlink
   - ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
+  # fix symlink for a role with custom modules
+  - ln -sf ~/.cache/molecule/ivantory-test/$TARGET/roles ./roles-galaxy
 
 before_script: |
     # fix issues with postgresql install on travis
@@ -117,12 +119,12 @@ before_script: |
     # per-target adjustments
     case "$TARGET" in
       local )
-        export IVATEST_FIREWALL=true
+        export IVATEST_FIREWALL=ferm
         export IVATEST_SSH_SERVER=true
         export IVATEST_SYSTEMD_TMPFILES=true
         ;;
       xenial | bionic )
-        export IVATEST_FIREWALL=false
+        export IVATEST_FIREWALL=none
         export IVATEST_SSH_SERVER=true
         export IVATEST_SYSTEMD_TMPFILES=true
         ;;
