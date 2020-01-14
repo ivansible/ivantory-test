@@ -1,4 +1,8 @@
 ---
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/plugins/requirements.yml
 driver:
   name: docker
 platforms:
@@ -19,6 +23,7 @@ provisioner:
     # tests are performed in converge step here (skip verify)
     converge: playbooks/test.yml
   env:
+    ANSIBLE_ROLES_PATH: ../../roles:../../roles-galaxy:../../roles-temp
     ANSIBLE_CALLBACK_PLUGINS: ../../plugins/callback
     ANSIBLE_STRATEGY_PLUGINS: ../../plugins/strategy/mitogen
   config_options:
@@ -37,6 +42,8 @@ lint:
     config-file: .yamllint.yml
 scenario:
   test_sequence:
+    # install role with modules before running lint
+    - dependency
     - lint
     - destroy
     - syntax
