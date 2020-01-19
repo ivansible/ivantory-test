@@ -30,7 +30,7 @@
 # Note: please `--skip-tags bastion_cert`
 #       when you run this playbook on a single host!
 - name: letsencrypt certificates on production master
-  hosts: prod_master
+  hosts: prod_master_all
   gather_facts: false
   roles:
     - ivansible.cert_cloudflare
@@ -39,7 +39,7 @@
     - bastion_cert_master
 
 - name: letsencrypt certificates on production slaves
-  hosts: prod_slaves
+  hosts: prod_slaves_all
   gather_facts: false
   roles:
     - ivansible.cert_replica
