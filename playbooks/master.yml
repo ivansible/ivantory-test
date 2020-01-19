@@ -21,14 +21,14 @@
 # Note: please `--skip-tags master_cert`
 #       when you run this playbook on a single host!
 - name: letsencrypt certificate on production master
-  hosts: prod_master
+  hosts: prod_master_all
   gather_facts: false
   roles:
     - ivansible.cert_cloudflare
   tags: master_cert
 
 - name: letsencrypt certificate on production slaves
-  hosts: prod_slaves
+  hosts: prod_slaves_all
   gather_facts: false
   roles:
     - ivansible.cert_replica
@@ -44,7 +44,7 @@
 
 - name: databases (master-only)
   hosts:
-    - prod_master
+    - prod_master_all
     - dev_master
   gather_facts: false
   roles:
@@ -65,7 +65,7 @@
 
 - name: mail (master-only)
   hosts:
-    - prod_master
+    - prod_master_all
     - dev_master
   gather_facts: false
   roles:
