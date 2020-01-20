@@ -4,9 +4,9 @@ certbot_acme_server: acme-v02.api.letsencrypt.org
 
 certbot_certificates:
   - name: test.example.com
-    active: yes
-    remove_existing: no
-    update_existing: no
+    active: true
+    remove_existing: false
+    update_existing: false
     domains:
       - test.example.com
       - "*.test.example.com"

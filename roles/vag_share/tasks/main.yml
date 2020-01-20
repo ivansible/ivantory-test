@@ -1,7 +1,4 @@
 ---
-- name: gather facts
-  setup:
-
 - name: install cifs tools and utf8 filesystem charset
   apt:
     name:
@@ -16,15 +13,15 @@
     state: present
     # --no-install-recommends minimizes the install
     # if the problem persists, reinstall with the recommends
-    install_recommends: no
-    update_cache: yes
-  become: yes
+    install_recommends: false
+    update_cache: true
+  become: true
   register: apt_result
 
 - name: activate the utf8 fs charset kernel module (ok to fail, if no such module)
   command: /sbin/modprobe nls_utf8
-  become: yes
-  ignore_errors: yes
+  become: true
+  ignore_errors: true
   when: apt_result is changed
 
 - name: record credentials in a file, if permitted
@@ -49,7 +46,7 @@
     state: directory
     owner: "{{ vag_share_uid }}"
     mode: 0750
-  become: yes
+  become: true
 
 - name: set mount options
   set_fact:
@@ -64,7 +61,7 @@
       - iocharset=utf8
       - file_mode=0644
       - dir_mode=0755
-      #- cache=none
+      # - cache=none
 
 
 - name: modify fstab
@@ -75,6 +72,6 @@
     opts: "{{ mount_opts | join(',') }}"
     # we don't need "mounted" because we setup automount
     state: present
-  become: yes
+  become: true
   notify: activate systemd mounts
 ...

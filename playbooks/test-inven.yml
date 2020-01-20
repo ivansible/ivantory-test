@@ -1,7 +1,8 @@
 ---
 - hosts: test_inven
   tasks:
-  - ping:
+  - name: test connection
+    ping:
   - debug:
       msg: "{{ inventory_hostname }} groups: {{ group_names | sort | join(' ') }}"
   - debug:
@@ -10,9 +11,10 @@
       msg: "test_public_var: {{ test_public_var }}"
   - debug:
       msg: "test_secret_var: {{ test_secret_var }}"
-  - command: hostname -f
+  - name: get fully qualified hostname
+    command: hostname -f
     changed_when: false
-    register: this_hostname
+    register: hostname_result
   - debug:
-      msg: "hostname: {{ this_hostname.stdout }}"
+      msg: "hostname: {{ hostname_result.stdout }}"
 ...

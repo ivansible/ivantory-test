@@ -1,11 +1,6 @@
 ---
-- name: refresh facts as non-root
-  setup:
-  become: no
-
-# use import to become root globally
-- name: become root
+- name: become root and deploy role
   import_tasks: root.yml
-  become: yes
+  become: true
   tags: vag_ipv6dns_all
 ...

@@ -53,8 +53,8 @@
       systemd:
         name: unattended-upgrades
         state: stopped
-      become: yes
-      ignore_errors: yes # the service may be absent
+      become: true
+      ignore_errors: true  # the service may be absent
       no_log: true
       tags: devops_fixes
   roles:

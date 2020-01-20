@@ -9,7 +9,7 @@
   gather_facts: false
   roles:
     - role: vag_share
-      when: vag_share_name |default('') != ''
+      when: vag_share_name |default('') != ''  # noqa 602
     - role: vag_vbguest
 
 - name: basic linux setup
@@ -25,7 +25,7 @@
     - name: update hostname
       hostname:
         name: "{{ starter_hostname }}"
-      become: yes
+      become: true
       when: starter_hostname is defined
       tags: update_hostname
 

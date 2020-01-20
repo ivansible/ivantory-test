@@ -1,6 +1,7 @@
 ---
-# defaults file for vag-share
-is_permitted: no
+# defaults for vag-share
+
+is_permitted: false
 
 vag_share_host: 192.168.1.1
 vag_share_name: ""

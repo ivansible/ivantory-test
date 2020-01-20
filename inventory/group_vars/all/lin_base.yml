@@ -1,6 +1,6 @@
 ---
-hide_secrets: yes
-is_permitted: no
+hide_secrets: true
+is_permitted: false
 
 web_group: www-data
 

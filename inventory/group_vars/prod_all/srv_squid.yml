@@ -3,15 +3,15 @@ squid_host: "{{ ansible_fqdn }}"
 squid_domain: "{{ squid_host }}"
 
 squid_port: 1085
-squid_allow_unencrypted: no
+squid_allow_unencrypted: false
 
-squid_ssl_enable: yes
+squid_ssl_enable: true
 squid_ssl_port: 1443
 squid_letsencrypt_cert: example.com
 
-squid_auth_ldap: no
-squid_auth_htpasswd: yes
-squid_use_squidguard: no
+squid_auth_ldap: false
+squid_auth_htpasswd: true
+squid_use_squidguard: false
 squid_cloaking: true
 
 squid_proxy_users:
@@ -27,22 +27,22 @@ squid_local_subnets:
 squid_nopassword_networks:
   - name: internal
     ranges:
-      - "192.168.0.0/16"
+      - '192.168.0.0/16'
 
 squid_domain_rules:
   - name: tor
     domain: onion
     host: torify.local
-    localhost: yes  # if true, the host will be added to /etc/hosts
+    localhost: true  # if true, the host will be added to /etc/hosts
     port: 1088
 
 squid_pac:
   pac_types: "{{ squid_pac_types }}"
   direct_nets:
-    - "127."
-    - "192.168."
+    - '127.'
+    - '192.168.'
   direct_hosts:
-    - "localhost"
+    - 'localhost'
   direct_domains:
-    - ".direct.localdomain"
+    - '.direct.localdomain'
 ...

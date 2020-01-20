@@ -6,7 +6,7 @@
   tasks:
     - name: deploy the test json file
       copy:
-        content: '{"foo": {"one": 1, "bar": "baz"}}' # noqa 206
+        content: '{"foo": {"one": 1, "bar": "baz"}}'  # noqa 206
         dest: test.json
     - name: get checksum of original json
       stat:

@@ -1,6 +1,6 @@
 ---
-vag_vbguest_enable: no
-vag_vbguest_freeze_kernel: no
+vag_vbguest_enable: false
+vag_vbguest_freeze_kernel: false
 
 vag_vbguest_kernel_packages:
   - linux-image-generic
