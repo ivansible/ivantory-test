@@ -17,8 +17,10 @@ galaxy_info:
 
   galaxy_tags:
     - linux
-    - ansible
     - vagrant
+    - cloudflare
+    - dns
+    - ipv6
 
   github_branch: master
 ...

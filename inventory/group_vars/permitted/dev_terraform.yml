@@ -1,7 +1,7 @@
 ---
-terraform_version: "0.12.13"
+terraform_version: '0.12.13'
 
-terraform_allow_reinstall_plugins: yes
+terraform_allow_reinstall_plugins: true
 terraform_provisioner_ansible_repo_owner: ivandeex
 terraform_provisioner_ansible_version: 2.2.1-iva03
 terraform_provisioner_ansible_is_tarball: true

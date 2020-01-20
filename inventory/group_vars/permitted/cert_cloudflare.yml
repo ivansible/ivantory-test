@@ -6,19 +6,19 @@ certbot_cloudflare_api_key: supersecret
 
 certbot_certificates:
   - name: example.com
-    active: yes
-    remove_existing: no
-    update_existing: no
+    active: true
+    remove_existing: false
+    update_existing: false
     domains:
       - example.com
 
 certbot_acme_accounts:
   - name: staging
-    active: yes
+    active: true
     server: acme-staging-v02.api.letsencrypt.org
     account: 00000
     hash: 00000000000000000000000000000000
-    creation_date: "2018-08-18T11:22:33Z"
+    creation_date: '2018-08-18T11:22:33Z'
     creation_host: example.com
     key_data:
       _n: 1

@@ -8,11 +8,11 @@ lin_rclone_mounts:
   - name: repo
     path: /mnt/rc/repo
     fstab: false
-    #logto: /tmp/rclone-repo.log
+    # logto: /tmp/rclone-repo.log
     token: "{{ lin_rclone_mailru_token |string }}"
     reuse_token: _repo
-    # use special mailru config with speedup disabled for restic
-    # speedup will always fail because all contents is encrypted
+    ## use special mailru config with speedup disabled for restic
+    ## speedup will always fail because all contents is encrypted
     config: |
       type = alias
       remote = _repo:_rc/repo

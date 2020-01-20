@@ -12,10 +12,10 @@ ast_softphones:
   - name: phoner4win
     password: 123
     exten: 104
-    srtp: no
-    active: yes
+    srtp: false
+    active: true
 
-ast_softphones_secure: no
+ast_softphones_secure: false
 
 ast_stun_addr: stun.example.com
 ...

@@ -49,4 +49,4 @@ MIT
 
 ## Author Information
 
-Created in 2019 by [IvanSible](https://github.com/_REPO_USER_)
+Created in 2020 by [IvanSible](https://github.com/_REPO_USER_)

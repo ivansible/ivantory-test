@@ -10,7 +10,7 @@ ast_pg_user: asterisk
 ast_pg_pass: supersecret
 ast_pg_dump_url: ""
 
-ast_g729_bench_enable: yes
+ast_g729_bench_enable: true
 
 ast_g729_bench_digium_tarball_url: ""
 

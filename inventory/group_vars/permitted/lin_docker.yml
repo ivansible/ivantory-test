@@ -1,6 +1,6 @@
 ---
 # add target user in the docker group
-docker_permit_user: yes
+docker_permit_user: true
 
 # secrets
 docker_hub_username: user

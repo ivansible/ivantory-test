@@ -1,5 +1,5 @@
 ---
-# defaults file for vag_ipv6dns
+# defaults for vag_ipv6dns
 
 # interface to get ipv6 from
 ipv6dns_interface: eth0

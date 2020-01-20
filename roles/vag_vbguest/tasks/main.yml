@@ -28,11 +28,11 @@
       systemd:
         name: "{{ item }}"
         state: restarted
-        enabled: yes
+        enabled: true
       loop:
         - vboxadd
         - vboxadd-service
-  become: yes
+  become: true
   when: vag_vbguest_enable |bool
         and vbguest_tools.stat.exists
         and not vbguest_kernel_module.stat.exists
@@ -40,6 +40,6 @@
 - name: freeze kernel version to prevent problems with guest additions
   when: vag_vbguest_freeze_kernel |bool
   command: apt-mark hold {{ vag_vbguest_kernel_packages |join(' ') }}
-  become: yes
+  become: true
   changed_when: false
 ...

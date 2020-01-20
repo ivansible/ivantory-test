@@ -1,7 +1,7 @@
 ---
 mongodb_cpu_quota: 50%
 mongodb_mem_quota: 256M
-mongodb_oom_killer: yes
+mongodb_oom_killer: true
 
 mongodb_ssl_mode: requireSSL
 ...

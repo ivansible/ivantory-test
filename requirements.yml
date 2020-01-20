@@ -1,5 +1,5 @@
 ---
-#- src: https://github.com/ivansible/vansible1
+# - src: https://github.com/ivansible/vansible1
 #  name: ivansible.vansible1
 #  version: multi
 #  scm: git
