@@ -53,6 +53,7 @@
   roles:
     - ivansible.lin_sslh
     - ivansible.lin_nginx
+    - ivansible.srv_cdn
     - ivansible.srv_ss
     - ivansible.srv_chisel
     - ivansible.srv_doh

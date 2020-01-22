@@ -7,6 +7,7 @@
 - name: setup vagrant boxes
   hosts: vagrant
   gather_facts: false
+  tags: starter_prepare
   roles:
     - role: ivansible.vag_share
       when: vag_share_name |default('') != ''  # noqa 602
@@ -15,6 +16,7 @@
 - name: basic linux setup
   hosts: all
   gather_facts: false
+  tags: starter_prepare
   roles:
     - role: ivansible.lin_system
     - role: ivansible.lin_ssh
@@ -32,6 +34,9 @@
 - name: system upgrade
   hosts: all
   gather_facts: false
+  tags:
+    - starter_prepare
+    - refresh
   vars:
     refresh: false
     # time-sync is already done in lin-system
@@ -39,7 +44,6 @@
   roles:
     - role: ivansible.lin_refresh
       when: refresh |bool
-  tags: refresh
 
 - name: configure main user
   hosts:
@@ -47,6 +51,7 @@
     - permitted
     - vagrant
   gather_facts: false
+  tags: starter_user
   roles:
     - ivansible.dev_user
 
