@@ -78,6 +78,9 @@
 - src: https://github.com/ivansible/srv-dante
   name: ivansible.srv_dante
   scm: git
+- src: https://github.com/ivansible/srv-cdn
+  name: ivansible.srv_cdn
+  scm: git
 - src: https://github.com/ivansible/srv-ss
   name: ivansible.srv_ss
   scm: git
