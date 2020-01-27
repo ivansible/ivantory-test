@@ -242,4 +242,16 @@
 - src: https://github.com/ivansible/wrt-yggdrasil
   name: ivansible.wrt_yggdrasil
   scm: git
+- src: https://github.com/ivansible/dev-nomad
+  name: ivansible.dev_nomad
+  scm: git
+- src: https://github.com/ivansible/termux-bootstrap
+  name: ivansible.termux_bootstrap
+  scm: git
+- src: https://github.com/ivansible/termux-core
+  name: ivansible.termux_core
+  scm: git
+- src: https://github.com/ivansible/termux-ubuntu
+  name: ivansible.termux_ubuntu
+  scm: git
 ...
