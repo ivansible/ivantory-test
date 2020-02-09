@@ -35,8 +35,22 @@ class CallbackModule(CallbackBase):
                 and result._result.get('_ansible_verbose_override', False) is False)
 
     def _process_result_output(self, result, msg):
+        label = ''
+        if self._run_is_verbose(result):
+            label = self._get_item_label(result._result) or ''
+            if isinstance(label, dict):
+                if 'key' in label:
+                    label = label['key']
+                elif 'name' in label:
+                    label = label['name']
+            label = ('%s' % label).strip()
+            if label and label[0] not in '[({':
+                label = '(%s)' % label
+            if label:
+                label = ' %s' % label
+
         task_host = result._host.get_name()
-        task_result = "%s %s" % (task_host, msg)
+        task_result = "%s %s%s" % (task_host, msg, label)
 
         task_action = result._task.action
         result_msg = result._result.get('msg', '')
@@ -48,11 +62,11 @@ class CallbackModule(CallbackBase):
             return "%s %s | %s: %s" % (task_host, msg, task_action, debug_msg)
 
         if self._run_is_verbose(result, verbosity=1):
-            return "%s %s: %s" % (task_host, msg, self._dump_results(result._result, indent=4))
+            return "%s %s%s: %s" % (task_host, msg, label, self._dump_results(result._result, indent=4))
 
         if self.delegated_vars:
             task_delegate_host = self.delegated_vars['ansible_host']
-            task_result = "%s -> %s %s" % (task_host, task_delegate_host, msg)
+            task_result = "%s -> %s %s%s" % (task_host, task_delegate_host, msg, label)
 
         if result_msg and result_msg != "All items completed":
             task_result += " | msg: " + to_text(result_msg)
