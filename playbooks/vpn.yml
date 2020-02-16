@@ -1,0 +1,80 @@
+---
+- name: gather facts
+  hosts: all,!keenetic_ndm,!keenetic_cli
+  gather_facts: true
+  tags: always
+
+- name: linux networking
+  hosts:
+    - net_linux
+    - net_test
+  gather_facts: false
+  roles:
+    - ivansible.lin_net
+  tags:
+    - vpn_linux
+    - vpn_linux_net
+
+- name: wireguard linux peers
+  hosts: wireguard_peers
+  gather_facts: false
+  roles:
+    - ivansible.lin_wireguard
+  tags:
+    - vpn_linux
+    - vpn_wireguard
+
+- name: sshtun servers
+  hosts: sshtun_servers
+  gather_facts: false
+  roles:
+    - ivansible.srv_sshtun
+  tags:
+    - vpn_linux
+    - vpn_sshtun
+
+- name: yggdrasil linux peers
+  hosts: yggdrasil_linux
+  gather_facts: false
+  roles:
+    - ivansible.lin_yggdrasil
+  tags:
+    - vpn_linux
+    - vpn_yggdrasil
+
+- name: keenetic entware vpn
+  hosts: keenetic_wrt
+  gather_facts: false
+  roles:
+    - ivansible.wrt_net
+    - ivansible.wrt_v2ray
+    - ivansible.wrt_sshtun
+    - ivansible.wrt_openvpn
+    - ivansible.wrt_wireguard
+    - ivansible.wrt_yggdrasil
+  tags:
+    - vpn_keenetic
+    - vpn_wrt
+
+- name: keenetic ndms vpn
+  hosts: keenetic_ndm
+  strategy: linear  # mitogen breaks httpapi
+  gather_facts: false
+  roles:
+    - ivansible.ndm_firewall
+    - ivansible.ndm_wireguard
+    - ivansible.ndm_openvpn
+  tags:
+    - vpn_keenetic
+    - vpn_ndm
+
+- name: openvpn servers
+  ## this play is last because it's long
+  hosts: openvpn_servers
+  gather_facts: false
+  roles:
+    - ivansible.srv_openvpn
+  tags:
+    - vpn_openvpn
+    - vpn_long
+...
