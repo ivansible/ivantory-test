@@ -1,0 +1,59 @@
+---
+- name: bootstrap python3 on entware
+  hosts: keenetic_wrt
+  gather_facts: false
+  strategy: linear  # raw module fails with mitogen
+  tags: [wrt_bootstrap, wrt]
+  tasks:
+    - name: bootstrap python3
+      raw: command -v python3 || opkg install python3
+      register: python3_opkg_result
+      changed_when: python3_opkg_result.stdout is match('Downloading')
+
+- name: gather entware facts
+  hosts: keenetic_wrt
+  gather_facts: true
+  tags: [always, wrt_gather, wrt]
+
+- name: setup core packages and vpn on entware
+  hosts: keenetic_wrt
+  gather_facts: false
+  tags: [wrt_base, wrt]
+  roles:
+    - ivansible.wrt_core
+    - ivansible.wrt_supervisor
+    - ivansible.wrt_srelay
+    - ivansible.wrt_privoxy
+    - ivansible.wrt_ss
+    - ivansible.wrt_v2ray
+    - ivansible.wrt_net
+    - ivansible.wrt_sshtun
+    - ivansible.wrt_openvpn
+    - ivansible.wrt_wireguard
+    - ivansible.wrt_yggdrasil
+
+- name: configure vpn on ndms
+  hosts: keenetic_ndm
+  gather_facts: false
+  strategy: linear  # mitogen breaks httpapi
+  tags: [ndm_vpn, ndm]
+  roles:
+    - ivansible.ndm_firewall
+    - ivansible.ndm_wireguard
+    - ivansible.ndm_openvpn
+
+- name: test keenetic cli
+  hosts: keenetic_cli
+  gather_facts: false
+  strategy: linear  # disable mitogen
+  tags: [never, cli_test, cli]
+  tasks:
+    - name: get running-config
+      cli_command:
+        command: show running-config
+      register: running_config
+    - name: print running-config
+      debug:
+        msg: "{{ running_config.stdout.split('\n') }}"
+        # "{{ stdout |regex_findall('[^\n]+') |replace('\x1b[K','') }}"
+...

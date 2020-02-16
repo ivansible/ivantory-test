@@ -9,6 +9,8 @@
   gather_facts: false
   roles:
     - ivansible.lin_tor
+    - ivansible.lin_wireguard
+    - ivansible.srv_openvpn
     - ivansible.srv_mtproxy
     - ivansible.srv_ziproxy
     - ivansible.srv_dante
@@ -24,13 +26,27 @@
     - ivansible.srv_ss
     - ivansible.srv_chisel
     - ivansible.srv_doh
+    - ivansible.srv_dyndns
+    - ivansible.srv_v2ray
+    - ivansible.srv_sshtun
   tags:
     - bastion_tls
 
+## squid must go last for the sake of idempotence because
+## it enumerates local interfaces created by other roles.
 - name: squid with tls
   hosts: all
   gather_facts: false
   roles:
     - ivansible.srv_squid
   tags: bastion_squid
+
+- name: setup port forwarding
+  hosts:
+    - prod_master_all
+    - prod_slaves_all
+  gather_facts: false
+  roles:
+    - ivansible.lin_bastion
+  tags: bastion_forwards
 ...
