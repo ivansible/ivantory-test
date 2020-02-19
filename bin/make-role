@@ -3,6 +3,7 @@ prog=$(basename "$0")
 dir=$(readlink -f "$0")
 dir=$(dirname "$dir")
 divan_dir=$(dirname "$dir")
+cur_dir=$(pwd)
 venv_dir=$(readlink -f "$divan_dir/.venv")
 roles_home=$(readlink -f "$divan_dir/roles-galaxy")
 skel_dir=$divan_dir/skel
@@ -15,6 +16,7 @@ galaxy=0
 desc_arg="ROLEFULL description"
 repo_arg=""
 default_roles_home="$roles_home"
+default_repo_user="ivansible"
 
 while true; do
   case "$1" in
@@ -33,7 +35,7 @@ while true; do
       shift
       ;;
     -c | --curdir )
-      roles_home="."
+      roles_home="$cur_dir"
       shift
       ;;
     -d | --desc )
@@ -70,7 +72,7 @@ if [ $help = 1 ] || [ -z "$repo_arg" ]; then
 fi
 
 if [ ! -d "$roles_home" ]; then
-    echo "$roles_home is not a directory"
+    echo "not a directory: $roles_home"
     exit 1
 fi
 
@@ -80,12 +82,22 @@ if [ -z "$(command -v hub)" ]; then
     exit 1
 fi
 
-[[ $repo_arg =~ ^\. ]] && repo_full="ivansible$repo_arg" || repo_full=$repo_arg
-
-repo_user=$(echo "$repo_full" | cut -d. -f1)
-repo_name=$(echo "$repo_full" | cut -d. -f2)
-role_name=${repo_name//[-.]/_}
-role_full="$repo_user.$role_name"
+if [[ $repo_arg =~ ^\. ]]; then
+    repo_full="${default_repo_user}${repo_arg}"
+else
+    repo_full="$repo_arg"
+fi
+if [[ $repo_full =~ \. ]]; then
+    repo_user=$(echo "$repo_full" | cut -d. -f1)
+    repo_name=$(echo "$repo_full" | cut -d. -f2)
+    role_name=${repo_name//[-.]/_}
+    role_full="$repo_user.$role_name"
+else
+    repo_user="$default_repo_user"
+    repo_name="$repo_full"
+    role_name=${repo_name//[-.]/_}
+    role_full="$role_name"
+fi
 role_badge=${role_name//_/__}
 home_page=https://galaxy.ansible.com/$repo_user/$role_name
 
