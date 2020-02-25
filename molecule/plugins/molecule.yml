@@ -36,10 +36,6 @@ verifier:
   name: ansible
   lint:
     name: ansible-lint
-lint:
-  name: yamllint
-  options:
-    config-file: .yamllint.yml
 scenario:
   test_sequence:
     # install role with modules before running lint

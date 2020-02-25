@@ -49,8 +49,8 @@ jobs:
           # stock and pypy flavors of PyYAML are incompatible:
           sudo apt-get remove -q -y python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
-          # molecule pulls: ansible-lint yamllint flake8 pytest testinfra
-          sudo -H pip3 install molecule docker jmespath mitogen
+          # also pulled: ansible-lint yamllint flake8
+          sudo -H pip3 install docker jmespath mitogen molecule pytest testinfra
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
 
@@ -93,8 +93,8 @@ jobs:
           # stock and pypy flavors of PyYAML are incompatible:
           sudo apt-get remove -q -y python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
-          # molecule pulls: ansible-lint yamllint flake8 pytest testinfra
-          sudo -H pip3 install molecule docker jmespath mitogen
+          # also pulled: ansible-lint yamllint flake8
+          sudo -H pip3 install docker jmespath mitogen molecule pytest testinfra
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
 
@@ -124,8 +124,8 @@ jobs:
           # stock and pypy flavors of PyYAML are incompatible:
           sudo apt-get remove -q -y python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
-          # molecule pulls: ansible-lint yamllint flake8 pytest testinfra
-          sudo -H pip3 install molecule docker jmespath mitogen
+          # also pulled: ansible-lint yamllint flake8
+          sudo -H pip3 install docker jmespath mitogen molecule pytest testinfra
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
           # fix symlink for a role with custom modules
