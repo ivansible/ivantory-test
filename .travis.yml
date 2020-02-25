@@ -98,8 +98,8 @@ jobs:
 # stages
 install:
   - pip3 install -U pip setuptools wheel
-  # molecule pulls: ansible-lint yamllint flake8 pytest testinfra
-  - pip3 install molecule docker jmespath mitogen
+  # also pulled: ansible-lint yamllint flake8
+  - pip3 install docker jmespath mitogen molecule pytest testinfra
   # fix mitogen strategy symlink
   - ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
   # fix symlink for a role with custom modules
