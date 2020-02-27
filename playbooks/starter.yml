@@ -24,10 +24,10 @@
   tasks:
     - name: update hostname
       hostname:
-        name: "{{ starter_hostname }}"
+        name: "{{ inventory_hostname if starter_hostname in [true, 'true', 'inventory'] else starter_hostname }}"
       become: true
       when: starter_hostname is defined
-      tags: update_hostname
+      tags: starter_hostname
 
 - name: system upgrade
   hosts: all
@@ -41,10 +41,19 @@
       when: refresh |bool
   tags: refresh
 
-- name: configure for development
-  hosts: permitted
+- name: configure main user
+  hosts:
+    - prod_all
+    - permitted
+    - vagrant
   gather_facts: false
   roles:
     - ivansible.dev_user
+
+- name: setup ansible
+  hosts: permitted
+  gather_facts: false
+  tags: starter_ansible
+  roles:
     - ivansible.dev_ansible
 ...
