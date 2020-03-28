@@ -18,7 +18,7 @@
   gather_facts: false
   tags: starter_prepare
   roles:
-    - role: ivansible.lin_system
+    - role: ivansible.lin_core
     - role: ivansible.lin_ssh
     - role: ivansible.lin_motd
     - role: ivansible.lin_docker
@@ -39,7 +39,7 @@
     - refresh
   vars:
     refresh: false
-    # time-sync is already done in lin-system
+    # time-sync is already done in lin-core
     linref_time_sync: false
   roles:
     - role: ivansible.lin_refresh

@@ -4,7 +4,7 @@ is_permitted: false
 
 web_group: www-data
 
-linsys_time_server: 2.pool.ntp.org  # note: supports both ipv4/ipv6
+lin_core_time_server: 2.pool.ntp.org  # note: supports both ipv4/ipv6
 
 lin_go_version: 1.13
 ...

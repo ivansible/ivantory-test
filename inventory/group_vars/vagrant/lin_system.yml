@@ -1,9 +1,0 @@
----
-# variables for role ivansible.lin_system in group vagrant
-
-linsys_apt_fast_mirrors: true
-
-linsys_system_locale: en_US.UTF-8
-
-linsys_timezone: Europe/Moscow
-...

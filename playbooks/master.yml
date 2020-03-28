@@ -8,13 +8,13 @@
   hosts: all
   gather_facts: false
   roles:
-    - role: ivansible.lin_system
+    - role: ivansible.lin_core
     - role: ivansible.lin_ssh
     - role: ivansible.lin_motd
     - role: ivansible.dev_user
     - role: ivansible.lin_docker
       when: lin_use_docker |bool
-    - role: ivansible.lin_syslog
+    - role: ivansible.lin_rsyslog
   tags: master_prepare
 
 

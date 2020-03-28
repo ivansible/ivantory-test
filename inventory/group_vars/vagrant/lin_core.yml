@@ -1,0 +1,7 @@
+---
+# variables for role ivansible.lin_core in group vagrant
+
+lin_core_system_locale: en_US.UTF-8
+
+lin_core_timezone: Europe/Moscow
+...

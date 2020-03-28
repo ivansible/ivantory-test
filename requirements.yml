@@ -9,8 +9,8 @@
 - src: https://github.com/ivansible/lin-enter
   name: ivansible.lin_enter
   scm: git
-- src: https://github.com/ivansible/lin-system
-  name: ivansible.lin_system
+- src: https://github.com/ivansible/lin-core
+  name: ivansible.lin_core
   scm: git
 - src: https://github.com/ivansible/lin-ferm
   name: ivansible.lin_ferm
@@ -159,8 +159,8 @@
 - src: https://github.com/ivansible/srv-redis
   name: ivansible.srv_redis
   scm: git
-- src: https://github.com/ivansible/lin-syslog
-  name: ivansible.lin_syslog
+- src: https://github.com/ivansible/lin-rsyslog
+  name: ivansible.lin_rsyslog
   scm: git
 - src: https://github.com/ivansible/vag-ipv6dns
   name: ivansible.vag_ipv6dns
