@@ -1,6 +1,0 @@
----
-- name: become root and deploy role
-  import_tasks: root.yml
-  become: true
-  tags: vag_ipv6dns_all
-...
