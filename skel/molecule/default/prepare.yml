@@ -5,5 +5,5 @@
     - name: vars
       include_vars: vars.yml
   roles:
-    - role: _REPO_USER_.lin_system
+    - role: _REPO_USER_.lin_core
 ...

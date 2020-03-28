@@ -37,7 +37,7 @@ None
 
     - hosts: vagrant-boxes
       roles:
-         - role: _ROLE_NAME_
+         - role: _ROLE_FULL_
            variable1: 1
            variable2: 2
 

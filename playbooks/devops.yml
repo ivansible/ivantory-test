@@ -11,7 +11,7 @@
     docker_extras: true
     docker_bash_completion_extras: true
   roles:
-    - role: ivansible.lin_system
+    - role: ivansible.lin_core
     - role: ivansible.lin_ssh
     - role: ivansible.lin_motd
     - role: ivansible.lin_devel

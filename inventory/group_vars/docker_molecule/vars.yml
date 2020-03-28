@@ -1,4 +1,4 @@
 ---
 ansible_user: ansible
-linsys_time_sync: false
+lin_core_time_sync: false
 ...

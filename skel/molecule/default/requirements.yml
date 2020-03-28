@@ -2,8 +2,8 @@
 - src: https://github.com/_REPO_USER_/lin-base
   name: _REPO_USER_.lin_base
   scm: git
-- src: https://github.com/_REPO_USER_/lin-system
-  name: _REPO_USER_.lin_system
+- src: https://github.com/_REPO_USER_/lin-core
+  name: _REPO_USER_.lin_core
   scm: git
 - src: https://github.com/_REPO_USER_/lin-ferm
   name: _REPO_USER_.lin_ferm
