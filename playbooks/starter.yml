@@ -8,9 +8,9 @@
   hosts: vagrant
   gather_facts: false
   roles:
-    - role: vag_share
+    - role: ivansible.vag_share
       when: vag_share_name |default('') != ''  # noqa 602
-    - role: vag_vbguest
+    - role: ivansible.vag_vbguest
 
 - name: basic linux setup
   hosts: all

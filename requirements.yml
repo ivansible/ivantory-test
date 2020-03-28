@@ -159,4 +159,13 @@
 - src: https://github.com/ivansible/lin-syslog
   name: ivansible.lin_syslog
   scm: git
+- src: https://github.com/ivansible/vag-ipv6dns
+  name: ivansible.vag_ipv6dns
+  scm: git
+- src: https://github.com/ivansible/vag-share
+  name: ivansible.vag_share
+  scm: git
+- src: https://github.com/ivansible/vag-vbguest
+  name: ivansible.vag_vbguest
+  scm: git
 ...
