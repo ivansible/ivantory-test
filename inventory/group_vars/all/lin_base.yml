@@ -6,5 +6,5 @@ web_group: www-data
 
 linsys_time_server: 2.pool.ntp.org  # note: supports both ipv4/ipv6
 
-lindev_golang_version: 1.13
+lin_go_version: 1.13
 ...
