@@ -42,6 +42,9 @@
 - src: https://github.com/ivansible/lin-devel
   name: ivansible.lin_devel
   scm: git
+- src: https://github.com/ivansible/lin-go
+  name: ivansible.lin_go
+  scm: git
 - src: https://github.com/ivansible/dev-ansible
   name: ivansible.dev_ansible
   scm: git

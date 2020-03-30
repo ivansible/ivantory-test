@@ -15,6 +15,7 @@
     - role: ivansible.lin_ssh
     - role: ivansible.lin_motd
     - role: ivansible.lin_devel
+    - role: ivansible.lin_go
     - role: ivansible.lin_docker
       when: lin_use_docker |bool
   tags: devops_prepare
