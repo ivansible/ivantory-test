@@ -141,6 +141,9 @@
 - src: https://github.com/ivansible/ast-providers
   name: ivansible.ast_providers
   scm: git
+- src: https://github.com/ivansible/ast-webui
+  name: ivansible.ast_webui
+  scm: git
 - src: https://github.com/ivansible/ast-billing
   name: ivansible.ast_billing
   scm: git
