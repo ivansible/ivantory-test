@@ -80,5 +80,6 @@
     - ivansible.ast_core
     - ivansible.ast_soho
     - ivansible.ast_providers
+    - ivansible.ast_webui
   tags: master_asterisk
 ...
