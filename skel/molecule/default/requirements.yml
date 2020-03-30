@@ -8,4 +8,7 @@
 - src: https://github.com/_REPO_USER_/lin-system
   name: _REPO_USER_.lin_system
   scm: git
+- src: https://github.com/_REPO_USER_/lin-ferm
+  name: _REPO_USER_.lin_ferm
+  scm: git
 ...
