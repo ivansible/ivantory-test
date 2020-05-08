@@ -28,27 +28,32 @@ Please provide the `--skip-tags ip4only` switch as a workaround.
 This type of operations is called _enter_ in ivansible parlance.
 Example operations follow below.
 
-Enter a box already added to repository:
-
-    ./bin/lin-enter vag2 -e linen_new_keyfile=default
-
-Enter a new Vultr box initialized with root password:
-
-    ./bin/lin-enter all -i ,172.1.2.3 -e linen_pass='secret'
-
 Enter a Vultr box by root password, probing for custom SSH port and
 then switching to this port, create a new user (trying to make uid=1000),
-and finally install python2 and authorize my default private key:
+and finally install python2 and authorize my default private key.
+You can try IPv4 address, IPv6 address or DNS hostname after comma.
 
-    ./bin/lin-enter all -i ,172.1.2.3 -e linen_pass='secret' -e linen_user=myuser -e linen_port=8822 -e linen_keyfile=default
+    ivantory-lin-enter 172.1.2.3 -v -u myuser -p 8822 -k files/keys/ssh.key -r secret
+
+Enter a box already added to repository:
+
+    ivantory-lin-enter vag2 -K default
+
+Enter a new Vultr box initialized with root password and enable UFW:
+
+    ivantory-lin-enter 172.1.2.3 --rootpass secret --ufw
 
 Enter a new Vultr box initialized with SSH key:
 
-    ./bin/lin-enter all -i ,172.1.2.3 -e linen_keyfile=files/secret/keys/newbox.key
+    ivantory-lin-enter 172.1.2.3 --keyfile files/secret/keys/newbox.key
 
 Enter a new _virtobox_ vagrant box:
 
-    ./bin/lin-enter all -i ,vag3.dev -e linen_port=8822 -e linen_new_keyfile=files/secret/keys/newbox.key
+    ivantory-lin-enter vag3.dev --port 8822 --new-keyfile files/secret/keys/newbox.key
+
+Full syntax:
+
+    ivantory-lin-enter 172.1.2.3 -e linen_pass='secret' -e linen_user=myuser -e linen_port=8822 -e linen_keyfile=default -e linen_login_methods=4 [-e linen_ufw=true]
 
 
 ## Refresh a linux box
