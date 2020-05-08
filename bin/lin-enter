@@ -1,9 +1,88 @@
 #!/bin/sh
-if [ -z "$1" ] || [ "$1" != "${1#-}" ]; then
-  echo "usage: $(basename "$0") hosts [args...]"
-  exit 1
-fi
+#set -x
+
 exe_path=$(readlink -f "$0")
 bin_dir=$(dirname "$exe_path")
-export ANSIBLE_STRATEGY=linear  # disable mitogen, it breaks python probing
-exec "$bin_dir"/role ivansible.lin_enter "$@" -e gather=false  # disable initial gather
+prog=$(basename "$0")
+
+help=0
+host=""
+
+args=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h | --help )
+      help=1
+      shift ;;
+    -a | --addr )
+      [ -z "$host" ] || help=1
+      host="$2"
+      shift 2 ;;
+    -p | --port )
+      args="$args -e linen_port=$2"
+      shift 2 ;;
+    -u | --user )
+      args="$args -e linen_user=$2"
+      shift 2 ;;
+    -k | --keyfile )
+      args="$args -e linen_keyfile=$2"
+      shift 2 ;;
+    -K | --newkeyfile | --new-keyfile )
+      args="$args -e linen_new_keyfile=$2"
+      shift 2 ;;
+    -r | --pass | --rootpass )
+      args="$args -e linen_pass=$2 -e linen_login_methods=4"
+      shift 2 ;;
+    -U | --ufw )
+      args="$args -e linen_ufw=true"
+      shift ;;
+    -e | --var )
+      args="$args -e $2"
+      shift 2 ;;
+    -v* )
+      args="$args $1"
+      shift ;;
+    '--' )
+      shift
+      args="$args $*"
+      ;;
+    -* )
+      help=1
+      shift ;;
+    '' )
+      shift ;;
+    * )
+      [ -z "$host" ] || help=1
+      host="$1"
+      shift ;;
+  esac
+done
+
+if [ -z "$host" ] || [ $help = 1 ]; then
+    echo "usage: $prog [-a] HOST [options] [-v...] [-- args...]"
+    echo "options:"
+    echo "  -p|--port PORT        -- desired remote SSH port"
+    echo "  -u|--user USER        -- desired remote SSH user"
+    echo "  -k|--keyfile KEYFILE  -- SSH keyfile to try and authorize"
+    echo "  -K|--new-keyfile FILE -- SSH keyfile to install"
+    echo "  -r|--rootpass PASS    -- root SSH password"
+    echo "  -U|--ufw              -- enables UFW (by default skip)"
+    echo "  -e|--var VAR=VAL      -- assigns ad-hoc role variable"
+    echo "  -v[vv]                -- increase verbodity"
+    echo "example:"
+    echo "$prog 172.1.2.3 -v -u myuser -p 8822 -k files/keys/ssh.key -r secret"
+    exit 1
+fi
+
+# disable initial gather
+args="all -i,${host}${args} -e gather=false"
+#echo "args: $args"
+
+# disable mitogen, it breaks python probing
+export ANSIBLE_STRATEGY=linear
+# force ssh settings for probing
+export ANSIBLE_SSH_ARGS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PasswordAuthentication=yes -o PubkeyAuthentication=yes -o ForwardAgent=no"
+
+# shellcheck disable=SC2086
+exec "$bin_dir"/role ivansible.lin_enter "$@" $args
