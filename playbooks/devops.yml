@@ -4,21 +4,18 @@
   gather_facts: true
   tags: always
 
-- name: setup core linux
+- name: setup docker for development
   hosts: all
   gather_facts: false
   vars:
     docker_extras: true
     docker_bash_completion_extras: true
   roles:
-    - role: ivansible.lin_core
-    - role: ivansible.lin_ssh
-    - role: ivansible.lin_motd
     - role: ivansible.lin_devel
     - role: ivansible.lin_go
     - role: ivansible.lin_docker
       when: lin_use_docker |bool
-  tags: devops_prepare
+  tags: devops_docker
 
 - name: deploy ansible playbooks
   hosts: permitted

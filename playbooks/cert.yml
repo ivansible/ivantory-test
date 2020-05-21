@@ -1,0 +1,31 @@
+---
+- name: gather facts
+  hosts: all
+  gather_facts: true
+  tags: always
+
+- name: letsencrypt certificates on production master
+  hosts:
+    - prod_master_all
+  gather_facts: false
+  roles:
+    - ivansible.cert_cloudflare
+  tags: cert_master
+
+- name: letsencrypt certificates on development hosts
+  hosts:
+    - dev_all
+    - prod_test
+  gather_facts: false
+  roles:
+    - ivansible.cert_copy
+  tags: cert_devel
+
+- name: letsencrypt certificates on production slaves
+  hosts:
+    - prod_slaves
+  gather_facts: false
+  roles:
+    - ivansible.cert_replica
+  tags: cert_slaves
+...

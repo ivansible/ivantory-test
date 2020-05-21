@@ -1,5 +1,7 @@
 ---
-- name: placeholder
-  hosts: all
-  gather_facts: false
+- name: import starter
+  import_playbook: ../../../playbooks/starter.yml
+
+- name: import cert
+  import_playbook: ../../../playbooks/cert.yml
 ...
