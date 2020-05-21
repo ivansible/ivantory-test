@@ -10,7 +10,7 @@
   tags: starter_prepare
   roles:
     - role: ivansible.vag_share
-      when: vag_share_name |default('') != ''  # noqa 602
+      when: vag_share_name |default('',true)
     - role: ivansible.vag_vbguest
 
 - name: basic linux setup
@@ -23,20 +23,25 @@
     - role: ivansible.lin_motd
     - role: ivansible.lin_docker
       when: lin_use_docker |bool
+    - role: ivansible.lin_rsyslog
+
+- name: update hostname
+  hosts: all
+  gather_facts: false
+  tags: starter_hostname
+  vars:
+    use_inventory_name: "{{ starter_hostname |default(false,true) |string |lower in 'inventory true yes on 1' }}"
   tasks:
     - name: update hostname
       hostname:
-        name: "{{ inventory_hostname if starter_hostname in [true, 'true', 'inventory'] else starter_hostname }}"
+        name: "{{ use_inventory_name |bool |ternary(inventory_hostname, starter_hostname) }}"
       become: true
       when: starter_hostname is defined
-      tags: starter_hostname
 
 - name: system upgrade
   hosts: all
   gather_facts: false
-  tags:
-    - starter_prepare
-    - refresh
+  tags: starter_refresh
   vars:
     refresh: false
     # time-sync is already done in lin-core
