@@ -245,6 +245,9 @@
 - src: https://github.com/ivansible/dev-nomad
   name: ivansible.dev_nomad
   scm: git
+- src: https://github.com/ivansible/srv-netdata
+  name: ivansible.srv_netdata
+  scm: git
 - src: https://github.com/ivansible/termux-bootstrap
   name: ivansible.termux_bootstrap
   scm: git
