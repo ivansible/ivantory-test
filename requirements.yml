@@ -33,6 +33,9 @@
 - src: https://github.com/ivansible/lin-docker
   name: ivansible.lin_docker
   scm: git
+- src: https://github.com/ivansible/lin-podman
+  name: ivansible.lin_podman
+  scm: git
 - src: https://github.com/ivansible/lin-rclone
   name: ivansible.lin_rclone
   scm: git
