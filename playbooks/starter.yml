@@ -13,18 +13,6 @@
       when: vag_share_name |default('',true)
     - role: ivansible.vag_vbguest
 
-- name: basic linux setup
-  hosts: all
-  gather_facts: false
-  tags: starter_prepare
-  roles:
-    - role: ivansible.lin_core
-    - role: ivansible.lin_ssh
-    - role: ivansible.lin_motd
-    - role: ivansible.lin_docker
-      when: lin_use_docker |bool
-    - role: ivansible.lin_rsyslog
-
 - name: update hostname
   hosts: all
   gather_facts: false
@@ -38,17 +26,15 @@
       become: true
       when: starter_hostname is defined
 
-- name: system upgrade
+- name: prepare core linux
   hosts: all
   gather_facts: false
-  tags: starter_refresh
-  vars:
-    refresh: false
-    # time-sync is already done in lin-core
-    linref_time_sync: false
+  tags: starter_prepare
   roles:
-    - role: ivansible.lin_refresh
-      when: refresh |bool
+    - role: ivansible.lin_core
+    - role: ivansible.lin_ssh
+    - role: ivansible.lin_motd
+    - role: ivansible.lin_rsyslog
 
 - name: configure main user
   hosts:
@@ -60,10 +46,30 @@
   roles:
     - ivansible.dev_user
 
+- name: setup docker
+  hosts: all
+  gather_facts: false
+  tags: starter_docker
+  roles:
+    - role: ivansible.lin_docker
+      when: lin_use_docker |bool
+
 - name: setup ansible
   hosts: permitted
   gather_facts: false
   tags: starter_ansible
   roles:
     - ivansible.dev_ansible
+
+- name: system upgrade
+  hosts: all
+  gather_facts: false
+  tags: starter_refresh
+  vars:
+    refresh: false
+    # time-sync is already done in lin-core
+    linref_time_sync: false
+  roles:
+    - role: ivansible.lin_refresh
+      when: refresh |bool
 ...
