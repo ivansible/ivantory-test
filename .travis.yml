@@ -99,7 +99,9 @@ jobs:
 install:
   - pip3 install -U pip setuptools wheel
   # also pulled: ansible-lint yamllint flake8
-  - pip3 install docker jmespath boto3 mitogen molecule pytest testinfra
+  - pip3 install jmespath netaddr boto3 mitogen molecule pytest testinfra
+  # travis xenial rejects docker client v4+, requires client api<1.38
+  - pip3 install "docker<4"
   # fix mitogen strategy symlink
   - ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
   # fix symlink for a role with custom modules
