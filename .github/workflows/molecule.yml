@@ -56,7 +56,7 @@ jobs:
           sudo apt-get remove -q -y python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
           # also pulled: ansible-lint yamllint flake8
-          sudo -H pip3 install docker jmespath boto3 mitogen molecule pytest testinfra
+          sudo -H pip3 install docker jmespath netaddr boto3 mitogen molecule pytest testinfra
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
 
@@ -100,7 +100,7 @@ jobs:
           sudo apt-get remove -q -y python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
           # also pulled: ansible-lint yamllint flake8
-          sudo -H pip3 install docker jmespath boto3 mitogen molecule pytest testinfra
+          sudo -H pip3 install docker jmespath netaddr boto3 mitogen molecule pytest testinfra
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
 
