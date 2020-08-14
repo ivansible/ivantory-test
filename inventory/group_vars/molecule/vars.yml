@@ -15,10 +15,10 @@ docker_hub_username: ""
 docker_hub_password: ""
 
 # dev_user
-lin_ssh_keys_files:
-  - files/insecure.key
-dev_user_authorized_keys_files: "{{ lin_ssh_keys_files }}"
-dev_user_installed_keys_files: "{{ lin_ssh_keys_files }}"
+lin_ssh_keys_files: [files/insecure.key]
+dev_user_ssh_keys_accept: "{{ lin_ssh_keys_files }}"
+dev_user_ssh_keys_deploy: "{{ lin_ssh_keys_files }}"
+dev_user_ssh_keys_revoke: []
 
 # dev_ivantory
 divan_repo: https://github.com/ivansible/ivantory-test.git
