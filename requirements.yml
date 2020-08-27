@@ -191,6 +191,9 @@
 - src: https://github.com/ivansible/lin-yggdrasil
   name: ivansible.lin_yggdrasil
   scm: git
+- src: https://github.com/ivansible/lin-keepalived
+  name: ivansible.lin_keepalived
+  scm: git
 - src: https://github.com/ivansible/ndm-firewall
   name: ivansible.ndm_firewall
   scm: git
