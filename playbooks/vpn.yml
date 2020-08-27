@@ -23,6 +23,7 @@
   tags:
     - vpn_linux
     - vpn_wireguard
+    - vpn_wg
 
 - name: sshtun servers
   hosts: sshtun_servers
@@ -41,6 +42,16 @@
   tags:
     - vpn_linux
     - vpn_yggdrasil
+
+- name: dynamic keepalived routing
+  hosts: net_vrrp
+  gather_facts: false
+  roles:
+    - ivansible.lin_keepalived
+  tags:
+    - vpn_linux
+    - vpn_keepalived
+    - vpn_vrrp
 
 - name: keenetic entware vpn
   hosts: keenetic_wrt
@@ -76,5 +87,6 @@
     - ivansible.srv_openvpn
   tags:
     - vpn_openvpn
+    - vpn_ovpn
     - vpn_long
 ...
