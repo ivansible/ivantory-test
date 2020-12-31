@@ -119,7 +119,6 @@ sed -i \
     -e "s/_REPO_USER_/$repo_user/g" \
     -e "s/_ROLE_BADGE_/$role_badge/g" \
     ./*/main.yml \
-    ./.travis.yml \
     ./.github/workflows/*.yml \
     ./molecule/default/*.yml \
     ./README.md

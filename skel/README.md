@@ -1,7 +1,6 @@
 # _ROLE_FULL_
 
 [![Github Test Status](https://github.com/_REPO_USER_/_REPO_NAME_/workflows/Molecule%20test/badge.svg?branch=master)](https://github.com/_REPO_USER_/_REPO_NAME_/actions)
-[![Travis Test Status](https://travis-ci.org/_REPO_USER_/_REPO_NAME_.svg?branch=master)](https://travis-ci.org/_REPO_USER_/_REPO_NAME_)
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-_REPO_USER_._ROLE_BADGE_-68a.svg?style=flat)](https://galaxy.ansible.com/_REPO_USER_/_ROLE_NAME_/)
 
 This role will:
