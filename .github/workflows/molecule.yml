@@ -3,7 +3,7 @@ name: Molecule test
 # yamllint disable-line rule:truthy
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '15 2 * * *'
   push:
     branches:
       - master
@@ -52,21 +52,29 @@ jobs:
       - name: Install requisites
         shell: bash
         run: |
-          # stock and pypy flavors of PyYAML are incompatible:
+          # stock and pypy flavors of PyYAML are incompatible
           sudo apt-get remove -q -y python3-yaml
-          sudo -H pip3 install -U pip setuptools wheel
-          # also pulled: ansible-lint yamllint flake8
-          sudo -H pip3 install docker jmespath netaddr boto3 mitogen molecule pytest testinfra
+          # pip 21 will drop python 3.5 support
+          sudo -H pip3 install -U "pip<21" setuptools wheel
+          # cryptography 2.9 has sane xenial wheels, works with old openssl
+          if [[ "${{ matrix.os }}" = "ubuntu-16.04" ]]; then sudo -H pip3 install "cryptography==2.9"; fi
+          # postpone ansible 2.10, molecule 3.2
+          sudo -H pip3 install "ansible<2.10"
+          sudo -H pip3 install "mitogen<0.3"
+          sudo -H pip3 install "molecule[docker]<3.2"
+          # pull dependencies
+          sudo -H pip3 install ansible-lint yamllint flake8
+          sudo -H pip3 install boto3 jmespath netaddr pytest testinfra
+          sudo -H pip3 install docker
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
 
       - name: Run test
         shell: bash
-        run: |
-          molecule test -s $TARGET
+        run: molecule test -s $TARGET
 
   docker_test:
-    name: docker
+    name: tests in docker
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
@@ -96,18 +104,26 @@ jobs:
       - name: Install requisites
         shell: bash
         run: |
-          # stock and pypy flavors of PyYAML are incompatible:
+          # stock and pypy flavors of PyYAML are incompatible
           sudo apt-get remove -q -y python3-yaml
-          sudo -H pip3 install -U pip setuptools wheel
-          # also pulled: ansible-lint yamllint flake8
-          sudo -H pip3 install docker jmespath netaddr boto3 mitogen molecule pytest testinfra
+          # pip 21 will drop python 3.5 support
+          sudo -H pip3 install -U "pip<21" setuptools wheel
+          # cryptography 2.9 has sane xenial wheels, works with old openssl
+          if [[ "${{ matrix.os }}" = "ubuntu-16.04" ]]; then sudo -H pip3 install "cryptography==2.9"; fi
+          # postpone ansible 2.10, molecule 3.2
+          sudo -H pip3 install "ansible<2.10"
+          sudo -H pip3 install "mitogen<0.3"
+          sudo -H pip3 install "molecule[docker]<3.2"
+          # pull dependencies
+          sudo -H pip3 install ansible-lint yamllint flake8
+          sudo -H pip3 install boto3 jmespath netaddr pytest testinfra
+          sudo -H pip3 install docker
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
 
       - name: Run test
         shell: bash
-        run: |
-          molecule test -s $TARGET
+        run: molecule test -s $TARGET
 
   plugins_test:
     name: plugins
@@ -127,11 +143,20 @@ jobs:
       - name: Install requisites
         shell: bash
         run: |
-          # stock and pypy flavors of PyYAML are incompatible:
+          # stock and pypy flavors of PyYAML are incompatible
           sudo apt-get remove -q -y python3-yaml
-          sudo -H pip3 install -U pip setuptools wheel
-          # also pulled: ansible-lint yamllint flake8
-          sudo -H pip3 install docker jmespath boto3 mitogen molecule pytest testinfra
+          # pip 21 will drop python 3.5 support
+          sudo -H pip3 install -U "pip<21" setuptools wheel
+          # cryptography 2.9 has sane xenial wheels, works with old openssl
+          if [[ "${{ matrix.os }}" = "ubuntu-16.04" ]]; then sudo -H pip3 install "cryptography==2.9"; fi
+          # postpone ansible 2.10, molecule 3.2
+          sudo -H pip3 install "ansible<2.10"
+          sudo -H pip3 install "mitogen<0.3"
+          sudo -H pip3 install "molecule[docker]<3.2"
+          # pull dependencies
+          sudo -H pip3 install ansible-lint yamllint flake8
+          sudo -H pip3 install boto3 jmespath netaddr pytest testinfra
+          sudo -H pip3 install docker
           # fix mitogen strategy symlink
           ln -sf $(python3 -c "import ansible_mitogen; print(ansible_mitogen.__path__[0])")/plugins/strategy ./plugins/strategy/mitogen
           # fix symlink for a role with custom modules
@@ -139,6 +164,5 @@ jobs:
 
       - name: Run test
         shell: bash
-        run: |
-          molecule test -s $TARGET
+        run: molecule test -s $TARGET
 ...
