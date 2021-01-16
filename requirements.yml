@@ -105,6 +105,9 @@
 - src: https://github.com/ivansible/srv-squid
   name: ivansible.srv_squid
   scm: git
+- src: https://github.com/ivansible/cert-base
+  name: ivansible.cert_base
+  scm: git
 - src: https://github.com/ivansible/cert-cloudflare
   name: ivansible.cert_cloudflare
   scm: git

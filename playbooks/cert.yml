@@ -10,6 +10,7 @@
   gather_facts: false
   roles:
     - ivansible.cert_cloudflare
+    - ivansible.cert_master
   tags: cert_master
 
 - name: letsencrypt certificates on development hosts
