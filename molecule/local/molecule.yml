@@ -13,6 +13,7 @@ platforms:
   - name: localhost
     groups:
       - local_molecule
+      - ${IVATEST_PYTHON_GROUP:-python_autodetect}
 provisioner:
   name: ansible
   inventory:
