@@ -1,0 +1,14 @@
+---
+# Mitogen detects python on docker as /usr/bin/python (python2).
+# When pip module creates virtual environment, it needs setuptools.
+# Normally ansible runs pip3 for that but mitogen runner on target
+# hits setuptools missing with python2 on target and fails with:
+#   ImportError: u'pkg_resources' is present in the Mitogen importer blacklist,
+#   therefore this context will not attempt to request it from the master,
+#   as the request will always be refused.
+#   Failed to import the required Python library (setuptools)
+#   on target's Python /usr/bin/python".
+# Fix: explicitly tell mitogen to use python3 on focal.
+
+ansible_python_interpreter: /usr/bin/python3
+...

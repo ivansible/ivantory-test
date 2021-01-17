@@ -1,6 +1,6 @@
 # Collection: ivantory (test)
 
-[![Github Test Status](https://github.com/ivansible/ivantory-test/workflows/Molecule%20test/badge.svg?branch=master)](https://github.com/ivansible/ivantory-test/actions)
+[![Github Test Status](https://github.com/ivansible/ivantory-test/workflows/test/badge.svg?branch=master)](https://github.com/ivansible/ivantory-test/actions)
 
 Ansible inventory and collection for **testing** [ivansible](https://github.com/ivansible) roles.
 

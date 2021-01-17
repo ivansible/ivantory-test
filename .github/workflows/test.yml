@@ -1,0 +1,129 @@
+---
+name: test
+
+# yamllint disable-line rule:truthy
+on:
+  schedule:
+    - cron: '15 2 * * *'
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ivantory-xenial
+            playbook: ivantory
+            os: ubuntu-16.04
+            target: local
+
+          - name: ivantory-bionic
+            playbook: ivantory
+            os: ubuntu-18.04
+            target: local
+
+          - name: ivantory-focal
+            playbook: ivantory
+            os: ubuntu-20.04
+            target: local
+
+          - name: devops-xenial
+            playbook: devops
+            os: ubuntu-16.04
+            target: local
+
+          - name: devops-bionic
+            playbook: devops
+            os: ubuntu-18.04
+            target: local
+
+          - name: devops-focal
+            playbook: devops
+            os: ubuntu-20.04
+            target: local
+
+          - name: bastion-docker
+            playbook: bastion
+            os: ubuntu-latest
+            target: all
+
+          - name: master-docker
+            playbook: master
+            os: ubuntu-latest
+            target: all
+
+          - name: plugins
+            playbook: none
+            os: ubuntu-latest
+            target: plugins
+
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    env:
+      TARGET: ${{ matrix.target }}
+      PLAYBOOK: ${{ matrix.playbook }}
+      ANSIBLE_FORCE_COLOR: true
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: fix pip issues on xenial
+        if: ${{ matrix.os == 'ubuntu-16.04' }}
+        run: |
+          # stock and pypi flavors of pyYAML are incompatible
+          sudo apt-get remove -qy python3-yaml
+          sudo apt-get install -qy libyaml-dev
+          sudo -H pip3 install -U pip==20.3.3 setuptools==50.3.2 wheel==0.36.2
+          sudo -H pip3 install cryptography==2.9 pyyaml==5.3.1
+
+      - name: upgrade pip
+        if: ${{ matrix.os != 'ubuntu-16.04' }}
+        run: |
+          sudo apt-get remove -q -y python3-yaml
+          sudo -H pip3 install -U pip setuptools wheel
+
+      - name: install requisites
+        run: |
+          # postpone ansible 2.10 and molecule 3.2
+          sudo -H pip3 install ansible==2.9.14 mitogen==0.2.9
+          sudo -H pip3 install "molecule[docker]<3.2"
+          # pull dependencies
+          sudo -H pip3 install ansible-lint yamllint flake8 pytest pytest-testinfra
+          sudo -H pip3 install boto3 jmespath netaddr docker
+
+      - name: make mitogen strategy symlink
+        run: |
+          dir=$(python3 -c "import ansible_mitogen as m; print(m.__path__[0])")
+          ln -sf $dir/plugins/strategy ./plugins/strategy/mitogen
+
+      - name: make symlink for custom modules
+        if: ${{ matrix.target == 'plugins' }}
+        run: |
+          ln -sf ~/.cache/molecule/ivantory-test/$TARGET/roles ./roles-galaxy
+
+      - name: run test
+        run: |
+          # set environment for local host, docker or plugins test
+          if [ ${{ matrix.target }} == local ]; then
+              export IVATEST_FIREWALL=ferm
+              export IVATEST_SSH_SERVER=false
+              export IVATEST_SYSTEMD_TMPFILES=false
+              if [ ${{ matrix.os }} == ubuntu-20.04 ]; then
+                  # mitigate mitogen detecting python as python2 on focal
+                  export IVATEST_PYTHON_GROUP=python3
+              fi
+          else
+              export IVATEST_FIREWALL=none
+              export IVATEST_SSH_SERVER=true
+              export IVATEST_SYSTEMD_TMPFILES=true
+          fi
+          molecule test -s ${{ matrix.target }}
+...
