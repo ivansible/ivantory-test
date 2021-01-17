@@ -8,4 +8,10 @@
 - src: https://github.com/_REPO_USER_/lin-ferm
   name: _REPO_USER_.lin_ferm
   scm: git
+- src: https://github.com/_REPO_USER_/cert-base
+  name: _REPO_USER_.cert_base
+  scm: git
+- src: https://github.com/_REPO_USER_/nginx-base
+  name: _REPO_USER_.nginx_base
+  scm: git
 ...
