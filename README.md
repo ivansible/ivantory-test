@@ -140,6 +140,12 @@ Notes:
 - remove `vakey` when done
 
 
+## OpenVZ Hosts
+
+OpenVZ resets `/etc/hosts` on every boot.
+These playbooks contain a special tag `etc_hosts` for all tasks that update hosts.
+
+
 ## Vagrant Boxes
 
 - vag1 - *enter-bionic* controller _1Gb_ RAM
