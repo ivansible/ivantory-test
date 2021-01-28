@@ -33,6 +33,7 @@ provisioner:
     defaults:
       strategy: mitogen_linear
       stdout_callback: unixy2
+      verbosity: 1
   lint:
     name: ansible-lint
 verifier:

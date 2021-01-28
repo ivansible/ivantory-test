@@ -16,6 +16,7 @@ jobs:
   test:
     strategy:
       fail-fast: false
+      max-parallel: 4
       matrix:
         include:
           - name: ivantory-xenial
