@@ -90,6 +90,8 @@ jobs:
         run: |
           sudo apt-get remove -q -y python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
+          # screw you cryptography! why require rust??
+          sudo -H pip3 install "cryptography<3.4"
 
       - name: install requisites
         run: |
