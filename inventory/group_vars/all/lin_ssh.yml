@@ -1,5 +1,6 @@
 ---
 lin_ssh_known_hosts:
   - github.com
-  - gitlab.com
+  ## keyscan of gitlab.com causes rate errors
+  # - gitlab.com
 ...
