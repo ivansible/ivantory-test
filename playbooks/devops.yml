@@ -41,6 +41,7 @@
     - ivansible.lin_nxserver
     # mount VM images
     - ivansible.lin_rclone
+    - ivansible.srv_vscode
   tags: devops_software
 
 - name: enable host for virtual machines
