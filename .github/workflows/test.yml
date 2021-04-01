@@ -22,59 +22,59 @@ jobs:
           - name: ivantory-xenial
             playbook: ivantory
             os: ubuntu-16.04
-            target: local
+            scenario: local
 
           - name: ivantory-bionic
             playbook: ivantory
             os: ubuntu-18.04
-            target: local
+            scenario: local
 
           - name: ivantory-focal
             playbook: ivantory
             os: ubuntu-20.04
-            target: local
+            scenario: local
 
           - name: devops-xenial
             playbook: devops
             os: ubuntu-16.04
-            target: local
+            scenario: local
 
           - name: devops-bionic
             playbook: devops
             os: ubuntu-18.04
-            target: local
+            scenario: local
 
           - name: devops-focal
             playbook: devops
             os: ubuntu-20.04
-            target: local
+            scenario: local
 
           - name: bastion-docker
             playbook: bastion
             os: ubuntu-latest
-            target: all
+            scenario: all
 
           - name: master-docker
             playbook: master
             os: ubuntu-latest
-            target: all
+            scenario: all
 
           - name: plugins
             playbook: none
             os: ubuntu-latest
-            target: plugins
+            scenario: plugins
 
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
 
     env:
-      TARGET: ${{ matrix.target }}
+      TARGET: ${{ matrix.scenario }}
       PLAYBOOK: ${{ matrix.playbook }}
       ANSIBLE_FORCE_COLOR: true
 
     steps:
-      - name: checkout
-        uses: actions/checkout@master
+      - name: checkout repository
+        uses: actions/checkout@v2
 
       - name: fix pip issues on xenial
         if: ${{ matrix.os == 'ubuntu-16.04' }}
@@ -88,13 +88,16 @@ jobs:
       - name: upgrade pip
         if: ${{ matrix.os != 'ubuntu-16.04' }}
         run: |
-          sudo apt-get remove -q -y python3-yaml
+          # upgrade pip, remove incompatible pyYAML
+          sudo apt-get remove -qy python3-yaml
           sudo -H pip3 install -U pip setuptools wheel
           # screw you cryptography! why require rust??
           sudo -H pip3 install "cryptography<3.4"
 
       - name: install requisites
         run: |
+          # remove incompatible ansible preinstalled on github
+          sudo rm -f /opt/pipx_bin/ansible*
           # postpone ansible 2.10 and molecule 3.2
           sudo -H pip3 install ansible==2.9.18 mitogen==0.2.9
           sudo -H pip3 install "molecule[docker]<3.2"
@@ -108,14 +111,14 @@ jobs:
           ln -sf $dir/plugins/strategy ./plugins/strategy/mitogen
 
       - name: make symlink for custom modules
-        if: ${{ matrix.target == 'plugins' }}
+        if: ${{ matrix.scenario == 'plugins' }}
         run: |
           ln -sf ~/.cache/molecule/ivantory-test/$TARGET/roles ./roles-galaxy
 
       - name: run test
         run: |
           # set environment for local host, docker or plugins test
-          if [ ${{ matrix.target }} == local ]; then
+          if [ ${{ matrix.scenario }} == local ]; then
               export IVATEST_FIREWALL=ferm
               export IVATEST_SSH_SERVER=false
               export IVATEST_SYSTEMD_TMPFILES=false
@@ -128,5 +131,5 @@ jobs:
               export IVATEST_SSH_SERVER=true
               export IVATEST_SYSTEMD_TMPFILES=true
           fi
-          molecule test -s ${{ matrix.target }}
+          molecule test -s ${{ matrix.scenario }}
 ...
