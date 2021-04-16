@@ -115,6 +115,13 @@ jobs:
         run: |
           ln -sf ~/.cache/molecule/ivantory-test/$TARGET/roles ./roles-galaxy
 
+      - name: investigate idempotence failures
+        run: |
+          touch log/idempotence.log
+          src=$(pwd)
+          pkg=$(python3 -c "import molecule as m; print(m.__path__[0])")
+          sudo patch -d ${pkg} -p3 -i ${src}/.github/workflows/idempotence.patch
+
       - name: run test
         run: |
           # set environment for local host, docker or plugins test
@@ -132,4 +139,11 @@ jobs:
               export IVATEST_SYSTEMD_TMPFILES=true
           fi
           molecule test -s ${{ matrix.scenario }}
+
+      - name: upload idempotence log
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: idempotence.${{ matrix.name }}.log
+          path: log/idempotence.log
 ...
