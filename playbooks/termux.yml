@@ -17,6 +17,7 @@
 - name: gather facts about ubuntu in termux
   hosts: termuntu
   gather_facts: true
+  strategy: linear  # workaround for mitogen 0.2.9 bug with ansible 2.9.18+ on xenial
   tags: always
 
 - name: setup ubuntu in termux

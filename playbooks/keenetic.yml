@@ -13,6 +13,7 @@
 - name: gather entware facts
   hosts: keenetic_wrt
   gather_facts: true
+  strategy: linear  # workaround for mitogen 0.2.9 bug with ansible 2.9.18+ on xenial
   tags: [always, wrt_gather, wrt]
 
 - name: setup core packages and vpn on entware
