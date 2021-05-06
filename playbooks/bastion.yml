@@ -2,6 +2,7 @@
 - name: gather facts
   hosts: all
   gather_facts: true
+  strategy: linear  # workaround for mitogen 0.2.9 bug with ansible 2.9.18+ on xenial
   tags: always
 
 - name: simple proxy services

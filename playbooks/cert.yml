@@ -2,12 +2,14 @@
 - name: gather facts
   hosts: all
   gather_facts: true
+  strategy: linear  # workaround for mitogen 0.2.9 bug with ansible 2.9.18+ on xenial
   tags: always
 
 - name: letsencrypt certificates on production master
   hosts:
     - prod_master_all
   gather_facts: false
+  strategy: linear  # mitogen fails when cert_master runs setup for replicas
   roles:
     - ivansible.cert_cloudflare
     - ivansible.cert_master
