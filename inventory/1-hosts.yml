@@ -41,7 +41,4 @@ all:
         testhost:
       vars:
         ansible_python_interpreter: /usr/bin/python
-    test_inven:
-      hosts:
-        localhost:
 ...
