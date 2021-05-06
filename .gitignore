@@ -14,3 +14,4 @@ __pycache__
 *.swp
 /log/*.log
 /*.tar.gz
+.cache
