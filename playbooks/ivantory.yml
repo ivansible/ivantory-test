@@ -3,7 +3,7 @@
   import_playbook: "{{ playbook_dir }}/starter.yml"
 
 - name: deploy ivan's inventory ("ivantory")
-  hosts: permitted
+  hosts: permitted,!microservers
   gather_facts: false
   vars:
     divan_skip_prepare: true  # already done in dev-user/dev-ansible

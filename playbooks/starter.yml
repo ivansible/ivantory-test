@@ -56,7 +56,7 @@
       when: lin_use_docker |bool
 
 - name: setup ansible
-  hosts: permitted
+  hosts: permitted,!microservers
   gather_facts: false
   tags: starter_ansible
   roles:
