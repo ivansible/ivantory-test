@@ -84,9 +84,8 @@ jobs:
         run: |
           # remove incompatible ansible preinstalled on github
           sudo rm -f /opt/pipx_bin/ansible*
-          # postpone ansible 2.10 and molecule 3.2
-          sudo -H pip3 install ansible==2.9.21 mitogen==0.2.9
-          sudo -H pip3 install "molecule[docker]<3.2"
+          sudo -H pip3 install ansible==2.10.7 mitogen==0.3.2
+          sudo -H pip3 install molecule==3.4.1 molecule-docker==1.0.2
           # pull dependencies
           sudo -H pip3 install ansible-lint yamllint flake8 pytest pytest-testinfra
           sudo -H pip3 install boto3 jmespath netaddr docker
@@ -100,6 +99,15 @@ jobs:
         if: ${{ matrix.scenario == 'plugins' }}
         run: |
           ln -sf ~/.cache/molecule/ivantory-test/$TARGET/roles ./roles-galaxy
+
+      - name: fix molecule-docker for mitogen
+        # mitogen speeds up main plays greatly, but create/destroy plays from
+        # molecule-docker use async wait which get stuck with mitogen, so patch
+        # https://github.com/mitogen-hq/mitogen/issues/835#issuecomment-978127345
+        run: |
+          src=$(pwd)
+          pkg=$(python3 -c "import molecule_docker as m; print(m.__path__[0])")
+          sudo patch -d ${pkg} -p1 -i ${src}/.github/workflows/docker-mitogen.patch
 
       - name: investigate idempotence failures
         run: |
