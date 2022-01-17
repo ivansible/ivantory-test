@@ -18,17 +18,17 @@ provisioner:
   name: ansible
   inventory:
     links:
-      hosts: ../default/hosts.yml
-      group_vars: ../../inventory/group_vars
-      host_vars: ../../inventory/host_vars
+      hosts: $MOLECULE_SCENARIO_DIRECTORY/../default/hosts.yml
+      group_vars: $MOLECULE_PROJECT_DIRECTORY/inventory/group_vars
+      host_vars: $MOLECULE_PROJECT_DIRECTORY/inventory/host_vars
   playbooks:
-    prepare: ../default/playbooks/${PLAYBOOK:-starter}-init.yml
-    converge: ../default/playbooks/${PLAYBOOK:-starter}-play.yml
-    verify: ../default/playbooks/${PLAYBOOK:-starter}-test.yml
+    prepare: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-init.yml
+    converge: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-play.yml
+    verify: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-test.yml
   env:
-    ANSIBLE_ROLES_PATH: ../../roles:../../roles-galaxy:../../roles-temp
-    ANSIBLE_CALLBACK_PLUGINS: ../../plugins/callback
-    ANSIBLE_STRATEGY_PLUGINS: ../../plugins/strategy/mitogen
+    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles:$MOLECULE_PROJECT_DIRECTORY/roles-galaxy:$MOLECULE_PROJECT_DIRECTORY/roles-temp
+    ANSIBLE_CALLBACK_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/callback
+    ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
   config_options:
     defaults:
       strategy: mitogen_linear
