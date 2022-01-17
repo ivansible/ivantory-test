@@ -3,19 +3,21 @@
   hosts: all
   gather_facts: false
   tags: json_patch
+  vars:
+    test_json: "{{ ansible_user_dir }}/test.json"
   tasks:
     - name: deploy the test json file
       copy:
         content: '{"foo": {"one": 1, "bar": "baz"}}'  # noqa 206
-        dest: test.json
+        dest: "{{ test_json }}"
     - name: get checksum of original json
       stat:
-        path: test.json
+        path: "{{ test_json }}"
       register: file1
 
     - name: get the original file content
       slurp:
-        src: test.json
+        src: "{{ test_json }}"
       register: data0
     - name: assert that original json is expected
       assert:
@@ -27,7 +29,7 @@
 
     - name: add the 'qux' member to json and back it up
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: add
             path: /foo/qux
@@ -37,7 +39,7 @@
 
     - name: get file content after adding
       slurp:
-        src: test.json
+        src: "{{ test_json }}"
       register: data1
     - name: assert that adding has changed json and it really has 'qux'
       assert:
@@ -58,7 +60,7 @@
 
     - name: add the 'qux' member again
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: add
             path: /foo/qux
@@ -71,7 +73,7 @@
 
     - name: remove the 'bar' member from json
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: remove
             path: /foo/bar
@@ -79,7 +81,7 @@
 
     - name: get file content after removal
       slurp:
-        src: test.json
+        src: "{{ test_json }}"
       register: data2
     - name: assert that removal has changed json and it doesn't have 'bar'
       assert:
@@ -89,7 +91,7 @@
 
     - name: remove the 'bar' member again
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: remove
             path: "/foo/bar"
@@ -102,7 +104,7 @@
       copy:
         remote_src: true
         src: "{{ add1.backup }}"
-        dest: test.json
+        dest: "{{ test_json }}"
       register: restore1
     - name: assert that restored file is dentical to original json
       assert:
@@ -110,7 +112,7 @@
 
     - name: move the 'one' member to 'uno'
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: move
             from: /foo/one
@@ -119,7 +121,7 @@
 
     - name: get file content after move
       slurp:
-        src: test.json
+        src: "{{ test_json }}"
       register: data3
     - name: assert that the 'one' member was moved
       assert:
@@ -130,7 +132,7 @@
 
     - name: move the 'one' member to 'uno' again
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: move
             from: /foo/one
@@ -142,7 +144,7 @@
 
     - name: replace the 'uno' member with a new value
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: replace
             path: /foo/uno
@@ -151,7 +153,7 @@
 
     - name: get file content after replacement
       slurp:
-        src: test.json
+        src: "{{ test_json }}"
       register: data4
     - name: assert that the 'uno' member's value was replaced
       assert:
@@ -161,7 +163,7 @@
 
     - name: replace the 'uno' member's value again
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: replace
             path: /foo/uno
@@ -173,7 +175,7 @@
 
     - name: copy the 'uno' member into a new member and change its value
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: copy
             from: /foo/uno
@@ -182,7 +184,7 @@
 
     - name: get file content after copying
       slurp:
-        src: test.json
+        src: "{{ test_json }}"
       register: data5
     - name: assert that the copy duplicated the value
       assert:
@@ -192,7 +194,7 @@
 
     - name: copy the 'uno' member into a new member again
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: copy
             from: /foo/uno
@@ -204,7 +206,7 @@
 
     - name: test the value of 'dos' is 'two'
       json_patch:
-        src: test.json
+        src: "{{ test_json }}"
         operations:
           - op: test
             path: /foo/dos
