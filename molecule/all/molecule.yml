@@ -6,15 +6,6 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: xenial
-    groups:
-      - docker_molecule
-    image: ivandeex/molecule:16.04
-    command: ""
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
   - name: bionic
     groups:
       - docker_molecule
@@ -53,6 +44,7 @@ provisioner:
     defaults:
       strategy: mitogen_linear
       stdout_callback: unixy2
+      verbosity: 1
   lint:
     name: ansible-lint
 verifier:
