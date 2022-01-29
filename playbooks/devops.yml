@@ -38,9 +38,10 @@
     - ivansible.dev_hosters
     - ivansible.dev_terraform
     - ivansible.dev_packer
-    # nxserver is required by virtualbox gui (and many others..)
-    - ivansible.lin_nxserver
-    # mount VM images
+    ## nxserver is required by virtualbox gui (and many others..)
+    - role: ivansible.lin_nxserver
+      when: ansible_architecture == 'x86_64'
+    ## mount VM images
     - ivansible.lin_rclone
     - ivansible.srv_vscode
   tags: devops_software
