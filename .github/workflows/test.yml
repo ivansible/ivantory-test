@@ -7,7 +7,7 @@ on:
     - cron: '15 2 * * 1'
   push:
     branches:
-      - master
+      - main
     tags:
       - '*'
   pull_request:
@@ -16,28 +16,18 @@ jobs:
   test:
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 3
       matrix:
         include:
-          - name: ivantory-bionic
+          - name: ivantory-docker
             playbook: ivantory
-            os: ubuntu-18.04
-            scenario: local
+            os: ubuntu-latest
+            scenario: all
 
-          - name: ivantory-focal
-            playbook: ivantory
-            os: ubuntu-20.04
-            scenario: local
-
-          - name: devops-bionic
+          - name: devops-docker
             playbook: devops
-            os: ubuntu-18.04
-            scenario: local
-
-          - name: devops-focal
-            playbook: devops
-            os: ubuntu-20.04
-            scenario: local
+            os: ubuntu-latest
+            scenario: all
 
           - name: bastion-docker
             playbook: bastion
