@@ -3,19 +3,21 @@
   hosts: all
   gather_facts: false
   tags: go
+  vars:
+    gover: '1.13'  # golang version on focal
   tasks:
     - name: install golang toolchain
       become: true
       apt:
         name:
           - git
-          - golang-1.10
+          - golang-{{ gover }}
         force_apt_get: true
     - name: link go binary into path
       become: true
       file:
         state: link
-        src: /usr/lib/go-1.10/bin/go
+        src: /usr/lib/go-{{ gover }}/bin/go
         dest: /usr/bin/go
 
     - name: check go environment
@@ -24,7 +26,7 @@
       changed_when: false
     - name: assert go_root
       assert:
-        that: result.stdout |regex_search('GOROOT="/usr/lib/go-1.10"')
+        that: result.stdout |regex_search('GOROOT="/usr/lib/go-{{ gover }}"')  # " dummy quote to fix vim syntax
 
     - name: remove go dir from previous test runs
       file:

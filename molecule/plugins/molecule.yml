@@ -6,8 +6,8 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: bionic
-    image: ivandeex/molecule:18.04
+  - name: focal
+    image: ivandeex/molecule:20.04
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
