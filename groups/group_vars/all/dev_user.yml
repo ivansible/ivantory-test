@@ -1,4 +1,0 @@
----
-dev_user_group_vars:
-  ANSIBLE_FORCE_COLOR: true
-...

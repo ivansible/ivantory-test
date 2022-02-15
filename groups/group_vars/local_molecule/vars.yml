@@ -1,4 +1,0 @@
----
-ansible_connection: local
-lin_core_time_sync: true
-...

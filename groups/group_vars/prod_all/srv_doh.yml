@@ -1,5 +1,0 @@
----
-srv_doh_upstream_dns: "{{ nginx_resolver |default(nginx_fallback_resolver) |default('127.0.0.1') }}"
-srv_doh_local_port: 1053
-srv_doh_web_path: /supersecret/doh
-...

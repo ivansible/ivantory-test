@@ -1,4 +1,0 @@
----
-packer_builder_vultr_version: "0.2.2"
-packer_templates_repo: ""
-...

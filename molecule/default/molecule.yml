@@ -21,8 +21,6 @@ provisioner:
   inventory:
     links:
       hosts: $MOLECULE_SCENARIO_DIRECTORY/../default/hosts.yml
-      group_vars: $MOLECULE_PROJECT_DIRECTORY/inventory/group_vars
-      host_vars: $MOLECULE_PROJECT_DIRECTORY/inventory/host_vars
   playbooks:
     prepare: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-init.yml
     converge: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-play.yml

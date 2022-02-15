@@ -1,9 +1,0 @@
----
-srv_pg_ssl_cert: "{{ nginx_ssl_cert }}"
-srv_pg_ssl_key: "{{ nginx_ssl_key }}"
-
-srv_pg_timezone: W-SU
-
-srv_pg_local_subnets:
-  - 192.168.0.0/16
-...
