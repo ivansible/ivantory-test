@@ -1,5 +1,0 @@
----
-certbot_group: "{{ web_group }}"
-
-certbot_master_host: master1
-...

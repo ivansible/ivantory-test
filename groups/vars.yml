@@ -1,0 +1,55 @@
+---
+all:
+  vars:
+    ## ssh_keys
+    dev_user_authorized_keys_files:
+      - files/insecure.key
+    dev_user_installed_keys_files:
+      - files/insecure.key
+    lin_ssh_keys_files: "{{ dev_user_installed_keys_files }}"
+
+    ## lin_sslh
+    use_sslh: false
+
+  ## lin_sslh
+  hosts:
+    test_sslh:
+      sslh_listen_addresses:
+        - "{{ ansible_default_ipv4.address }}"
+        - "{{ ansible_default_ipv6.address }}"
+      use_sslh: true
+
+  children:
+    ## lin_nginx
+    xenial_nodns:
+      hosts:
+        test_nodns:
+      vars:
+        nginx_resolver: 1.1.1.1
+
+    ## lin_restic
+    vagrant:
+      vars:
+        lin_restic_password: supersecret
+        lin_restic_repo_owner: ivandeex
+        lin_restic_postgres_port: 5432
+        lin_restic_rclone_remote: repo
+        # molecule defines no jobs
+        lin_restic_jobs: []
+
+    ## srv_ss
+    prod_all:
+      vars:
+        srv_ss_configs:
+          - name: default
+            port: 1081
+            direct: true
+            password: supersecret
+            method: aes-128-cfb
+        srv_ss_mirrors:
+          # `server` is a front server name, which can be
+          # 'default' (must go first) or full.host.name or .domain.name
+          # `origin` is host name of an origin server, which must support https
+          - server: default
+            origin: www.lartc.org
+...

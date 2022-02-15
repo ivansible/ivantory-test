@@ -1,8 +1,0 @@
----
-dev_user_git_fullname: "Git User"
-dev_user_git_email: "user@mail.com"
-
-dev_user_group_secrets:
-  AESPASS: supersecret
-  VULTR_API_KEY: supersecret
-...

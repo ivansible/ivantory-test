@@ -1,6 +1,0 @@
----
-ast_billing_secrets:
-  - name: pgsql
-    username: "{{ ast_pg_user }}"
-    password: "{{ ast_pg_pass }}"
-...

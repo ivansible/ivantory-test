@@ -1,7 +1,0 @@
----
-vag_share_host: 192.168.99.1
-vag_share_name: share1
-vag_share_user: ubuntu1
-vag_share_pass: supersecret
-vag_share_mount: "{{ ansible_user_dir }}/temp/share1"
-...

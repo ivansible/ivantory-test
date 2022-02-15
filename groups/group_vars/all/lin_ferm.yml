@@ -1,6 +1,0 @@
----
-ferm_hosts_internal:
-  - 127.0.0.1
-
-ferm_hosts_block: []
-...
