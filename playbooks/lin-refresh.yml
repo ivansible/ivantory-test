@@ -10,5 +10,5 @@
   gather_facts: false
   strategy: "{{ linref_play_strategy | default('linear') }}"
   roles:
-    - role: ivansible.lin_refresh
+    - role: ivansible.linux.refresh
 ...

@@ -21,17 +21,17 @@
   gather_facts: false
   tags: [wrt_base, wrt]
   roles:
-    - ivansible.wrt_core
-    - ivansible.wrt_supervisor
-    - ivansible.wrt_srelay
-    - ivansible.wrt_privoxy
-    - ivansible.wrt_ss
-    - ivansible.wrt_v2ray
-    - ivansible.wrt_net
-    - ivansible.wrt_sshtun
-    - ivansible.wrt_openvpn
-    - ivansible.wrt_wireguard
-    - ivansible.wrt_yggdrasil
+    - ivansible.entware.core
+    - ivansible.entware.supervisor
+    - ivansible.entware.srelay
+    - ivansible.entware.privoxy
+    - ivansible.entware.ss
+    - ivansible.entware.v2ray
+    - ivansible.entware.net
+    - ivansible.entware.sshtun
+    - ivansible.entware.openvpn
+    - ivansible.entware.wireguard
+    - ivansible.entware.yggdrasil
 
 - name: configure vpn on ndms
   hosts: keenetic_ndm
@@ -39,9 +39,9 @@
   strategy: linear  # mitogen breaks httpapi
   tags: [ndm_vpn, ndm]
   roles:
-    - ivansible.ndm_firewall
-    - ivansible.ndm_wireguard
-    - ivansible.ndm_openvpn
+    - ivansible.ndms.firewall
+    - ivansible.ndms.wireguard
+    - ivansible.ndms.openvpn
 
 - name: test keenetic cli
   hosts: keenetic_cli

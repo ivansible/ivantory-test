@@ -11,17 +11,17 @@
     - dev_master
   gather_facts: false
   roles:
-    - ivansible.srv_postgres
-    - ivansible.srv_mongodb
-    - ivansible.srv_redis
+    - ivansible.server.postgres
+    - ivansible.server.mongodb
+    - ivansible.server.redis
   tags: master_db
 
 - name: web servers
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.lin_sslh
-    - ivansible.lin_nginx
+    - ivansible.nginx.sslh
+    - ivansible.nginx.nginx
   tags: master_web
 
 - name: mail (master-only)
@@ -30,17 +30,17 @@
     - dev_master
   gather_facts: false
   roles:
-    - ivansible.srv_cgpro
+    - ivansible.nginx.cgpro
   tags: master_mail
 
 - name: asterisk
   hosts: asterisk_servers
   gather_facts: false
   roles:
-    - ivansible.ast_core
-    - ivansible.ast_soho
-    - ivansible.ast_providers
-    - ivansible.ast_webui
+    - ivansible.asterisk.core
+    - ivansible.asterisk.soho
+    - ivansible.asterisk.providers
+    - ivansible.asterisk.webui
   tags: master_asterisk
 
 - name: backup
@@ -49,7 +49,7 @@
     - dev_master
   gather_facts: false
   roles:
-    - ivansible.lin_rclone
-    - ivansible.lin_restic
+    - ivansible.linux.rclone
+    - ivansible.linux.restic
   tags: master_backup
 ...

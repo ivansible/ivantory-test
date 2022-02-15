@@ -10,9 +10,9 @@
   gather_facts: false
   tags: starter_prepare
   roles:
-    - role: ivansible.vag_share
+    - role: ivansible.vagrant.share
       when: vag_share_name |default('',true)
-    - role: ivansible.vag_vbguest
+    - role: ivansible.vagrant.vbguest
 
 - name: update hostname
   hosts: all
@@ -32,10 +32,10 @@
   gather_facts: false
   tags: starter_prepare
   roles:
-    - role: ivansible.lin_core
-    - role: ivansible.lin_ssh
-    - role: ivansible.lin_motd
-    - role: ivansible.lin_rsyslog
+    - role: ivansible.linux.core
+    - role: ivansible.linux.ssh
+    - role: ivansible.linux.motd
+    - role: ivansible.linux.rsyslog
 
 - name: configure main user
   hosts:
@@ -45,14 +45,14 @@
   gather_facts: false
   tags: starter_user
   roles:
-    - ivansible.dev_user
+    - ivansible.devel.user
 
 - name: setup docker
   hosts: all
   gather_facts: false
   tags: starter_docker
   roles:
-    - role: ivansible.lin_docker
+    - role: ivansible.linux.docker
       when: lin_use_docker |bool
 
 - name: setup ansible
@@ -60,7 +60,7 @@
   gather_facts: false
   tags: starter_ansible
   roles:
-    - ivansible.dev_ansible
+    - ivansible.devel.ansible
 
 - name: system upgrade
   hosts: all
@@ -71,6 +71,6 @@
     # time-sync is already done in lin-core
     linref_time_sync: false
   roles:
-    - role: ivansible.lin_refresh
+    - role: ivansible.linux.refresh
       when: refresh |bool
 ...

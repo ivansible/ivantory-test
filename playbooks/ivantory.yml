@@ -8,7 +8,7 @@
   vars:
     divan_skip_prepare: true  # already done in dev-user/dev-ansible
   roles:
-    - ivansible.dev_ivantory
+    - ivansible.devel.ivantory
   tags:
     - ip4only
     - ivantory

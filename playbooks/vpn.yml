@@ -11,7 +11,7 @@
     - net_test
   gather_facts: false
   roles:
-    - ivansible.lin_net
+    - ivansible.linux.net
   tags:
     - vpn_linux
     - vpn_linux_net
@@ -20,7 +20,7 @@
   hosts: wireguard_peers
   gather_facts: false
   roles:
-    - ivansible.lin_wireguard
+    - ivansible.linux.wireguard
   tags:
     - vpn_linux
     - vpn_wireguard
@@ -30,7 +30,7 @@
   hosts: sshtun_servers
   gather_facts: false
   roles:
-    - ivansible.srv_sshtun
+    - ivansible.server.sshtun
   tags:
     - vpn_linux
     - vpn_sshtun
@@ -39,7 +39,7 @@
   hosts: yggdrasil_linux
   gather_facts: false
   roles:
-    - ivansible.lin_yggdrasil
+    - ivansible.linux.yggdrasil
   tags:
     - vpn_linux
     - vpn_yggdrasil
@@ -48,7 +48,7 @@
   hosts: net_vrrp
   gather_facts: false
   roles:
-    - ivansible.lin_keepalived
+    - ivansible.linux.keepalived
   tags:
     - vpn_linux
     - vpn_keepalived
@@ -58,12 +58,12 @@
   hosts: keenetic_wrt
   gather_facts: false
   roles:
-    - ivansible.wrt_net
-    - ivansible.wrt_v2ray
-    - ivansible.wrt_sshtun
-    - ivansible.wrt_openvpn
-    - ivansible.wrt_wireguard
-    - ivansible.wrt_yggdrasil
+    - ivansible.entware.net
+    - ivansible.entware.v2ray
+    - ivansible.entware.sshtun
+    - ivansible.entware.openvpn
+    - ivansible.entware.wireguard
+    - ivansible.entware.yggdrasil
   tags:
     - vpn_keenetic
     - vpn_wrt
@@ -73,9 +73,9 @@
   strategy: linear  # mitogen breaks httpapi
   gather_facts: false
   roles:
-    - ivansible.ndm_firewall
-    - ivansible.ndm_wireguard
-    - ivansible.ndm_openvpn
+    - ivansible.ndms.firewall
+    - ivansible.ndms.wireguard
+    - ivansible.ndms.openvpn
   tags:
     - vpn_keenetic
     - vpn_ndm
@@ -85,7 +85,7 @@
   hosts: openvpn_servers
   gather_facts: false
   roles:
-    - ivansible.srv_openvpn
+    - ivansible.linux.openvpn
   tags:
     - vpn_openvpn
     - vpn_ovpn

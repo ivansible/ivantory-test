@@ -9,27 +9,27 @@
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.lin_tor
-    - ivansible.lin_wireguard
-    - ivansible.srv_openvpn
-    - ivansible.srv_mtproxy
-    - ivansible.srv_ziproxy
-    - ivansible.srv_dante
+    - ivansible.linux.wireguard
+    - ivansible.linux.openvpn
+    - ivansible.server.mtproxy
+    - ivansible.server.ziproxy
+    - ivansible.server.dante
+    - ivansible.server.tor
   tags: bastion_proxy
 
 - name: services dependent on nginx and tls certificates
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.lin_sslh
-    - ivansible.lin_nginx
-    - ivansible.srv_cdn
-    - ivansible.srv_ss
-    - ivansible.srv_chisel
-    - ivansible.srv_doh
-    - ivansible.srv_dyndns
-    - ivansible.srv_v2ray
-    - ivansible.srv_sshtun
+    - ivansible.nginx.sslh
+    - ivansible.nginx.nginx
+    - ivansible.nginx.cdn
+    - ivansible.nginx.ss
+    - ivansible.nginx.chisel
+    - ivansible.nginx.doh
+    - ivansible.nginx.dyndns
+    - ivansible.nginx.v2ray
+    - ivansible.server.sshtun
   tags:
     - bastion_tls
 
@@ -39,7 +39,7 @@
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.srv_squid
+    - ivansible.nginx.squid
   tags: bastion_squid
 
 - name: refresh all facts before forwarding ports
@@ -54,6 +54,6 @@
     - prod_slaves_all
   gather_facts: false
   roles:
-    - ivansible.lin_bastion
+    - ivansible.linux.bastion
   tags: bastion_forwards
 ...

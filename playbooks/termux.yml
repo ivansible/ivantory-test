@@ -5,14 +5,14 @@
   gather_facts: false
   tags: termux_bootstrap
   roles:
-    - ivansible.termux_bootstrap
+    - ivansible.termux.bootstrap
 
 - name: setup termux core and boostrap proot
   hosts: termux
   gather_facts: false
   tags: termux_core
   roles:
-    - ivansible.termux_core
+    - ivansible.termux.core
 
 - name: gather facts about ubuntu in termux
   hosts: termuntu
@@ -25,7 +25,7 @@
   gather_facts: false
   tags: termux_ubuntu_setup
   roles:
-    - ivansible.termux_ubuntu
-    - ivansible.lin_motd
-    - ivansible.dev_user
+    - ivansible.termux.ubuntu
+    - ivansible.linux.motd
+    - ivansible.devel.user
 ...

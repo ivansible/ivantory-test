@@ -12,9 +12,9 @@
     docker_extras: true
     docker_bash_completion_extras: true
   roles:
-    - role: ivansible.lin_devel
-    - role: ivansible.lin_go
-    - role: ivansible.lin_docker
+    - role: ivansible.devel.tools
+    - role: ivansible.devel.go
+    - role: ivansible.linux.docker
       when: lin_use_docker |bool
   tags: devops_docker
 
@@ -25,25 +25,25 @@
     # avoid task duplication between dev-user and dev-ivantory
     divan_skip_prepare: true
   roles:
-    - ivansible.dev_user
-    - ivansible.dev_ansible
+    - ivansible.devel.user
+    - ivansible.devel.ansible
     # ivantory's ansible playbooks are required by terraform plans
-    - ivansible.dev_ivantory
+    - ivansible.devel.ivantory
   tags: devops_permitted
 
 - name: configure for devops and cloud control
   hosts: all
   gather_facts: false
   roles:
-    - ivansible.dev_hosters
-    - ivansible.dev_terraform
-    - ivansible.dev_packer
+    - ivansible.devel.hosters
+    - ivansible.devel.terraform
+    - ivansible.devel.packer
     ## nxserver is required by virtualbox gui (and many others..)
-    - role: ivansible.lin_nxserver
+    - role: ivansible.server.nxserver
       when: ansible_architecture == 'x86_64'
     ## mount VM images
-    - ivansible.lin_rclone
-    - ivansible.srv_vscode
+    - ivansible.linux.rclone
+    - ivansible.devel.vscode
   tags: devops_software
 
 - name: enable host for virtual machines
@@ -59,8 +59,8 @@
       no_log: true
       tags: devops_fixes
   roles:
-    - ivansible.lin_virtualbox
-    - ivansible.dev_vagrant
+    - ivansible.devel.virtualbox
+    - ivansible.devel.vagrant
   tags: devops_virtual
 
 - name: silence cloud-init warning on bender

@@ -11,8 +11,8 @@
   gather_facts: false
   strategy: linear  # mitogen fails when cert_master runs setup for replicas
   roles:
-    - ivansible.cert_cloudflare
-    - ivansible.cert_master
+    - ivansible.cert.cloudflare
+    - ivansible.cert.master
   tags: cert_master
 
 - name: letsencrypt certificates on development hosts
@@ -21,7 +21,7 @@
     - prod_test
   gather_facts: false
   roles:
-    - ivansible.cert_copy
+    - ivansible.cert.copy
   tags: cert_devel
 
 - name: letsencrypt certificates on production slaves
@@ -29,6 +29,6 @@
     - prod_slaves
   gather_facts: false
   roles:
-    - ivansible.cert_replica
+    - ivansible.cert.replica
   tags: cert_slaves
 ...
