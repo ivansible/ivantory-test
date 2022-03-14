@@ -9,6 +9,7 @@ platforms:
   - name: focal
     groups:
       - docker_molecule
+      - python3  # mitigate mitogen detecting python as python2 on focal
     image: ivandeex/molecule:20.04
     command: ""
     volumes:

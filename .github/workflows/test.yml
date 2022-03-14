@@ -22,22 +22,22 @@ jobs:
           - name: ivantory-docker
             playbook: ivantory
             os: ubuntu-latest
-            scenario: all
+            scenario: default
 
           - name: devops-docker
             playbook: devops
             os: ubuntu-latest
-            scenario: all
+            scenario: default
 
           - name: bastion-docker
             playbook: bastion
             os: ubuntu-latest
-            scenario: all
+            scenario: default
 
           - name: master-docker
             playbook: master
             os: ubuntu-latest
-            scenario: all
+            scenario: default
 
           - name: plugins
             playbook: none
