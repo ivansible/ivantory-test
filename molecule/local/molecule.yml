@@ -1,19 +1,4 @@
 ---
-dependency:
-  name: galaxy
-  options:
-    role-file: requirements.yml
-driver:
-  name: delegated
-  options:
-    managed: false
-    ansible_connection_options:
-      ansible_connection: local
-platforms:
-  - name: localhost
-    groups:
-      - local_molecule
-      - ${IVATEST_PYTHON_GROUP:-python_autodetect}
 provisioner:
   name: ansible
   inventory:
@@ -38,15 +23,33 @@ verifier:
   name: ansible
   lint:
     name: ansible-lint
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: delegated
+  options:
+    managed: false
+    ansible_connection_options:
+      ansible_connection: local
+platforms:
+  - name: localhost
+    groups:
+      - local_molecule
+      - ${IVATEST_PYTHON_GROUP:-python_autodetect}
 scenario:
   test_sequence:
     - lint
     - dependency
+    # destroy
     - syntax
+    # create
     - prepare
     - converge
-    - idempotence
+    # idempotence
     - verify
+    # destroy
   create_sequence:
     - create
     - prepare
