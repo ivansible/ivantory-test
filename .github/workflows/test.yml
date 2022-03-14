@@ -14,6 +14,23 @@ on:
 
 jobs:
   test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    env:
+      SCENARIO: ${{ matrix.scenario }}
+      PLAYBOOK: ${{ matrix.playbook }}
+      ANSIBLE_FORCE_COLOR: true
+
+      IVATEST_FIREWALL: 'none'
+      IVATEST_SSH_SERVER: true
+      IVATEST_SYSTEMD_TMPFILES: true
+      ## mitigate mitogen detecting python as python2 on focal
+      IVATEST_PYTHON_GROUP: python3
+
+      ## environment for local host:
+      # IVATEST_SSH_SERVER: false
+      # IVATEST_SYSTEMD_TMPFILES: false
+
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -44,85 +61,46 @@ jobs:
             os: ubuntu-latest
             scenario: plugins
 
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
-
-    env:
-      TARGET: ${{ matrix.scenario }}
-      PLAYBOOK: ${{ matrix.playbook }}
-      ANSIBLE_FORCE_COLOR: true
-
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
 
-      - name: fix pip issues on bionic
-        if: ${{ matrix.os == 'ubuntu-18.04' }}
-        run: |
-          # fix "cannot uninstall pexpect, it is a distutils installed project"
-          sudo apt-get remove -qy python3-pexpect
-
-      - name: upgrade pip
-        run: |
-          # upgrade pip, remove incompatible pyYAML
-          sudo apt-get remove -qy python3-yaml
-          sudo -H pip3 install -U pip setuptools wheel
-          # screw you cryptography! why require rust??
-          sudo -H pip3 install "cryptography<3.4"
-
       - name: install requisites
         run: |
-          # remove incompatible ansible preinstalled on github
+          sudo apt-get remove -qy python3-yaml
           sudo rm -f /opt/pipx_bin/ansible*
-          sudo -H pip3 install ansible==2.10.7 mitogen==0.3.2
-          sudo -H pip3 install molecule==3.4.1 molecule-docker==1.0.2
-          # pull dependencies
-          sudo -H pip3 install ansible-lint yamllint flake8 pytest pytest-testinfra
-          sudo -H pip3 install boto3 jmespath netaddr docker
+          sudo -H python3 -m pip install -U pip setuptools wheel
+          sudo -H pip3 install -r molecule/default/requirements.txt
 
       - name: make mitogen strategy symlink
         run: |
-          dir=$(python3 -c "import ansible_mitogen as m; print(m.__path__[0])")
-          ln -sf $dir/plugins/strategy ./plugins/strategy/mitogen
+          PKG=$(python3 -c "import ansible_mitogen as m; print(m.__path__[0])")
+          ln -sf $PKG/plugins/strategy ./plugins/strategy/mitogen
 
       - name: make symlink for custom modules
         if: ${{ matrix.scenario == 'plugins' }}
         run: |
-          ln -sf ~/.cache/molecule/ivantory-test/$TARGET/roles ./roles-galaxy
+          ln -sf ~/.cache/molecule/ivantory-test/$SCENARIO/roles ./roles-galaxy
 
       - name: fix molecule-docker for mitogen
         # mitogen speeds up main plays greatly, but create/destroy plays from
         # molecule-docker use async wait which get stuck with mitogen, so patch
         # https://github.com/mitogen-hq/mitogen/issues/835#issuecomment-978127345
         run: |
-          src=$(pwd)
-          pkg=$(python3 -c "import molecule_docker as m; print(m.__path__[0])")
-          sudo patch -d ${pkg} -p1 -i ${src}/.github/workflows/docker-mitogen.patch
+          SRC=$(pwd)
+          PKG=$(python3 -c "import molecule_docker as m; print(m.__path__[0])")
+          sudo patch -d $PKG -p1 -i $SRC/.github/workflows/docker-mitogen.patch
 
       - name: investigate idempotence failures
         run: |
           touch log/idempotence.log
-          src=$(pwd)
-          pkg=$(python3 -c "import molecule as m; print(m.__path__[0])")
-          sudo patch -d ${pkg} -p3 -i ${src}/.github/workflows/idempotence.patch
+          SRC=$(pwd)
+          PKG=$(python3 -c "import molecule as m; print(m.__path__[0])")
+          sudo patch -d $PKG -p3 -i $SRC/.github/workflows/idempotence.patch
 
       - name: run test
         run: |
-          # set environment for local host, docker or plugins test
-          if [ ${{ matrix.scenario }} == local ]; then
-              export IVATEST_FIREWALL=none
-              export IVATEST_SSH_SERVER=false
-              export IVATEST_SYSTEMD_TMPFILES=false
-              if [ ${{ matrix.os }} == ubuntu-20.04 ]; then
-                  # mitigate mitogen detecting python as python2 on focal
-                  export IVATEST_PYTHON_GROUP=python3
-              fi
-          else
-              export IVATEST_FIREWALL=none
-              export IVATEST_SSH_SERVER=true
-              export IVATEST_SYSTEMD_TMPFILES=true
-          fi
-          molecule test -s ${{ matrix.scenario }}
+          molecule test -s $SCENARIO
 
       - name: upload idempotence log
         if: always()

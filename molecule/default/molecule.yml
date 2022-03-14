@@ -1,21 +1,4 @@
 ---
-dependency:
-  name: galaxy
-  options:
-    role-file: requirements.yml
-driver:
-  name: docker
-platforms:
-  - name: focal
-    groups:
-      - docker_molecule
-      - python3  # mitigate mitogen detecting python as python2 on focal
-    image: ivandeex/molecule:20.04
-    command: ""
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
 provisioner:
   name: ansible
   inventory:
@@ -40,6 +23,23 @@ verifier:
   name: ansible
   lint:
     name: ansible-lint
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: focal
+    groups:
+      - docker_molecule
+      - python3  # mitigate mitogen detecting python as python2 on focal
+    image: ivandeex/molecule:20.04
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
 scenario:
   test_sequence:
     - lint
@@ -49,7 +49,7 @@ scenario:
     - create
     - prepare
     - converge
-    # - idempotence
+    # idempotence
     - verify
     - destroy
   create_sequence:
