@@ -15,6 +15,8 @@ DOCUMENTATION = '''
       - set as stdout in configuration
 '''
 
+import json
+
 from datetime import datetime
 from os.path import basename
 from ansible import constants as C
@@ -175,12 +177,19 @@ class CallbackModule(CallbackModule_default):
     def v2_on_file_diff(self, result):
         if result._task.loop and 'results' in result._result:
             for res in result._result['results']:
-                if 'diff' in res and res['diff'] and res.get('changed', False):
-                    diff = self._get_diff(res['diff'])
-                    if diff:
-                        self._display.display(diff)
-        elif 'diff' in result._result and result._result['diff'] and result._result.get('changed', False):
-            diff = self._get_diff(result._result['diff'])
+                self._display_diff(res)
+        else:
+            self._display_diff(result._result)
+
+    def _display_diff(self, result):
+        src = result.get('diff', None)
+        if isinstance(src, dict) and 'prepared' in src:
+            prep = src['prepared']
+            if isinstance(prep, dict):
+                str_prep = json.dumps(prep, sort_keys=True, indent=2, ensure_ascii=False)
+                src['prepared'] = str_prep
+        if src and result.get('changed', False):
+            diff = self._get_diff(src)
             if diff:
                 self._display.display(diff)
 
