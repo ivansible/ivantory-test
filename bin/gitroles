@@ -3,7 +3,7 @@ prog=$(basename "$0")
 dir=$(readlink -f "$0")
 dir=$(dirname "$dir")
 divan_dir=$(dirname "$dir")
-roles_dir=$(readlink -f "$divan_dir/roles-galaxy")
+roles_dir=$(readlink -f "$divan_dir/roles")
 
 full=0
 pull=0
