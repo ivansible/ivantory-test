@@ -9,7 +9,8 @@ provisioner:
     converge: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-play.yml
     verify: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-test.yml
   env:
-    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles:$MOLECULE_PROJECT_DIRECTORY/roles-galaxy:$MOLECULE_PROJECT_DIRECTORY/roles-temp
+    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
+    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
     ANSIBLE_CALLBACK_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/callback
     ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
   config_options:
@@ -43,7 +44,7 @@ platforms:
 scenario:
   test_sequence:
     - lint
-    - dependency
+    # dependency
     - destroy
     - syntax
     - create

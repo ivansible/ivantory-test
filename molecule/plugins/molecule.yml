@@ -23,7 +23,8 @@ provisioner:
     # tests are performed in converge step here (skip verify)
     converge: playbooks/test.yml
   env:
-    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles:$MOLECULE_PROJECT_DIRECTORY/roles-galaxy:$MOLECULE_PROJECT_DIRECTORY/roles-temp
+    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
+    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
     ANSIBLE_CALLBACK_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/callback
     ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
   config_options:

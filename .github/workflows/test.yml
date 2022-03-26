@@ -98,6 +98,12 @@ jobs:
           PKG=$(python3 -c "import molecule as m; print(m.__path__[0])")
           sudo patch -d $PKG -p3 -i $SRC/.github/workflows/idempotence.patch
 
+      - name: install required collections
+        run: |
+          rm -f collections/ansible_collections
+          mkdir -p collections/ansible-collections
+          ./bin/import-roles
+
       - name: run test
         run: |
           molecule test -s $SCENARIO
