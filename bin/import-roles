@@ -1,50 +1,87 @@
 #!/bin/bash
-prog=$(basename "$0")
-mode="$1"
-
-case "$mode" in
-  '')
-    mode=devel
-    ;;
-  light|force|devel|clone)
-    ;;
-  *)
-    echo "usage: $prog force|light|devel|clone"
-    exit 1
-esac
-echo "mode: $mode"
+#set -x
 
 dir=$(readlink -f "$0")
 dir=$(dirname "$dir")
 divan_dir=$(dirname "$dir")
-venv_dir=$(readlink -f "$divan_dir/.venv")
-roles_dir=$(readlink -f "$divan_dir/roles-galaxy")
 
-force_arg=""
-git_meta_arg=""
-nodep_arg="--no-deps"
+requirements_file="$divan_dir/requirements.yml"
+collections_dir=$(readlink -f "$divan_dir/collections/ansible_collections")
+roles_dir=$(readlink -f "$divan_dir/roles")
+default_branch=main
 
-cd "$divan_dir" || exit 1
-# shellcheck disable=SC1090
-. "$venv_dir/bin/activate" || exit 1
+kind="item"
+name=""
+repo=""
+branch=""
 
-if [ $mode = force ] || [ $mode = devel ]; then
-    rm -rf -- "${roles_dir:?}"/*
-    force_arg="--force"
-fi
-if [ $mode = devel ]; then
-    git_meta_arg="--keep-scm-meta"
-fi
+install_item()
+{
+  namespace=${name%.*}
+  dir=${name#*.}
+  if [[ $kind ]] && [[ $namespace ]] && [[ $dir ]] && [[ $repo ]]; then
+    case "$kind" in
+      collection)
+        parent="$collections_dir/$namespace" ;;
+      role)
+        parent="$roles_dir/$namespace" ;;
+    esac
+    if [ -d "$parent/$dir" ]; then
+      echo "> Skip installed $kind $name"
+      return
+    fi
+    echo "> Installing $kind $namespace/$dir from $repo ($branch) ..."
+    mkdir -p "$parent"
+    git clone -b "$branch" "$repo" "$parent/$dir" || exit 1
+  elif [[ $name ]] || [[ $repo ]]; then
+    echo "ERROR: invalid $kind $name"
+    exit 1
+  fi
+}
 
-set -x
-ansible-galaxy role install \
-    --role-file=requirements.yml --roles-path="$roles_dir" \
-    "$nodep_arg" "$git_meta_arg" "$force_arg"
+## simplistic "parser" for requirements.yml
+while IFS= read -r line
+do
+  str=${line//[[:space:]]/}  # strip whitespace
+  case "$str" in
+    ...|---|\#*)
+      continue ;;
+  esac
 
-if [ $mode = clone ]; then
-    cd "$roles_dir" || exit 1
-    for dir in ivansible.* ; do
-        rm -rf "${dir}"
-        git clone git@github.com:"${dir/\./\/}" "${dir}"
-    done
-fi
+  key=${str%%:*}
+  val=${str#*:}
+  case "$key" in
+    '-name')
+      install_item
+      name=$val
+      branch=$default_branch
+      repo=""
+      ;;
+    source)
+      repo=$val ;;
+    version)
+      branch=$val ;;
+    collections)
+      kind=collection ;;
+    roles)
+      kind=role ;;
+    type)
+      case "$val" in
+        git) ;;
+        *)
+          echo "ERROR: Cannot install $kind $name of type $val"
+          exit 1
+          ;;
+      esac
+      ;;
+    *)
+      echo "ERROR: Unsupported key \"$key\":"
+      echo "[$line]"
+      exit 1
+      ;;
+  esac
+  # echo "$key = $val"
+done < "$requirements_file"
+
+install_item
+exit 0
