@@ -4,6 +4,7 @@ dir=$(readlink -f "$0")
 dir=$(dirname "$dir")
 divan_dir=$(dirname "$dir")
 roles_dir=$(readlink -f "$divan_dir/roles")
+collections_dir=$(readlink -f "$divan_dir/collections/ansible_collections")
 
 full=0
 pull=0
@@ -19,11 +20,16 @@ case "$1" in
     exit 1 ;;
 esac
 
-cd "$roles_dir" || exit 1
-for role in * ; do
-    echo
-    echo ">>>> $role"
-    if ! cd "$roles_dir/$role"; then
+list_items()
+{
+  parent_dir=$(pwd)
+  [ "$(ls -A)" ] || return
+  echo ">>> $parent_name <<<"
+  echo
+
+  for item in * ; do
+    echo ">>>> $item"
+    if ! cd "$parent_dir/$item"; then
         echo "error: cannot access role directory"
         continue
     fi
@@ -36,4 +42,16 @@ for role in * ; do
         git fetch
         git pull --ff-only
     fi
+    echo
+  done
+}
+
+for namespace_dir in "$collections_dir"/* ; do
+  cd "$namespace_dir" || continue
+  parent_name="collections/$(basename "$namespace_dir")"
+  list_items
 done
+
+cd "$roles_dir" || exit 1
+parent_name=roles
+list_items
