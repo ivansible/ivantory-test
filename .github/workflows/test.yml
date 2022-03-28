@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 5
       matrix:
         include:
           - name: ivantory-docker
@@ -72,31 +72,21 @@ jobs:
           sudo -H python3 -m pip install -U pip setuptools wheel
           sudo -H pip3 install -r ./requirements.txt
 
-      - name: make mitogen strategy symlink
+      - name: fix mitogen and molecule
         run: |
-          PKG=$(python3 -c "import ansible_mitogen as m; print(m.__path__[0])")
-          ln -sf $PKG/plugins/strategy ./plugins/strategy/mitogen
+          MITOGEN=$(python3 -c "import ansible_mitogen as m; print(m.__path__[0])")
+          VENV=$(dirname $MITOGEN)
+          PRJ=$(pwd)
+          SRC=$PRJ/.github/workflows
+          sudo patch -d $VENV/molecule_docker -p1 -i $SRC/docker-mitogen.patch
+          sudo patch -d $VENV/mitogen -p1 -i $SRC/mitogen-distro.patch
+          ## make mitogen strategy symlink
+          ln -sf $MITOGEN/plugins/strategy $PRJ/plugins/strategy/mitogen
 
       - name: make symlink for custom modules
         if: ${{ matrix.scenario == 'plugins' }}
         run: |
           ln -sf ~/.cache/molecule/ivantory-test/$SCENARIO/roles ./roles-galaxy
-
-      - name: fix molecule-docker for mitogen
-        # mitogen speeds up main plays greatly, but create/destroy plays from
-        # molecule-docker use async wait which get stuck with mitogen, so patch
-        # https://github.com/mitogen-hq/mitogen/issues/835#issuecomment-978127345
-        run: |
-          SRC=$(pwd)
-          PKG=$(python3 -c "import molecule_docker as m; print(m.__path__[0])")
-          sudo patch -d $PKG -p1 -i $SRC/.github/workflows/docker-mitogen.patch
-
-      - name: investigate idempotence failures
-        run: |
-          touch log/idempotence.log
-          SRC=$(pwd)
-          PKG=$(python3 -c "import molecule as m; print(m.__path__[0])")
-          sudo patch -d $PKG -p3 -i $SRC/.github/workflows/idempotence.patch
 
       - name: install required collections
         run: |
@@ -107,11 +97,4 @@ jobs:
       - name: run test
         run: |
           molecule test -s $SCENARIO
-
-      - name: upload idempotence log
-        if: always()
-        uses: actions/upload-artifact@v1
-        with:
-          name: idempotence.${{ matrix.name }}.log
-          path: log/idempotence.log
 ...

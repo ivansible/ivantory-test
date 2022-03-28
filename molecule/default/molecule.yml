@@ -15,7 +15,7 @@ provisioner:
     ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
   config_options:
     defaults:
-      strategy: mitogen_linear
+      strategy: ${ANSIBLE_STRATEGY:-mitogen_linear}
       stdout_callback: unixy2
       verbosity: 1
   lint:
