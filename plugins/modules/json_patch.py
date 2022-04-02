@@ -1,1 +1,0 @@
-../../roles-galaxy/ivansible.lin_base/library/json_patch.py
