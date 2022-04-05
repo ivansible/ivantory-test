@@ -41,8 +41,8 @@ jobs:
             os: ubuntu-latest
             scenario: default
 
-          - name: devops-docker
-            playbook: devops
+          - name: devel-docker
+            playbook: devel
             os: ubuntu-latest
             scenario: default
 
