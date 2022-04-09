@@ -15,50 +15,31 @@ on:
 jobs:
   test:
     name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-20.04
     env:
       SCENARIO: ${{ matrix.scenario }}
       PLAYBOOK: ${{ matrix.playbook }}
       ANSIBLE_FORCE_COLOR: true
-
-      IVATEST_FIREWALL: 'none'
-      IVATEST_SSH_SERVER: true
-      IVATEST_SYSTEMD_TMPFILES: true
-      ## mitigate mitogen detecting python as python2 on focal
-      IVATEST_PYTHON_GROUP: python3
-
-      ## environment for local host:
-      # IVATEST_SSH_SERVER: false
-      # IVATEST_SYSTEMD_TMPFILES: false
+      PY_COLORS: true
 
     strategy:
       fail-fast: false
       max-parallel: 5
       matrix:
         include:
-          - name: ivantory-docker
+          - name: ivantory
             playbook: ivantory
-            os: ubuntu-latest
-            scenario: default
 
-          - name: devel-docker
+          - name: devel
             playbook: devel
-            os: ubuntu-latest
-            scenario: default
 
-          - name: bastion-docker
+          - name: bastion
             playbook: bastion
-            os: ubuntu-latest
-            scenario: default
 
-          - name: master-docker
+          - name: master
             playbook: master
-            os: ubuntu-latest
-            scenario: default
 
           - name: plugins
-            playbook: none
-            os: ubuntu-latest
             scenario: plugins
 
     steps:
@@ -80,21 +61,11 @@ jobs:
           SRC=$PRJ/.github/workflows
           sudo patch -d $VENV/molecule_docker -p1 -i $SRC/docker-mitogen.patch
           sudo patch -d $VENV/mitogen -p1 -i $SRC/mitogen-distro.patch
-          ## make mitogen strategy symlink
           ln -sf $MITOGEN/plugins/strategy $PRJ/plugins/strategy/mitogen
-
-      - name: make symlink for custom modules
-        if: ${{ matrix.scenario == 'plugins' }}
-        run: |
-          ln -sf ~/.cache/molecule/ivantory-test/$SCENARIO/roles ./roles-galaxy
-
-      - name: install required collections
-        run: |
-          rm -f collections/ansible_collections
-          mkdir -p collections/ansible-collections
-          ./bin/import-roles
 
       - name: run test
         run: |
-          molecule test -s $SCENARIO
+          mkdir -p $(realpath ./collections/ansible_collections)
+          molecule dependency -s ${SCENARIO:-default}
+          molecule test -s ${SCENARIO:-default}
 ...

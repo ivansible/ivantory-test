@@ -1,18 +1,4 @@
 ---
-dependency:
-  name: galaxy
-  options:
-    role-file: molecule/plugins/requirements.yml
-driver:
-  name: docker
-platforms:
-  - name: focal
-    image: ivandeex/molecule:20.04
-    command: ""
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
 provisioner:
   name: ansible
   inventory:
@@ -20,37 +6,56 @@ provisioner:
       all:
         ansible_user: ansible
   playbooks:
-    # tests are performed in converge step here (skip verify)
+    ## tests are performed by the converge step here (skip verify)
     converge: playbooks/test.yml
   env:
-    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
-    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
     ANSIBLE_CALLBACK_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/callback
     ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
+    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
+    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
   config_options:
     defaults:
-      strategy: mitogen_linear
-      stdout_callback: unixy2
-  lint:
-    name: ansible-lint
-verifier:
-  name: ansible
-  lint:
-    name: ansible-lint
+      strategy: ${ANSIBLE_STRATEGY:-mitogen_linear}
+      stdout_callback: ${ANSIBLE_STDOUT_CALLBACK:-unixy2}
+      verbosity: 1
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+lint: |
+  ansible-lint
 scenario:
   test_sequence:
-    # install role with modules before running lint
-    - dependency
+    # dependency
+    - syntax
     - lint
     - destroy
-    - syntax
     - create
-    - converge
+    # prepare
+    - converge  # actual test is here
+    # idempotence
+    # verify
     - destroy
   create_sequence:
     - create
+    # prepare
   destroy_sequence:
     - destroy
+    # cleanup
   converge_sequence:
     - converge
+verifier:
+  name: ansible
+driver:
+  name: docker
+platforms:
+  - name: focal.$MOLECULE_SCENARIO_NAME
+    groups:
+      - docker_molecule
+    image: ivandeex/molecule:20.04
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
 ...

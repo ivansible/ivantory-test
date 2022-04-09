@@ -2,7 +2,7 @@
 - name: verify
   hosts: all
   tasks:
-    - name: TODO
+    - name: no test yet
       debug:
-        msg: 'tests complete'
+        msg: 'TEST FINISHED.'
 ...

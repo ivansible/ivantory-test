@@ -97,9 +97,9 @@ all:
 
         allow_sysctl: false
 
-        lin_use_ssh: "{{ lookup('env', 'IVATEST_SSH_SERVER') |d('true', true) |bool }}"
-        lin_firewall: "{{ lookup('env', 'IVATEST_FIREWALL') |d('ferm', true) |string }}"
-        lin_systemd_tmpfiles: "{{ lookup('env', 'IVATEST_SYSTEMD_TMPFILES') |d('true', true) |bool }}"
+        lin_use_ssh: true
+        lin_firewall: none
+        lin_systemd_tmpfiles: true
 
         ## lin_docker
         docker_hub_username: ""

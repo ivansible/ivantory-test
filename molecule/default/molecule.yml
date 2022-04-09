@@ -3,62 +3,59 @@ provisioner:
   name: ansible
   inventory:
     links:
-      hosts: $MOLECULE_SCENARIO_DIRECTORY/../default/hosts.yml
+      hosts: settings.yml
   playbooks:
-    prepare: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-init.yml
-    converge: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-play.yml
-    verify: $MOLECULE_SCENARIO_DIRECTORY/../default/playbooks/${PLAYBOOK:-starter}-test.yml
+    prepare: ${PLAYBOOK:-starter}/prepare.yml
+    converge: ${PLAYBOOK:-starter}/converge.yml
+    verify: ${PLAYBOOK:-starter}/verify.yml
   env:
-    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
-    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
     ANSIBLE_CALLBACK_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/callback
     ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
+    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
+    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
   config_options:
     defaults:
       strategy: ${ANSIBLE_STRATEGY:-mitogen_linear}
-      stdout_callback: unixy2
+      stdout_callback: ${ANSIBLE_STDOUT_CALLBACK:-unixy2}
       verbosity: 1
-  lint:
-    name: ansible-lint
-verifier:
-  name: ansible
-  lint:
-    name: ansible-lint
 dependency:
   name: galaxy
   options:
     role-file: requirements.yml
+lint: |
+  ansible-lint
+scenario:
+  test_sequence:
+    # dependency
+    - syntax
+    - lint
+    - destroy
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
+  create_sequence:
+    - create
+    # prepare
+  destroy_sequence:
+    - destroy
+    # cleanup
+  converge_sequence:
+    - converge
+verifier:
+  name: ansible
 driver:
   name: docker
 platforms:
-  - name: focal
+  - name: focal.$PLAYBOOK
     groups:
       - docker_molecule
-      - python3  # mitigate mitogen detecting python as python2 on focal
     image: ivandeex/molecule:20.04
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-scenario:
-  test_sequence:
-    - lint
-    # dependency
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    # idempotence
-    - verify
-    - destroy
-  create_sequence:
-    - create
-    - prepare
-  destroy_sequence:
-    - cleanup
-    - destroy
-  converge_sequence:
-    - converge
 ...
