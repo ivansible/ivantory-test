@@ -1,13 +1,13 @@
 #!/bin/bash
 #set -x
 
-dir=$(readlink -f "$0")
+dir=$(realpath "$0")
 dir=$(dirname "$dir")
 divan_dir=$(dirname "$dir")
 
 requirements_file="$divan_dir/requirements.yml"
-collections_dir=$(readlink -f "$divan_dir/collections/ansible_collections")
-roles_dir=$(readlink -f "$divan_dir/roles")
+collections_dir=$(realpath "$divan_dir/collections/ansible_collections")
+roles_dir=$(realpath "$divan_dir/roles")
 default_branch=main
 
 kind="item"
@@ -17,9 +17,24 @@ branch=""
 
 install_item()
 {
-  namespace=${name%.*}
-  dir=${name#*.}
+  local namespace="" dir=""
+  if [[ $name ]] && [[ ! $repo ]]; then
+    repo=$name
+    name=""
+  fi
+  case "$repo" in
+    git+https://github.com/ivansible/*)
+      namespace=ivansible
+      dir=$(basename "$repo")
+      repo=${repo#git+}
+      ;;
+    git@github.com:ivansible/*)
+      namespace=ivansible
+      dir=$(basename "$repo")
+      ;;
+  esac
   if [[ $kind ]] && [[ $namespace ]] && [[ $dir ]] && [[ $repo ]]; then
+    [[ $name ]] || name="$namespace.$dir"
     case "$kind" in
       collection)
         parent="$collections_dir/$namespace" ;;
@@ -30,11 +45,11 @@ install_item()
       echo "> Skip installed $kind $name"
       return
     fi
-    echo "> Installing $kind $namespace/$dir from $repo ($branch) ..."
+    echo "> Installing $kind $name from $repo ($branch) ..."
     mkdir -p "$parent"
     git clone -b "$branch" "$repo" "$parent/$dir" || exit 1
   elif [[ $name ]] || [[ $repo ]]; then
-    echo "ERROR: invalid $kind $name"
+    echo "ERROR: invalid $kind ${name:-$repo}"
     exit 1
   fi
 }
@@ -46,41 +61,40 @@ do
   case "$str" in
     ...|---|\#*)
       continue ;;
-  esac
-
-  key=${str%%:*}
-  val=${str#*:}
-  case "$key" in
-    '-name')
+    '-name:'*)
       install_item
-      name=$val
-      branch=$default_branch
+      name=${str#*:}
       repo=""
+      branch=$default_branch
       ;;
-    source)
-      repo=$val ;;
-    version)
-      branch=$val ;;
-    collections)
+    '-'*)
+      install_item
+      name=""
+      repo=${str#-}
+      branch=$default_branch
+      ;;
+    source:*)
+      repo=${str#*:} ;;
+    version:*)
+      branch=${str#*:} ;;
+    collections:)
       kind=collection ;;
-    roles)
+    roles:)
       kind=role ;;
-    type)
-      case "$val" in
+    type:*)
+      case "${str#*:}" in
         git) ;;
         *)
-          echo "ERROR: Cannot install $kind $name of type $val"
+          echo "ERROR: Cannot install $kind $name of type ${str#*:}"
           exit 1
           ;;
       esac
       ;;
     *)
-      echo "ERROR: Unsupported key \"$key\":"
-      echo "[$line]"
+      echo "ERROR: Invalid line [$line]"
       exit 1
       ;;
   esac
-  # echo "$key = $val"
 done < "$requirements_file"
 
 install_item

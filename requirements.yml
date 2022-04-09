@@ -1,36 +1,14 @@
 ---
 collections:
-  - name: ivansible.asterisk
-    source: https://github.com/ivansible/asterisk
-    type: git
-  - name: ivansible.base
-    source: https://github.com/ivansible/base
-    type: git
-  - name: ivansible.cert
-    source: https://github.com/ivansible/cert
-    type: git
-  - name: ivansible.devel
-    source: https://github.com/ivansible/devel
-    type: git
-  - name: ivansible.entware
-    source: https://github.com/ivansible/entware
-    type: git
-  - name: ivansible.linux
-    source: https://github.com/ivansible/linux
-    type: git
-  - name: ivansible.ndms
-    source: https://github.com/ivansible/ndms
-    type: git
-  - name: ivansible.nginx
-    source: https://github.com/ivansible/nginx
-    type: git
-  - name: ivansible.server
-    source: https://github.com/ivansible/server
-    type: git
-  - name: ivansible.termux
-    source: https://github.com/ivansible/termux
-    type: git
-  - name: ivansible.vagrant
-    source: https://github.com/ivansible/vagrant
-    type: git
+  - git+https://github.com/ivansible/asterisk
+  - git+https://github.com/ivansible/base
+  - git+https://github.com/ivansible/cert
+  - git+https://github.com/ivansible/devel
+  - git+https://github.com/ivansible/entware
+  - git+https://github.com/ivansible/linux
+  - git+https://github.com/ivansible/ndms
+  - git+https://github.com/ivansible/nginx
+  - git+https://github.com/ivansible/server
+  - git+https://github.com/ivansible/termux
+  - git+https://github.com/ivansible/vagrant
 ...
