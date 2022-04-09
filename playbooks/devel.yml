@@ -55,7 +55,7 @@
         name: unattended-upgrades
         state: stopped
       become: true
-      ignore_errors: true  # the service may be absent
+      failed_when: false  # the service may be absent
       no_log: true
       tags: devops_fixes
   roles:
@@ -71,5 +71,6 @@
       copy:
         dest: "{{ ansible_user_dir }}/.cloud-warnings.skip"
         content: ""
+        mode: 0644
   tags: devops_fixes
 ...
