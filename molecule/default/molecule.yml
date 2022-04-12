@@ -11,17 +11,16 @@ provisioner:
   env:
     ANSIBLE_CALLBACK_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/callback
     ANSIBLE_STRATEGY_PLUGINS: $MOLECULE_PROJECT_DIRECTORY/plugins/strategy/mitogen
-    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections
-    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles
+    ANSIBLE_COLLECTIONS_PATH: $MOLECULE_PROJECT_DIRECTORY/collections:$MOLECULE_EPHEMERAL_DIRECTORY/collections
+    ANSIBLE_ROLES_PATH: $MOLECULE_PROJECT_DIRECTORY/roles:$MOLECULE_EPHEMERAL_DIRECTORY/roles
   config_options:
     defaults:
       strategy: ${ANSIBLE_STRATEGY:-mitogen_linear}
       stdout_callback: ${ANSIBLE_STDOUT_CALLBACK:-unixy2}
       verbosity: 1
 dependency:
-  name: galaxy
-  options:
-    role-file: requirements.yml
+  name: shell  # manually install into $MOLECULE_EPHEMERAL_DIRECTORY
+  command: ansible-galaxy install -r $MOLECULE_PROJECT_DIRECTORY/requirements.yml
 lint: |
   ansible-lint
 scenario:
@@ -49,7 +48,7 @@ verifier:
 driver:
   name: docker
 platforms:
-  - name: focal.$PLAYBOOK
+  - name: focal.${PLAYBOOK:-starter}
     groups:
       - docker_molecule
     image: ivandeex/molecule:20.04
