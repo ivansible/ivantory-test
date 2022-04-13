@@ -22,7 +22,7 @@
     use_inventory_name: "{{ starter_hostname |default(false,true) |string |lower in 'inventory true yes on 1' }}"
   tasks:
     - name: update hostname
-      hostname:
+      ansible.builtin.hostname:
         name: "{{ use_inventory_name |bool |ternary(inventory_hostname, starter_hostname) }}"
       become: true
       when: starter_hostname is defined

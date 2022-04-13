@@ -51,7 +51,7 @@
   gather_facts: false
   pre_tasks:
     - name: prevent unattanded-upgrades locking dpkg frontend lock
-      systemd:
+      ansible.builtin.systemd:
         name: unattended-upgrades
         state: stopped
       become: true
@@ -68,7 +68,7 @@
   gather_facts: false
   tasks:
     - name: silence the cloud-init warning
-      copy:
+      ansible.builtin.copy:
         dest: "{{ ansible_user_dir }}/.cloud-warnings.skip"
         content: ""
         mode: 0644
