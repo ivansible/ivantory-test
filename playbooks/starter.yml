@@ -32,10 +32,11 @@
   gather_facts: false
   tags: starter_prepare
   roles:
-    - role: ivansible.linux.core
-    - role: ivansible.linux.ssh
-    - role: ivansible.linux.motd
-    - role: ivansible.linux.rsyslog
+    - ivansible.linux.core
+    - ivansible.linux.ecryptfs
+    - ivansible.linux.ssh
+    - ivansible.linux.motd
+    - ivansible.linux.rsyslog
 
 - name: configure main user
   hosts:
