@@ -10,8 +10,6 @@
   gather_facts: false
   roles:
     - ivansible.linux.wireguard
-    - ivansible.linux.openvpn
-    - ivansible.server.mtproxy
     - ivansible.server.ziproxy
     - ivansible.server.dante
     - ivansible.server.tor
@@ -29,6 +27,8 @@
     - ivansible.nginx.doh
     - ivansible.nginx.dyndns
     - ivansible.nginx.v2ray
+    - ivansible.linux.openvpn
+    - ivansible.server.mtproxy
     - ivansible.server.sshtun
   tags:
     - bastion_tls
