@@ -5,6 +5,13 @@
   strategy: linear  # workaround for mitogen 0.2.9 bug with ansible 2.9.18+ on xenial
   tags: always
 
+- name: base network settings
+  hosts: all
+  gather_facts: false
+  roles:
+    - ivansible.linux.net
+  tags: bastion_net
+
 - name: simple proxy services
   hosts: all
   gather_facts: false
