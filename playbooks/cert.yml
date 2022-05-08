@@ -5,15 +5,23 @@
   strategy: linear  # workaround for mitogen 0.2.9 bug with ansible 2.9.18+ on xenial
   tags: always
 
-- name: letsencrypt certificates on production master
+- name: letsencrypt certificates on master
   hosts:
-    - prod_master_all
+    - cert_master
   gather_facts: false
   strategy: linear  # mitogen fails when cert_master runs setup for replicas
   roles:
     - ivansible.cert.cloudflare
     - ivansible.cert.master
   tags: cert_master
+
+- name: letsencrypt certificates on slaves
+  hosts:
+    - cert_slaves
+  gather_facts: false
+  roles:
+    - ivansible.cert.replica
+  tags: cert_slaves
 
 - name: letsencrypt certificates on development hosts
   hosts:
@@ -23,12 +31,4 @@
   roles:
     - ivansible.cert.copy
   tags: cert_devel
-
-- name: letsencrypt certificates on production slaves
-  hosts:
-    - prod_slaves
-  gather_facts: false
-  roles:
-    - ivansible.cert.replica
-  tags: cert_slaves
 ...
