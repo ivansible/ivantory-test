@@ -3,7 +3,7 @@ ansible-core==2.12.4
 ansible-compat==2.0.2
 mitogen==0.3.2
 # avoid latest cryptography, it requires rust
-cryptography==3.3.2
+cryptography==39.0.1
 # testing
 molecule==3.6.1
 molecule-docker==1.1.0
